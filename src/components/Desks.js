@@ -1,7 +1,8 @@
 import React from "react";
+import PropsTypes from "prop-types";
 import { Panel, Button } from "@vkontakte/vkui";
 
-export const Desks = ({ id, onChangePanel }) => {
+const Desks = ({ id, onChangePanel }) => {
   return (
     <Panel id={id}>
       <div>Панель с досками</div>
@@ -9,3 +10,10 @@ export const Desks = ({ id, onChangePanel }) => {
     </Panel>
   );
 };
+
+Desks.propTypes = {
+  id: PropsTypes.string.isRequired,
+  onChangePanel: PropsTypes.func.isRequired,
+};
+
+export { Desks };
