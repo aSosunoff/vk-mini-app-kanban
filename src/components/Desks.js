@@ -1,12 +1,14 @@
 import React from "react";
 import PropsTypes from "prop-types";
-import { Panel, Button } from "@vkontakte/vkui";
+import { Panel, Button, PanelHeaderSimple } from "@vkontakte/vkui";
 
 const Desks = ({ id, onChangePanel }) => {
   return (
     <Panel id={id}>
-      <div>Панель с досками</div>
-      <Button onClick={onChangePanel}>Перейти к колонкам</Button>
+      <PanelHeaderSimple>Мои доски</PanelHeaderSimple>
+
+      {/* <div>Панель с досками</div>
+      <Button onClick={onChangePanel}>Перейти к колонкам</Button> */}
     </Panel>
   );
 };
