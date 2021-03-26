@@ -1,49 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import bridge from '@vkontakte/vk-bridge';
-import View from '@vkontakte/vkui/dist/components/View/View';
-import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner';
-import { AdaptivityProvider, AppRoot } from '@vkontakte/vkui';
-import '@vkontakte/vkui/dist/vkui.css';
+import React, { useState, useEffect } from "react";
+import { View, Panel, Button } from "@vkontakte/vkui";
 
-import Home from './panels/Home';
-import Persik from './panels/Persik';
+import { AdaptivityProvider, AppRoot } from "@vkontakte/vkui";
+import "@vkontakte/vkui/dist/vkui.css";
 
-const App = () => {
-	const [activePanel, setActivePanel] = useState('home');
-	const [fetchedUser, setUser] = useState(null);
-	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
+const panel = {
+  desks: "desks",
+  columns: "columns",
+};
 
-	useEffect(() => {
-		bridge.subscribe(({ detail: { type, data }}) => {
-			if (type === 'VKWebAppUpdateConfig') {
-				const schemeAttribute = document.createAttribute('scheme');
-				schemeAttribute.value = data.scheme ? data.scheme : 'client_light';
-				document.body.attributes.setNamedItem(schemeAttribute);
-			}
-		});
-		async function fetchData() {
-			const user = await bridge.send('VKWebAppGetUserInfo');
-			setUser(user);
-			setPopout(null);
-		}
-		fetchData();
-	}, []);
+export const App = () => {
+  const [activePanel, setActivePanel] = useState(panel.desks);
 
-	const go = e => {
-		setActivePanel(e.currentTarget.dataset.to);
-	};
-
-	return (
-		<AdaptivityProvider>
-			<AppRoot>
-				<View activePanel={activePanel} popout={popout}>
-					<Home id='home' fetchedUser={fetchedUser} go={go} />
-					<Persik id='persik' go={go} />
-				</View>
-			</AppRoot>
-		</AdaptivityProvider>
-	);
-}
-
-export default App;
-
+  return (
+    <AdaptivityProvider>
+      <AppRoot>
+        <View activePanel={activePanel}>
+          <Panel id={panel.desks}>
+            <div>Панель с досками</div>
+            <Button onClick={() => setActivePanel(panel.columns)}>Перейти к колонкам</Button>
+          </Panel>
+          <Panel id={panel.columns}>
+            <div>Панель с колонками</div>
+            <Button onClick={() => setActivePanel(panel.desks)}>Перейти к доскам</Button>
+          </Panel>
+        </View>
+      </AppRoot>
+    </AdaptivityProvider>
+  );
+};
