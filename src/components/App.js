@@ -3,6 +3,8 @@ import { View, Panel, Button } from "@vkontakte/vkui";
 
 import { AdaptivityProvider, AppRoot } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
+import { Desks } from "./Desks";
+import { Columns } from "./Columns";
 
 const panel = {
   desks: "desks",
@@ -16,14 +18,8 @@ export const App = () => {
     <AdaptivityProvider>
       <AppRoot>
         <View activePanel={activePanel}>
-          <Panel id={panel.desks}>
-            <div>Панель с досками</div>
-            <Button onClick={() => setActivePanel(panel.columns)}>Перейти к колонкам</Button>
-          </Panel>
-          <Panel id={panel.columns}>
-            <div>Панель с колонками</div>
-            <Button onClick={() => setActivePanel(panel.desks)}>Перейти к доскам</Button>
-          </Panel>
+          <Desks id={panel.desks} onChangePanel={() => setActivePanel(panel.columns)} />
+          <Columns id={panel.columns} onChangePanel={() => setActivePanel(panel.desks)} />
         </View>
       </AppRoot>
     </AdaptivityProvider>
