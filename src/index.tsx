@@ -8,6 +8,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import { AlertProvider } from "./context/alert-context";
 import { AdaptivityProvider, AppRoot } from "@vkontakte/vkui";
+import { SnackbarProvider } from "./context/snackbar-context";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDy_s8iisu5mEYvW0r9Ryk6IzkdlbWky2k",
@@ -30,7 +31,9 @@ ReactDOM.render(
   <AdaptivityProvider>
     <AppRoot>
       <AlertProvider>
-        <App />
+        <SnackbarProvider>
+          <App />
+        </SnackbarProvider>
       </AlertProvider>
     </AppRoot>
   </AdaptivityProvider>,

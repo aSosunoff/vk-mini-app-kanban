@@ -1,9 +1,19 @@
 import React, { FormEventHandler, useCallback, useState } from "react";
 import { useForm, InitialFormType } from "@asosunoff/react_use_form";
 import firebase from "firebase/app";
-import { Alert, Button, Div, FormItem, FormLayout, FormLayoutGroup, Input } from "@vkontakte/vkui";
+import {
+  Alert,
+  Button,
+  Div,
+  FormItem,
+  FormLayout,
+  FormLayoutGroup,
+  Input,
+  Snackbar,
+} from "@vkontakte/vkui";
 import { Icon24Add, Icon24DeleteOutline } from "@vkontakte/icons";
 import { useAlertContext } from "../context/alert-context";
+import { useSnackbarContext } from "../context/snackbar-context";
 
 type Modes = "button" | "form";
 
@@ -24,6 +34,8 @@ const DeskCreate: React.FC = () => {
   const [mode, setMode] = useState<Modes>("button");
 
   const { setPopoutHandler } = useAlertContext();
+
+  const { setSnackbarHandler } = useSnackbarContext();
 
   const createDeskHandler = useCallback<FormEventHandler<HTMLElement>>(
     (event) => {
@@ -55,7 +67,20 @@ const DeskCreate: React.FC = () => {
             name: values.name,
           })
           .then(() => {
-            console.log("Document successfully written!");
+            setSnackbarHandler(
+              <Snackbar
+                onClose={() => setSnackbarHandler(null)}
+                /* action="Поделиться" */
+                /* onActionClick={() => this.setState({ text: "Добавляем метку." })} */
+                /*  before={
+                  <Avatar size={24} style={{ background: "var(--accent)" }}>
+                    <Icon16Done fill="#fff" width={14} height={14} />
+                  </Avatar>
+                } */
+              >
+                Добавдена новая доска "{values.name}"
+              </Snackbar>
+            );
           })
           .catch((error) => {
             console.error("Error writing document: ", error);
