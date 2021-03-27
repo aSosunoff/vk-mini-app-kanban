@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import firebase from "firebase/app";
-import PropsTypes from "prop-types";
 import { CardGrid } from "@vkontakte/vkui";
 import { DeskItem } from "./DeskItem";
 
+interface Desks {
+  id: string;
+  name: string;
+}
+
 const DeskList = () => {
-  const [desct, setDescs] = useState([]);
+  const [desct, setDescs] = useState<Desks[]>([]);
 
   useEffect(() => {
     const db = firebase.firestore();
@@ -13,7 +17,7 @@ const DeskList = () => {
     db.collection("desks")
       .get()
       .then((querySnapshot) => {
-        const desks = [];
+        const desks: Desks[] = [];
 
         querySnapshot.forEach((desk) => {
           desks.push({
@@ -37,14 +41,6 @@ const DeskList = () => {
       ))}
     </CardGrid>
   );
-};
-
-DeskList.propTypes = {
-  /* list: PropsTypes.arrayOf(
-    PropsTypes.shape({
-      name: PropsTypes.string,
-    })
-  ), */
 };
 
 export { DeskList };

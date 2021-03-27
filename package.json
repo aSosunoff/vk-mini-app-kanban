@@ -13,9 +13,13 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^14.14.37",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
     "cross-env": "^5.2.0",
     "react-hot-loader": "^4.9.0",
-    "react-scripts": "^4.0.1"
+    "react-scripts": "^4.0.1",
+    "typescript": "^4.2.3"
   },
   "dependencies": {
     "@vkontakte/icons": "^1.88.0",
@@ -29,7 +33,6 @@
     "eruda-code": "^2.0.0",
     "eruda-dom": "^2.0.0",
     "firebase": "8.3.1",
-    "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, Panel, Button } from "@vkontakte/vkui";
+import React, { useState } from "react";
+import { View } from "@vkontakte/vkui";
 
 import { AdaptivityProvider, AppRoot } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";

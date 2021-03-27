@@ -3,8 +3,13 @@ import PropsTypes from "prop-types";
 import { Panel, CardGrid, PanelHeaderSimple } from "@vkontakte/vkui";
 import { DeskItem } from "./DeskItem";
 import { DeskList } from "./DeskList";
+import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
 
-const Desks = ({ id, onChangePanel }) => {
+interface DesksProps extends Pick<PanelProps, "id"> {
+  onChangePanel: () => void;
+}
+
+const Desks: React.FC<DesksProps> = ({ id, onChangePanel }) => {
   return (
     <Panel id={id}>
       <PanelHeaderSimple>Мои доски</PanelHeaderSimple>
@@ -15,11 +20,6 @@ const Desks = ({ id, onChangePanel }) => {
       <Button onClick={onChangePanel}>Перейти к колонкам</Button> */}
     </Panel>
   );
-};
-
-Desks.propTypes = {
-  id: PropsTypes.string.isRequired,
-  onChangePanel: PropsTypes.func.isRequired,
 };
 
 export { Desks };
