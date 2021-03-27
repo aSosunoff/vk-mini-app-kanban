@@ -9,7 +9,7 @@ interface Desks {
 }
 
 const DeskList = () => {
-  const [desct, setDescs] = useState<Desks[]>([]);
+  const [descs, setDescs] = useState<Desks[]>([]);
 
   useEffect(() => {
     const db = firebase.firestore();
@@ -30,13 +30,13 @@ const DeskList = () => {
       });
   }, []);
 
-  if (!desct.length) {
+  if (!descs.length) {
     return null;
   }
 
   return (
     <CardGrid size="l">
-      {desct.map(({ name }, index) => (
+      {descs.map(({ name }, index) => (
         <DeskItem key={index}>{name}</DeskItem>
       ))}
     </CardGrid>
