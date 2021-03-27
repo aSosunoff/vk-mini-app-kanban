@@ -9,16 +9,7 @@ const Desks = ({ id, onChangePanel }) => {
     <Panel id={id}>
       <PanelHeaderSimple>Мои доски</PanelHeaderSimple>
 
-      <DeskList
-        list={[
-          {
-            name: "Доска 1",
-          },
-          {
-            name: "Доска 2",
-          },
-        ]}
-      />
+      <DeskList />
 
       {/* <div>Панель с досками</div>
       <Button onClick={onChangePanel}>Перейти к колонкам</Button> */}
