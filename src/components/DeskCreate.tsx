@@ -1,7 +1,8 @@
 import React, { FormEventHandler, useCallback, useState } from "react";
 import { useForm, InitialFormType } from "@asosunoff/react_use_form";
-import { Button, Div, FormItem, FormLayout, FormLayoutGroup, Input } from "@vkontakte/vkui";
+import { Alert, Button, Div, FormItem, FormLayout, FormLayoutGroup, Input } from "@vkontakte/vkui";
 import { Icon24Add, Icon24DeleteOutline } from "@vkontakte/icons";
+import { useAlertContext } from "../context/alert-context";
 
 type Modes = "button" | "form";
 
@@ -21,17 +22,37 @@ const DeskCreate: React.FC = () => {
 
   const [mode, setMode] = useState<Modes>("button");
 
+  const { setPopoutHandler } = useAlertContext();
+
   const createDeskHandler = useCallback<FormEventHandler<HTMLElement>>(
     (event) => {
       if (event) {
         event.preventDefault();
       }
 
-      console.log(values);
+      if (isInvalidForm) {
+        setPopoutHandler(
+          <Alert
+            header="Внимание"
+            text="Не все обязательные поля заполнены"
+            actions={[
+              {
+                title: "Понял",
+                mode: "destructive",
+                autoclose: true,
+              },
+            ]}
+            actionsLayout="vertical"
+            onClose={() => setPopoutHandler(null)}
+          />
+        );
+      } else {
+        console.log(values);
 
-      setMode("button");
+        setMode("button");
 
-      resetHandler();
+        resetHandler();
+      }
     },
     [values]
   );

@@ -6,6 +6,8 @@ import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
+import { AlertProvider } from "./context/alert-context";
+import { AdaptivityProvider, AppRoot } from "@vkontakte/vkui";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDy_s8iisu5mEYvW0r9Ryk6IzkdlbWky2k",
@@ -24,7 +26,16 @@ firebase.analytics();
 // Init VK  Mini App
 /* bridge.send("VKWebAppInit"); */
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <AdaptivityProvider>
+    <AppRoot>
+      <AlertProvider>
+        <App />
+      </AlertProvider>
+    </AppRoot>
+  </AdaptivityProvider>,
+  document.getElementById("root")
+);
 
 if (process.env.NODE_ENV === "development") {
   import("./eruda").then(({ default: eruda }) => {}); //runtime download
