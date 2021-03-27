@@ -1,5 +1,6 @@
 import React, { FormEventHandler, useCallback, useState } from "react";
 import { useForm, InitialFormType } from "@asosunoff/react_use_form";
+import firebase from "firebase/app";
 import { Alert, Button, Div, FormItem, FormLayout, FormLayoutGroup, Input } from "@vkontakte/vkui";
 import { Icon24Add, Icon24DeleteOutline } from "@vkontakte/icons";
 import { useAlertContext } from "../context/alert-context";
@@ -47,7 +48,18 @@ const DeskCreate: React.FC = () => {
           />
         );
       } else {
-        console.log(values);
+        const db = firebase.firestore();
+
+        db.collection("desks")
+          .add({
+            name: values.name,
+          })
+          .then(() => {
+            console.log("Document successfully written!");
+          })
+          .catch((error) => {
+            console.error("Error writing document: ", error);
+          });
 
         setMode("button");
 
