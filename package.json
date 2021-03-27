@@ -22,6 +22,7 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
+    "@asosunoff/react_use_form": "^1.0.5",
     "@vkontakte/icons": "^1.88.0",
     "@vkontakte/vk-bridge": "^2.4.1",
     "@vkontakte/vk-miniapps-deploy": "0.0.17",
