@@ -1,5 +1,5 @@
 import React from "react";
-import { CardGrid } from "@vkontakte/vkui";
+import { Group, List } from "@vkontakte/vkui";
 import { DeskItem } from "./DeskItem";
 import { IDesks } from "../Interfaces/IDesks";
 
@@ -13,11 +13,15 @@ const DeskList: React.FC<DeskListProps> = ({ list }) => {
   }
 
   return (
-    <CardGrid size="l">
-      {list.map(({ name }, index) => (
-        <DeskItem key={index}>{name}</DeskItem>
-      ))}
-    </CardGrid>
+    <Group>
+      <List>
+        {list.map(({ id, name }) => (
+          <DeskItem key={id} id={id}>
+            {name}
+          </DeskItem>
+        ))}
+      </List>
+    </Group>
   );
 };
 

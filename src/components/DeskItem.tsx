@@ -1,11 +1,25 @@
 import React from "react";
-import { Card, Div } from "@vkontakte/vkui";
+import { Cell } from "@vkontakte/vkui";
+import { Icon24DeleteOutline } from "@vkontakte/icons";
 
-const DeskItem: React.FC = ({ children }) => {
+interface DeskItemProps {
+  id: string;
+}
+
+const DeskItem: React.FC<DeskItemProps> = ({ id, children }) => {
   return (
-    <Card>
-      <Div>{children}</Div>
-    </Card>
+    <Cell
+      expandable
+      after={
+        <Icon24DeleteOutline
+          onClick={() => {
+            console.log(id);
+          }}
+        />
+      }
+    >
+      {children}
+    </Cell>
   );
 };
 
