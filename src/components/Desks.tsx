@@ -31,7 +31,8 @@ const Desks: React.FC<DesksProps> = ({ id }) => {
         });
 
         setDesks(() => desks);
-      });
+      })
+      .catch(console.error);
   }, []);
 
   const addDeskHandler = useCallback((desk) => {
