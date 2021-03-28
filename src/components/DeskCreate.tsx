@@ -82,7 +82,7 @@ const DeskCreate: React.FC<DeskCreateProps> = ({ onCreate }) => {
 
           setSnackbarHandler(
             <Snackbar onClose={() => setSnackbarHandler(null)}>
-              Добавдена новая доска "{name}"
+              Добавдена новая доска "{(data as IDesks).name}"
             </Snackbar>
           );
 
@@ -94,7 +94,7 @@ const DeskCreate: React.FC<DeskCreateProps> = ({ onCreate }) => {
         }
       }
     },
-    [values]
+    [isInvalidForm, onCreate, resetHandler, setPopoutHandler, setSnackbarHandler, values.name]
   );
 
   if (mode === "button") {

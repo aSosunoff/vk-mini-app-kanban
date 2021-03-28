@@ -8,11 +8,9 @@ import { DeskCreate } from "./DeskCreate";
 import { useSnackbarContext } from "../context/snackbar-context";
 import { IDesks } from "../Interfaces/IDesks";
 
-interface DesksProps extends Pick<PanelProps, "id"> {
-  onChangePanel: () => void;
-}
+interface DesksProps extends Pick<PanelProps, "id"> {}
 
-const Desks: React.FC<DesksProps> = ({ id, onChangePanel }) => {
+const Desks: React.FC<DesksProps> = ({ id }) => {
   const { snackbar } = useSnackbarContext();
 
   const [descs, setDesks] = useState<IDesks[]>([]);

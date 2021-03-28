@@ -1,5 +1,5 @@
 import { ViewProps } from "@vkontakte/vkui/dist/components/View/View";
-import React, { createContext, useCallback, useContext, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useState } from "react";
 
 interface IAlertContext extends Pick<ViewProps, "popout"> {
   setPopoutHandler: (popout: React.ReactNode) => void;

@@ -16,7 +16,7 @@ export const App = () => {
 
   return (
     <View activePanel={activePanel} popout={popout}>
-      <Desks id={panel.desks} onChangePanel={() => setActivePanel(panel.columns)} />
+      <Desks id={panel.desks} /* onChangePanel={() => setActivePanel(panel.columns)} */ />
       <Columns id={panel.columns} onChangePanel={() => setActivePanel(panel.desks)} />
     </View>
   );
