@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Panel, PanelHeaderSimple } from "@vkontakte/vkui";
+import { Panel, PanelHeaderSimple, Snackbar } from "@vkontakte/vkui";
 import firebase from "firebase/app";
 
 import { DeskList } from "./DeskList";
 import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
-import { DeskCreate } from "./DeskCreate";
 import { useSnackbarContext } from "../context/snackbar-context";
 import { IDesks } from "../Interfaces/IDesks";
+import { CreateForm } from "./CreateForm";
 
 interface DesksProps extends Pick<PanelProps, "id"> {}
 
 const Desks: React.FC<DesksProps> = ({ id }) => {
-  const { snackbar } = useSnackbarContext();
+  const { snackbar, setSnackbarHandler } = useSnackbarContext();
 
   const [descs, setDesks] = useState<IDesks[]>([]);
 
@@ -43,11 +43,42 @@ const Desks: React.FC<DesksProps> = ({ id }) => {
     setDesks((prev) => prev.filter(({ id }) => id !== deskIdRemoved));
   }, []);
 
+  const createDeskHandler = useCallback(
+    async (name: string) => {
+      try {
+        const db = firebase.firestore();
+
+        const docRef = await db.collection("desks").add({
+          name,
+        });
+
+        const doc = await docRef.get();
+
+        const data = doc.data();
+
+        addDeskHandler({ id: doc.id, name: (data as IDesks).name });
+
+        setSnackbarHandler(
+          <Snackbar onClose={() => setSnackbarHandler(null)}>
+            Добавдена новая доска "{(data as IDesks).name}"
+          </Snackbar>
+        );
+      } catch (error) {
+        console.error("Error writing document: ", error);
+      }
+    },
+    [addDeskHandler, setSnackbarHandler]
+  );
+
   return (
     <Panel id={id}>
       <PanelHeaderSimple>Мои доски</PanelHeaderSimple>
 
-      <DeskCreate onCreate={addDeskHandler} />
+      <CreateForm
+        onCreate={createDeskHandler}
+        buttonName="Создать доску"
+        placeholder="введите название доски"
+      />
 
       <DeskList list={descs} onDeleteDesk={deleteDeskHandler} />
 

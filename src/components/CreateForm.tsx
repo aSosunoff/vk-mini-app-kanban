@@ -1,20 +1,8 @@
 import React, { FormEventHandler, useCallback, useState } from "react";
 import { useForm, InitialFormType } from "@asosunoff/react_use_form";
-import firebase from "firebase/app";
-import {
-  Alert,
-  Button,
-  Div,
-  FormItem,
-  FormLayout,
-  FormLayoutGroup,
-  Input,
-  Snackbar,
-} from "@vkontakte/vkui";
-import { Icon24Add, Icon24DeleteOutline } from "@vkontakte/icons";
+import { Alert, Button, Div, FormItem, FormLayout, FormLayoutGroup, Input } from "@vkontakte/vkui";
+import { Icon24Add } from "@vkontakte/icons";
 import { useAlertContext } from "../context/alert-context";
-import { useSnackbarContext } from "../context/snackbar-context";
-import { IDesks } from "../Interfaces/IDesks";
 
 type Modes = "button" | "form";
 
@@ -29,20 +17,20 @@ const FORM: InitialFormType<"name"> = {
   },
 };
 
-interface DeskCreateProps {
-  onCreate: (desk: IDesks) => void;
+interface CreateFormProps {
+  buttonName: string;
+  placeholder?: string;
+  onCreate: (name: string) => Promise<void>;
 }
 
-const DeskCreate: React.FC<DeskCreateProps> = ({ onCreate }) => {
+const CreateForm: React.FC<CreateFormProps> = ({ onCreate, buttonName, placeholder }) => {
   const { handlers, values, resetHandler, isInvalidForm } = useForm(FORM);
 
   const [mode, setMode] = useState<Modes>("button");
 
   const { setPopoutHandler } = useAlertContext();
 
-  const { setSnackbarHandler } = useSnackbarContext();
-
-  const createDeskHandler = useCallback<FormEventHandler<HTMLElement>>(
+  const createHandler = useCallback<FormEventHandler<HTMLElement>>(
     async (event) => {
       if (event) {
         event.preventDefault();
@@ -65,50 +53,30 @@ const DeskCreate: React.FC<DeskCreateProps> = ({ onCreate }) => {
           />
         );
       } else {
-        try {
-          const db = firebase.firestore();
+        await onCreate(values.name);
 
-          const docRef = await db.collection("desks").add({
-            name: values.name,
-          });
+        setMode("button");
 
-          const doc = await docRef.get();
-
-          const data = doc.data();
-
-          onCreate({ id: doc.id, name: (data as IDesks).name });
-
-          setSnackbarHandler(
-            <Snackbar onClose={() => setSnackbarHandler(null)}>
-              Добавдена новая доска "{(data as IDesks).name}"
-            </Snackbar>
-          );
-
-          setMode("button");
-
-          resetHandler();
-        } catch (error) {
-          console.error("Error writing document: ", error);
-        }
+        resetHandler();
       }
     },
-    [isInvalidForm, onCreate, resetHandler, setPopoutHandler, setSnackbarHandler, values.name]
+    [isInvalidForm, onCreate, resetHandler, setPopoutHandler, values.name]
   );
 
   if (mode === "button") {
     return (
       <Div>
         <Button size="l" stretched before={<Icon24Add />} onClick={() => setMode("form")}>
-          Создать доску
+          {buttonName}
         </Button>
       </Div>
     );
   }
 
   return (
-    <FormLayout onSubmit={createDeskHandler}>
+    <FormLayout onSubmit={createHandler}>
       <FormItem
-        top="Наименование доски"
+        /* top="Наименование доски" */
         status={handlers.name.error && handlers.name.touched ? "error" : "valid"}
         bottom={
           handlers.name.error && handlers.name.touched ? handlers.name.error.errorMessage : ""
@@ -118,26 +86,19 @@ const DeskCreate: React.FC<DeskCreateProps> = ({ onCreate }) => {
           autoFocus
           value={handlers.name.value}
           onChange={handlers.name.onChange}
-          placeholder="введите название доски"
+          placeholder={placeholder}
         />
       </FormItem>
 
       <FormLayoutGroup mode="horizontal">
         <FormItem>
-          <Button size="l" stretched before={<Icon24Add />} onClick={createDeskHandler}>
+          <Button size="l" stretched before={<Icon24Add />} onClick={createHandler}>
             Создать доску
           </Button>
         </FormItem>
 
         <FormItem>
-          <Button
-            size="l"
-            stretched
-            onClick={() => setMode("button")}
-            before={<Icon24DeleteOutline />}
-            mode="tertiary"
-            color="red"
-          >
+          <Button size="l" stretched onClick={() => setMode("button")} mode="tertiary" color="red">
             Отменить
           </Button>
         </FormItem>
@@ -146,4 +107,4 @@ const DeskCreate: React.FC<DeskCreateProps> = ({ onCreate }) => {
   );
 };
 
-export { DeskCreate };
+export { CreateForm };
