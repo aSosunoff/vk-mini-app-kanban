@@ -68,11 +68,10 @@ const DeskCreate: React.FC<DeskCreateProps> = ({ onCreate }) => {
         try {
           const db = firebase.firestore();
 
-          const desks = db.collection("desks");
-
-          const docRef = await desks.add({
+          const docRef = await db.collection("desks").add({
             name: values.name,
           });
+
           const doc = await docRef.get();
 
           const data = doc.data();
