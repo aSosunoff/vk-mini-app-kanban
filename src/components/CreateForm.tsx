@@ -93,7 +93,7 @@ const CreateForm: React.FC<CreateFormProps> = ({ onCreate, buttonName, placehold
       <FormLayoutGroup mode="horizontal">
         <FormItem>
           <Button size="l" stretched before={<Icon24Add />} onClick={createHandler}>
-            Создать доску
+            {buttonName}
           </Button>
         </FormItem>
 
