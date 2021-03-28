@@ -14,6 +14,7 @@ import {
 import { Icon24Add, Icon24DeleteOutline } from "@vkontakte/icons";
 import { useAlertContext } from "../context/alert-context";
 import { useSnackbarContext } from "../context/snackbar-context";
+import { IDesks } from "../Interfaces/IDesks";
 
 type Modes = "button" | "form";
 
@@ -28,7 +29,11 @@ const FORM: InitialFormType<"name"> = {
   },
 };
 
-const DeskCreate: React.FC = () => {
+interface DeskCreateProps {
+  onCreate: (desk: IDesks) => void;
+}
+
+const DeskCreate: React.FC<DeskCreateProps> = ({ onCreate }) => {
   const { handlers, values, resetHandler, isInvalidForm } = useForm(FORM);
 
   const [mode, setMode] = useState<Modes>("button");
@@ -38,7 +43,7 @@ const DeskCreate: React.FC = () => {
   const { setSnackbarHandler } = useSnackbarContext();
 
   const createDeskHandler = useCallback<FormEventHandler<HTMLElement>>(
-    (event) => {
+    async (event) => {
       if (event) {
         event.preventDefault();
       }
@@ -60,35 +65,34 @@ const DeskCreate: React.FC = () => {
           />
         );
       } else {
-        const db = firebase.firestore();
+        try {
+          const db = firebase.firestore();
 
-        db.collection("desks")
-          .add({
+          const desks = db.collection("desks");
+
+          const docRef = await desks.add({
             name: values.name,
-          })
-          .then(() => {
-            setSnackbarHandler(
-              <Snackbar
-                onClose={() => setSnackbarHandler(null)}
-                /* action="Поделиться" */
-                /* onActionClick={() => this.setState({ text: "Добавляем метку." })} */
-                /*  before={
-                  <Avatar size={24} style={{ background: "var(--accent)" }}>
-                    <Icon16Done fill="#fff" width={14} height={14} />
-                  </Avatar>
-                } */
-              >
-                Добавдена новая доска "{values.name}"
-              </Snackbar>
-            );
-          })
-          .catch((error) => {
-            console.error("Error writing document: ", error);
           });
+          const doc = await docRef.get();
 
-        setMode("button");
+          const data = doc.data();
 
-        resetHandler();
+          const { name } = data || {};
+
+          onCreate({ id: doc.id, name });
+
+          setSnackbarHandler(
+            <Snackbar onClose={() => setSnackbarHandler(null)}>
+              Добавдена новая доска "{name}"
+            </Snackbar>
+          );
+
+          setMode("button");
+
+          resetHandler();
+        } catch (error) {
+          console.error("Error writing document: ", error);
+        }
       }
     },
     [values]

@@ -1,42 +1,20 @@
-import React, { useEffect, useState } from "react";
-import firebase from "firebase/app";
+import React from "react";
 import { CardGrid } from "@vkontakte/vkui";
 import { DeskItem } from "./DeskItem";
+import { IDesks } from "../Interfaces/IDesks";
 
-interface Desks {
-  id: string;
-  name: string;
+interface DeskListProps {
+  list: IDesks[];
 }
 
-const DeskList = () => {
-  const [descs, setDescs] = useState<Desks[]>([]);
-
-  useEffect(() => {
-    const db = firebase.firestore();
-
-    db.collection("desks")
-      .get()
-      .then((querySnapshot) => {
-        const desks: Desks[] = [];
-
-        querySnapshot.forEach((desk) => {
-          desks.push({
-            id: desk.id,
-            name: desk.data().name,
-          });
-        });
-
-        setDescs(() => desks);
-      });
-  }, []);
-
-  if (!descs.length) {
+const DeskList: React.FC<DeskListProps> = ({ list }) => {
+  if (!list || !list.length) {
     return null;
   }
 
   return (
     <CardGrid size="l">
-      {descs.map(({ name }, index) => (
+      {list.map(({ name }, index) => (
         <DeskItem key={index}>{name}</DeskItem>
       ))}
     </CardGrid>
