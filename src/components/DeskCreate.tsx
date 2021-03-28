@@ -76,9 +76,9 @@ const DeskCreate: React.FC<DeskCreateProps> = ({ onCreate }) => {
 
           const data = doc.data();
 
-          const { name } = data || {};
+          /* const { name } = data || {}; */
 
-          onCreate({ id: doc.id, name });
+          onCreate({ id: doc.id, name: (data as IDesks).name });
 
           setSnackbarHandler(
             <Snackbar onClose={() => setSnackbarHandler(null)}>
