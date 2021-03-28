@@ -38,13 +38,17 @@ const Desks: React.FC<DesksProps> = ({ id }) => {
     setDesks((prev) => [...prev, desk]);
   }, []);
 
+  const deleteDeskHandler = useCallback((deskIdRemoved) => {
+    setDesks((prev) => prev.filter(({ id }) => id !== deskIdRemoved));
+  }, []);
+
   return (
     <Panel id={id}>
       <PanelHeaderSimple>Мои доски</PanelHeaderSimple>
 
       <DeskCreate onCreate={addDeskHandler} />
 
-      <DeskList list={descs} />
+      <DeskList list={descs} onDeleteDesk={deleteDeskHandler} />
 
       {/* <div>Панель с досками</div>
       <Button onClick={onChangePanel}>Перейти к колонкам</Button> */}

@@ -5,9 +5,10 @@ import { IDesks } from "../Interfaces/IDesks";
 
 interface DeskListProps {
   list: IDesks[];
+  onDeleteDesk: (id: string) => void;
 }
 
-const DeskList: React.FC<DeskListProps> = ({ list }) => {
+const DeskList: React.FC<DeskListProps> = ({ list, onDeleteDesk }) => {
   if (!list || !list.length) {
     return null;
   }
@@ -16,7 +17,7 @@ const DeskList: React.FC<DeskListProps> = ({ list }) => {
     <Group>
       <List>
         {list.map(({ id, name }) => (
-          <DeskItem key={id} id={id}>
+          <DeskItem key={id} id={id} onDelete={onDeleteDesk}>
             {name}
           </DeskItem>
         ))}
