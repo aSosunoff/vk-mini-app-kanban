@@ -1,2 +1,9 @@
 .columns {
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery {
+  flex-grow: 1;
+  height: auto;
 }

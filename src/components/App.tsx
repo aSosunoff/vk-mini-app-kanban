@@ -6,7 +6,7 @@ import { Columns } from "./Columns";
 import { useAlertContext } from "../context/alert-context";
 
 export const App = () => {
-  const [activePanel, setActivePanel] = useState<"desks" | "columns">("desks");
+  const [activePanel, setActivePanel] = useState<"desks" | "columns">("columns");
   const { popout } = useAlertContext();
 
   return (

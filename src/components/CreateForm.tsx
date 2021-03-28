@@ -20,10 +20,10 @@ const FORM: InitialFormType<"name"> = {
 interface CreateFormProps {
   buttonName: string;
   placeholder?: string;
-  onCreate: (name: string) => Promise<void>;
+  onSubmit: (name: string) => Promise<void>;
 }
 
-const CreateForm: React.FC<CreateFormProps> = ({ onCreate, buttonName, placeholder }) => {
+const CreateForm: React.FC<CreateFormProps> = ({ onSubmit, buttonName, placeholder }) => {
   const { handlers, values, resetHandler, isInvalidForm } = useForm(FORM);
 
   const [mode, setMode] = useState<Modes>("button");
@@ -53,30 +53,27 @@ const CreateForm: React.FC<CreateFormProps> = ({ onCreate, buttonName, placehold
           />
         );
       } else {
-        await onCreate(values.name);
+        await onSubmit(values.name);
 
         setMode("button");
 
         resetHandler();
       }
     },
-    [isInvalidForm, onCreate, resetHandler, setPopoutHandler, values.name]
+    [isInvalidForm, onSubmit, resetHandler, setPopoutHandler, values.name]
   );
 
   if (mode === "button") {
     return (
-      <Div>
-        <Button size="l" stretched before={<Icon24Add />} onClick={() => setMode("form")}>
-          {buttonName}
-        </Button>
-      </Div>
+      <Button size="l" stretched before={<Icon24Add />} onClick={() => setMode("form")}>
+        {buttonName}
+      </Button>
     );
   }
 
   return (
     <FormLayout onSubmit={createHandler}>
       <FormItem
-        /* top="Наименование доски" */
         status={handlers.name.error && handlers.name.touched ? "error" : "valid"}
         bottom={
           handlers.name.error && handlers.name.touched ? handlers.name.error.errorMessage : ""

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Button, Div, Gallery, Panel, PanelHeaderSimple } from "@vkontakte/vkui";
+import React, { useCallback, useEffect, useState } from "react";
+import { Button, Div, Gallery, Group, Panel, PanelHeaderSimple, Snackbar } from "@vkontakte/vkui";
 import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
 import firebase from "firebase/app";
 
@@ -7,13 +7,14 @@ import { useSnackbarContext } from "../context/snackbar-context";
 import styles from "./Columns.module.css";
 import { Column } from "./Column";
 import { IColumns } from "../Interfaces/IColumns";
+import { CreateForm } from "./CreateForm";
 
 interface ColumnsProps extends Pick<PanelProps, "id"> {
   onChangePanel: () => void;
 }
 
 const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel }) => {
-  const { snackbar } = useSnackbarContext();
+  const { snackbar, setSnackbarHandler } = useSnackbarContext();
 
   const [columns, setColumns] = useState<IColumns[]>([]);
 
@@ -40,17 +41,61 @@ const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel }) => {
       .catch(console.error);
   }, []);
 
+  const addColumnHandler = useCallback((column: IColumns) => {
+    setColumns((prev) => [...prev, column]);
+  }, []);
+
+  const createColumnHandler = useCallback(
+    async (name: string) => {
+      try {
+        const db = firebase.firestore();
+
+        const docRef = await db.collection("columns").add({
+          name,
+          deskId: "",
+        });
+
+        const doc = await docRef.get();
+
+        const data = doc.data();
+
+        addColumnHandler({
+          id: doc.id,
+          name: (data as IColumns).name,
+          deskId: (data as IColumns).deskId,
+        });
+
+        setSnackbarHandler(
+          <Snackbar onClose={() => setSnackbarHandler(null)}>
+            Добавдена новая колонка "{(data as IColumns).name}"
+          </Snackbar>
+        );
+      } catch (error) {
+        console.error("Error writing document: ", error);
+      }
+    },
+    [addColumnHandler, setSnackbarHandler]
+  );
+
   return (
     <Panel id={id} className={styles.columns}>
       <PanelHeaderSimple>Доска</PanelHeaderSimple>
 
-      <Div>
-        <Gallery slideWidth="100%" align="center">
-          {columns.map((column) => (
-            <Column key={column.id} />
-          ))}
-        </Gallery>
-      </Div>
+      <Gallery slideWidth="100%" align="center" className={styles.gallery} bullets="dark">
+        {columns.map((column) => (
+          <Column key={column.id} name={column.name} />
+        ))}
+
+        <Group>
+          <Div>
+            <CreateForm
+              onSubmit={createColumnHandler}
+              buttonName="Создать колонку"
+              placeholder="введите название колонки"
+            />
+          </Div>
+        </Group>
+      </Gallery>
 
       <Div>
         <Button stretched onClick={onChangePanel}>
