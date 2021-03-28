@@ -45,6 +45,10 @@ const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel }) => {
     setColumns((prev) => [...prev, column]);
   }, []);
 
+  const deleteColumnHandler = useCallback((columnIdRemoved) => {
+    setColumns((prev) => prev.filter(({ id }) => id !== columnIdRemoved));
+  }, []);
+
   const createColumnHandler = useCallback(
     async (name: string) => {
       try {
@@ -83,7 +87,12 @@ const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel }) => {
 
       <Gallery slideWidth="100%" align="center" className={styles.gallery} bullets="dark">
         {columns.map((column) => (
-          <Column key={column.id} name={column.name} />
+          <Column
+            key={column.id}
+            id={column.id}
+            onDelete={deleteColumnHandler}
+            name={column.name}
+          />
         ))}
 
         <Group>
