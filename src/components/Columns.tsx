@@ -1,15 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  Button,
-  Div,
-  Gallery,
-  Group,
-  Panel,
-  PanelHeader,
-  PanelHeaderBack,
-  PanelHeaderSimple,
-  Snackbar,
-} from "@vkontakte/vkui";
+import { Gallery, Group, Panel, PanelHeader, PanelHeaderBack, Snackbar } from "@vkontakte/vkui";
 import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
 import firebase from "firebase/app";
 
