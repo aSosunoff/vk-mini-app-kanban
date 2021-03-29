@@ -1,10 +1,10 @@
 import React, { useCallback } from "react";
-import { Alert, CardGrid, Group, Header, Snackbar } from "@vkontakte/vkui";
+import { Alert, Group, Header, Snackbar } from "@vkontakte/vkui";
 import firebase from "firebase/app";
 import { Icon16Delete } from "@vkontakte/icons";
-import { ColumnCard } from "./ColumnCard";
 import { useSnackbarContext } from "../context/snackbar-context";
 import { useAlertContext } from "../context/alert-context";
+import { Cards } from "./Cards";
 
 interface ColumnProps {
   onDelete: (id: string) => void;
@@ -65,11 +65,7 @@ const Column: React.FC<ColumnProps> = ({ id, name, onDelete }) => {
         </Header>
       }
     >
-      <CardGrid size="l">
-        <ColumnCard>a</ColumnCard>
-        <ColumnCard>b</ColumnCard>
-        <ColumnCard>c</ColumnCard>
-      </CardGrid>
+      <Cards />
     </Group>
   );
 };
