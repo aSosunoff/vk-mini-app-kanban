@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Alert, CardGrid, Group, Header, Snackbar } from "@vkontakte/vkui";
+import { Alert, CardGrid, Cell, Group, Header, List, Snackbar } from "@vkontakte/vkui";
 import firebase from "firebase/app";
 import { Icon16Delete } from "@vkontakte/icons";
 import { ColumnCard } from "./ColumnCard";
@@ -35,56 +35,22 @@ const Cards: React.FC<CardsProps> = () => {
       .catch(console.error);
   }, []);
 
-  /* const { setSnackbarHandler } = useSnackbarContext(); */
+  const addColumnHandler = useCallback((column: ICards) => {
+    setCards((prev) => [...prev, column]);
+  }, []);
 
-  /* const { setPopoutHandler } = useAlertContext(); */
-
-  /* const deleteHandler = useCallback(() => {
-    const db = firebase.firestore();
-
-    db.collection("columns")
-      .doc(id)
-      .delete()
-      .then(() => {
-        onDelete(id);
-
-        setSnackbarHandler(
-          <Snackbar onClose={() => setSnackbarHandler(null)}>Удалена колонка "{name}"</Snackbar>
-        );
-      })
-      .catch(console.error);
-  }, [id, name, onDelete, setSnackbarHandler]); */
-
-  /* const question = useCallback(() => {
-    setPopoutHandler(
-      <Alert
-        header="Внимание"
-        text={`Вы уверены в удалении доски ${name}`}
-        actions={[
-          {
-            title: "Да",
-            mode: "destructive",
-            autoclose: true,
-            action: deleteHandler,
-          },
-          {
-            title: "Передумал",
-            mode: "cancel",
-            autoclose: true,
-          },
-        ]}
-        actionsLayout="vertical"
-        onClose={() => setPopoutHandler(null)}
-      />
-    );
-  }, [deleteHandler, name, setPopoutHandler]); */
+  const deleteColumnHandler = useCallback((idRemoved) => {
+    setCards((prev) => prev.filter(({ id }) => id !== idRemoved));
+  }, []);
 
   return (
-    <CardGrid size="l">
+    <List>
       {cards.map(({ id, name }) => (
-        <ColumnCard key={id}>{name}</ColumnCard>
+        <ColumnCard key={id} id={id} onDelete={deleteColumnHandler}>
+          {name}
+        </ColumnCard>
       ))}
-    </CardGrid>
+    </List>
   );
 };
 
