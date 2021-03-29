@@ -1,5 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Div, Gallery, Group, Panel, PanelHeaderSimple, Snackbar } from "@vkontakte/vkui";
+import {
+  Button,
+  Div,
+  Gallery,
+  Group,
+  Panel,
+  PanelHeader,
+  PanelHeaderBack,
+  PanelHeaderSimple,
+  Snackbar,
+} from "@vkontakte/vkui";
 import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
 import firebase from "firebase/app";
 
@@ -83,16 +93,13 @@ const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel }) => {
 
   return (
     <Panel id={id} className={styles.columns}>
-      <PanelHeaderSimple>Доска</PanelHeaderSimple>
+      <PanelHeader left={<PanelHeaderBack onClick={onChangePanel} />}>Доска</PanelHeader>
 
       <Gallery slideWidth="100%" align="center" className={styles.gallery} bullets="dark">
         {columns.map((column) => (
-          <Column
-            key={column.id}
-            id={column.id}
-            onDelete={deleteColumnHandler}
-            name={column.name}
-          />
+          <Column key={column.id} id={column.id} onDelete={deleteColumnHandler}>
+            {column.name}
+          </Column>
         ))}
 
         <Group>
@@ -103,12 +110,6 @@ const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel }) => {
           />
         </Group>
       </Gallery>
-
-      <Div>
-        <Button stretched onClick={onChangePanel}>
-          Перейти к колонкам
-        </Button>
-      </Div>
 
       {snackbar}
     </Panel>

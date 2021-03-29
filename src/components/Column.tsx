@@ -9,10 +9,9 @@ import { Cards } from "./Cards";
 interface ColumnProps {
   onDelete: (id: string) => void;
   id: string;
-  name: string;
 }
 
-const Column: React.FC<ColumnProps> = ({ id, name, onDelete }) => {
+const Column: React.FC<ColumnProps> = ({ id, children, onDelete }) => {
   const { setSnackbarHandler } = useSnackbarContext();
 
   const { setPopoutHandler } = useAlertContext();
@@ -27,17 +26,17 @@ const Column: React.FC<ColumnProps> = ({ id, name, onDelete }) => {
         onDelete(id);
 
         setSnackbarHandler(
-          <Snackbar onClose={() => setSnackbarHandler(null)}>Удалена колонка "{name}"</Snackbar>
+          <Snackbar onClose={() => setSnackbarHandler(null)}>Удалена колонка "{children}"</Snackbar>
         );
       })
       .catch(console.error);
-  }, [id, name, onDelete, setSnackbarHandler]);
+  }, [id, children, onDelete, setSnackbarHandler]);
 
   const question = useCallback(() => {
     setPopoutHandler(
       <Alert
         header="Внимание"
-        text={`Вы уверены в удалении доски ${name}`}
+        text={`Вы уверены в удалении доски ${children}`}
         actions={[
           {
             title: "Да",
@@ -55,13 +54,13 @@ const Column: React.FC<ColumnProps> = ({ id, name, onDelete }) => {
         onClose={() => setPopoutHandler(null)}
       />
     );
-  }, [deleteHandler, name, setPopoutHandler]);
+  }, [deleteHandler, children, setPopoutHandler]);
 
   return (
     <Group
       header={
         <Header mode="secondary" aside={<Icon16Delete onClick={question} />}>
-          {name}
+          {children}
         </Header>
       }
     >
