@@ -1,6 +1,6 @@
 import React, { FormEventHandler, useCallback, useState } from "react";
 import { useForm, InitialFormType } from "@asosunoff/react_use_form";
-import { Alert, Button, FormItem, FormLayout, FormLayoutGroup, Input } from "@vkontakte/vkui";
+import { Alert, Button, Div, FormItem, FormLayout, FormLayoutGroup, Input } from "@vkontakte/vkui";
 import { Icon24Add } from "@vkontakte/icons";
 import { useAlertContext } from "../context/alert-context";
 
@@ -65,9 +65,11 @@ const CreateForm: React.FC<CreateFormProps> = ({ onSubmit, buttonName, placehold
 
   if (mode === "button") {
     return (
-      <Button size="l" stretched before={<Icon24Add />} onClick={() => setMode("form")}>
-        {buttonName}
-      </Button>
+      <Div>
+        <Button size="l" stretched before={<Icon24Add />} onClick={() => setMode("form")}>
+          {buttonName}
+        </Button>
+      </Div>
     );
   }
 

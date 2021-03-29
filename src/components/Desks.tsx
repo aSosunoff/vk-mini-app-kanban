@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Div, Panel, PanelHeaderSimple, Snackbar } from "@vkontakte/vkui";
+import { Panel, PanelHeaderSimple, Snackbar } from "@vkontakte/vkui";
 import firebase from "firebase/app";
 
 import { DeskList } from "./DeskList";
@@ -74,13 +74,11 @@ const Desks: React.FC<DesksProps> = ({ id }) => {
     <Panel id={id}>
       <PanelHeaderSimple>Мои доски</PanelHeaderSimple>
 
-      <Div>
-        <CreateForm
-          onSubmit={createDeskHandler}
-          buttonName="Создать доску"
-          placeholder="введите название доски"
-        />
-      </Div>
+      <CreateForm
+        onSubmit={createDeskHandler}
+        buttonName="Создать доску"
+        placeholder="введите название доски"
+      />
 
       <DeskList list={descs} onDeleteDesk={deleteDeskHandler} />
 

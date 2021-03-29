@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Alert, CardGrid, Cell, Group, Header, List, Snackbar } from "@vkontakte/vkui";
+import { List, Snackbar } from "@vkontakte/vkui";
 import firebase from "firebase/app";
-import { Icon16Delete } from "@vkontakte/icons";
 import { ColumnCard } from "./ColumnCard";
 import { useSnackbarContext } from "../context/snackbar-context";
-import { useAlertContext } from "../context/alert-context";
 import { ICards } from "../Interfaces/ICards";
+import { CreateForm } from "./CreateForm";
 
 interface CardsProps {}
 
 const Cards: React.FC<CardsProps> = () => {
+  const { setSnackbarHandler } = useSnackbarContext();
+
   const [cards, setCards] = useState<ICards[]>([]);
 
   useEffect(() => {
@@ -35,7 +36,7 @@ const Cards: React.FC<CardsProps> = () => {
       .catch(console.error);
   }, []);
 
-  const addColumnHandler = useCallback((column: ICards) => {
+  const addHandler = useCallback((column: ICards) => {
     setCards((prev) => [...prev, column]);
   }, []);
 
@@ -43,14 +44,54 @@ const Cards: React.FC<CardsProps> = () => {
     setCards((prev) => prev.filter(({ id }) => id !== idRemoved));
   }, []);
 
+  const createHandler = useCallback(
+    async (name: string) => {
+      try {
+        const db = firebase.firestore();
+
+        const docRef = await db.collection("cards").add({
+          name,
+          columnId: "",
+        });
+
+        const doc = await docRef.get();
+
+        const data = doc.data();
+
+        addHandler({
+          id: doc.id,
+          name: (data as ICards).name,
+          columnId: (data as ICards).columnId,
+        });
+
+        setSnackbarHandler(
+          <Snackbar onClose={() => setSnackbarHandler(null)}>
+            Добавдена новая колонка "{(data as ICards).name}"
+          </Snackbar>
+        );
+      } catch (error) {
+        console.error("Error writing document: ", error);
+      }
+    },
+    [addHandler, setSnackbarHandler]
+  );
+
   return (
-    <List>
-      {cards.map(({ id, name }) => (
-        <ColumnCard key={id} id={id} onDelete={deleteColumnHandler}>
-          {name}
-        </ColumnCard>
-      ))}
-    </List>
+    <>
+      <List>
+        {cards.map(({ id, name }) => (
+          <ColumnCard key={id} id={id} onDelete={deleteColumnHandler}>
+            {name}
+          </ColumnCard>
+        ))}
+      </List>
+
+      <CreateForm
+        onSubmit={createHandler}
+        buttonName="Создать карточку"
+        placeholder="введите название карточки"
+      />
+    </>
   );
 };
 

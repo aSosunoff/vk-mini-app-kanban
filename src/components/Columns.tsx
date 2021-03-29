@@ -96,13 +96,11 @@ const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel }) => {
         ))}
 
         <Group>
-          <Div>
-            <CreateForm
-              onSubmit={createColumnHandler}
-              buttonName="Создать колонку"
-              placeholder="введите название колонки"
-            />
-          </Div>
+          <CreateForm
+            onSubmit={createColumnHandler}
+            buttonName="Создать колонку"
+            placeholder="введите название колонки"
+          />
         </Group>
       </Gallery>
 
