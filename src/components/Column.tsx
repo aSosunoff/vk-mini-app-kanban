@@ -2,7 +2,6 @@ import React, { useCallback } from "react";
 import { Alert, CardGrid, Group, Header, Snackbar } from "@vkontakte/vkui";
 import firebase from "firebase/app";
 import { Icon16Delete } from "@vkontakte/icons";
-import styles from "./Column.module.css";
 import { ColumnCard } from "./ColumnCard";
 import { useSnackbarContext } from "../context/snackbar-context";
 import { useAlertContext } from "../context/alert-context";
