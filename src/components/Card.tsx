@@ -4,12 +4,12 @@ import { Alert, Cell, Snackbar } from "@vkontakte/vkui";
 import { useAlertContext } from "../context/alert-context";
 import { useSnackbarContext } from "../context/snackbar-context";
 
-interface ColumnCardProps {
+interface CardProps {
   onDelete: (id: string) => void;
   id: string;
 }
 
-const ColumnCard: React.FC<ColumnCardProps> = ({ id, children, onDelete }) => {
+const Card: React.FC<CardProps> = ({ id, children, onDelete }) => {
   const { setSnackbarHandler } = useSnackbarContext();
 
   const { setPopoutHandler } = useAlertContext();
@@ -63,4 +63,4 @@ const ColumnCard: React.FC<ColumnCardProps> = ({ id, children, onDelete }) => {
   );
 };
 
-export { ColumnCard };
+export { Card };

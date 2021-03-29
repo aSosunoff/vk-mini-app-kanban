@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { List, Snackbar } from "@vkontakte/vkui";
 import firebase from "firebase/app";
-import { ColumnCard } from "./ColumnCard";
+import { Card } from "./Card";
 import { useSnackbarContext } from "../context/snackbar-context";
 import { ICards } from "../Interfaces/ICards";
 import { CreateForm } from "./CreateForm";
@@ -80,9 +80,9 @@ const Cards: React.FC<CardsProps> = () => {
     <>
       <List>
         {cards.map(({ id, name }) => (
-          <ColumnCard key={id} id={id} onDelete={deleteColumnHandler}>
+          <Card key={id} id={id} onDelete={deleteColumnHandler}>
             {name}
-          </ColumnCard>
+          </Card>
         ))}
       </List>
 
