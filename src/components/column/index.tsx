@@ -1,15 +1,17 @@
 import React, { useCallback } from "react";
+import { Alert, Group, Header, Snackbar } from "@vkontakte/vkui";
 import firebase from "firebase/app";
-import { Alert, Cell, Snackbar } from "@vkontakte/vkui";
-import { useAlertContext } from "../context/alert-context";
-import { useSnackbarContext } from "../context/snackbar-context";
+import { Icon16Delete } from "@vkontakte/icons";
+import { useSnackbarContext } from "../../context/snackbar-context";
+import { useAlertContext } from "../../context/alert-context";
+import { Cards } from "../cards";
 
-interface CardProps {
+interface ColumnProps {
   onDelete: (id: string) => void;
   id: string;
 }
 
-const Card: React.FC<CardProps> = ({ id, children, onDelete }) => {
+const Column: React.FC<ColumnProps> = ({ id, children, onDelete }) => {
   const { setSnackbarHandler } = useSnackbarContext();
 
   const { setPopoutHandler } = useAlertContext();
@@ -17,16 +19,14 @@ const Card: React.FC<CardProps> = ({ id, children, onDelete }) => {
   const deleteHandler = useCallback(() => {
     const db = firebase.firestore();
 
-    db.collection("cards")
+    db.collection("columns")
       .doc(id)
       .delete()
       .then(() => {
         onDelete(id);
 
         setSnackbarHandler(
-          <Snackbar onClose={() => setSnackbarHandler(null)}>
-            Удалена карточка "{children}"
-          </Snackbar>
+          <Snackbar onClose={() => setSnackbarHandler(null)}>Удалена колонка "{children}"</Snackbar>
         );
       })
       .catch(console.error);
@@ -36,7 +36,7 @@ const Card: React.FC<CardProps> = ({ id, children, onDelete }) => {
     setPopoutHandler(
       <Alert
         header="Внимание"
-        text={`Вы уверены в удалении карточки ${children}`}
+        text={`Вы уверены в удалении доски ${children}`}
         actions={[
           {
             title: "Да",
@@ -57,10 +57,16 @@ const Card: React.FC<CardProps> = ({ id, children, onDelete }) => {
   }, [deleteHandler, children, setPopoutHandler]);
 
   return (
-    <Cell removable onRemove={question}>
-      {children}
-    </Cell>
+    <Group
+      header={
+        <Header mode="secondary" aside={<Icon16Delete onClick={question} />}>
+          {children}
+        </Header>
+      }
+    >
+      <Cards />
+    </Group>
   );
 };
 
-export { Card };
+export { Column };

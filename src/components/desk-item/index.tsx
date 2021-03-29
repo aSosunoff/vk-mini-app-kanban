@@ -1,17 +1,16 @@
 import React, { useCallback } from "react";
-import { Alert, Group, Header, Snackbar } from "@vkontakte/vkui";
 import firebase from "firebase/app";
-import { Icon16Delete } from "@vkontakte/icons";
-import { useSnackbarContext } from "../context/snackbar-context";
-import { useAlertContext } from "../context/alert-context";
-import { Cards } from "./Cards";
+import { Alert, Cell, Snackbar } from "@vkontakte/vkui";
+import { Icon24DeleteOutline } from "@vkontakte/icons";
+import { useSnackbarContext } from "../../context/snackbar-context";
+import { useAlertContext } from "../../context/alert-context";
 
-interface ColumnProps {
-  onDelete: (id: string) => void;
+interface DeskItemProps {
   id: string;
+  onDelete: (id: string) => void;
 }
 
-const Column: React.FC<ColumnProps> = ({ id, children, onDelete }) => {
+const DeskItem: React.FC<DeskItemProps> = ({ id, onDelete, children }) => {
   const { setSnackbarHandler } = useSnackbarContext();
 
   const { setPopoutHandler } = useAlertContext();
@@ -19,18 +18,18 @@ const Column: React.FC<ColumnProps> = ({ id, children, onDelete }) => {
   const deleteHandler = useCallback(() => {
     const db = firebase.firestore();
 
-    db.collection("columns")
+    db.collection("desks")
       .doc(id)
       .delete()
       .then(() => {
         onDelete(id);
 
         setSnackbarHandler(
-          <Snackbar onClose={() => setSnackbarHandler(null)}>Удалена колонка "{children}"</Snackbar>
+          <Snackbar onClose={() => setSnackbarHandler(null)}>Удалена доска "{children}"</Snackbar>
         );
       })
       .catch(console.error);
-  }, [id, children, onDelete, setSnackbarHandler]);
+  }, [children, id, onDelete, setSnackbarHandler]);
 
   const question = useCallback(() => {
     setPopoutHandler(
@@ -54,19 +53,13 @@ const Column: React.FC<ColumnProps> = ({ id, children, onDelete }) => {
         onClose={() => setPopoutHandler(null)}
       />
     );
-  }, [deleteHandler, children, setPopoutHandler]);
+  }, [children, deleteHandler, setPopoutHandler]);
 
   return (
-    <Group
-      header={
-        <Header mode="secondary" aside={<Icon16Delete onClick={question} />}>
-          {children}
-        </Header>
-      }
-    >
-      <Cards />
-    </Group>
+    <Cell expandable after={<Icon24DeleteOutline onClick={question} />}>
+      {children}
+    </Cell>
   );
 };
 
-export { Column };
+export { DeskItem };

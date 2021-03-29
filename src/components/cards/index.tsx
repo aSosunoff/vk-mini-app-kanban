@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { List, Snackbar } from "@vkontakte/vkui";
 import firebase from "firebase/app";
-import { Card } from "./Card";
-import { useSnackbarContext } from "../context/snackbar-context";
-import { ICards } from "../Interfaces/ICards";
-import { CreateForm } from "./CreateForm";
+import { Card } from "../card";
+import { useSnackbarContext } from "../../context/snackbar-context";
+import { ICards } from "../../Interfaces/ICards";
+import { CreateForm } from "../create-form";
 
 interface CardsProps {}
 

@@ -1,16 +1,15 @@
 import React, { useCallback } from "react";
 import firebase from "firebase/app";
 import { Alert, Cell, Snackbar } from "@vkontakte/vkui";
-import { Icon24DeleteOutline } from "@vkontakte/icons";
-import { useSnackbarContext } from "../context/snackbar-context";
-import { useAlertContext } from "../context/alert-context";
+import { useAlertContext } from "../../context/alert-context";
+import { useSnackbarContext } from "../../context/snackbar-context";
 
-interface DeskItemProps {
-  id: string;
+interface CardProps {
   onDelete: (id: string) => void;
+  id: string;
 }
 
-const DeskItem: React.FC<DeskItemProps> = ({ id, onDelete, children }) => {
+const Card: React.FC<CardProps> = ({ id, children, onDelete }) => {
   const { setSnackbarHandler } = useSnackbarContext();
 
   const { setPopoutHandler } = useAlertContext();
@@ -18,24 +17,26 @@ const DeskItem: React.FC<DeskItemProps> = ({ id, onDelete, children }) => {
   const deleteHandler = useCallback(() => {
     const db = firebase.firestore();
 
-    db.collection("desks")
+    db.collection("cards")
       .doc(id)
       .delete()
       .then(() => {
         onDelete(id);
 
         setSnackbarHandler(
-          <Snackbar onClose={() => setSnackbarHandler(null)}>Удалена доска "{children}"</Snackbar>
+          <Snackbar onClose={() => setSnackbarHandler(null)}>
+            Удалена карточка "{children}"
+          </Snackbar>
         );
       })
       .catch(console.error);
-  }, [children, id, onDelete, setSnackbarHandler]);
+  }, [id, children, onDelete, setSnackbarHandler]);
 
   const question = useCallback(() => {
     setPopoutHandler(
       <Alert
         header="Внимание"
-        text={`Вы уверены в удалении доски ${children}`}
+        text={`Вы уверены в удалении карточки ${children}`}
         actions={[
           {
             title: "Да",
@@ -53,13 +54,13 @@ const DeskItem: React.FC<DeskItemProps> = ({ id, onDelete, children }) => {
         onClose={() => setPopoutHandler(null)}
       />
     );
-  }, [children, deleteHandler, setPopoutHandler]);
+  }, [deleteHandler, children, setPopoutHandler]);
 
   return (
-    <Cell expandable after={<Icon24DeleteOutline onClick={question} />}>
+    <Cell removable onRemove={question}>
       {children}
     </Cell>
   );
 };
 
-export { DeskItem };
+export { Card };

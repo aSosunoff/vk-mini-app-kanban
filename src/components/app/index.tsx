@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
-import { Desks } from "./Desks";
-import { Columns } from "./Columns";
-import { useAlertContext } from "../context/alert-context";
+import { Desks } from "../desks";
+import { Columns } from "../columns";
+import { useAlertContext } from "../../context/alert-context";
 
 export const App = () => {
   const [activePanel, setActivePanel] = useState<"desks" | "columns">("columns");

@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Panel, PanelHeaderSimple, Snackbar } from "@vkontakte/vkui";
+import { Group, List, Panel, PanelHeaderSimple, Snackbar } from "@vkontakte/vkui";
 import firebase from "firebase/app";
 
-import { DeskList } from "./DeskList";
 import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
-import { useSnackbarContext } from "../context/snackbar-context";
-import { IDesks } from "../Interfaces/IDesks";
-import { CreateForm } from "./CreateForm";
+import { useSnackbarContext } from "../../context/snackbar-context";
+import { IDesks } from "../../Interfaces/IDesks";
+import { CreateForm } from "../create-form";
+import { DeskItem } from "../desk-item";
 
 interface DesksProps extends Pick<PanelProps, "id"> {}
 
@@ -80,7 +80,17 @@ const Desks: React.FC<DesksProps> = ({ id }) => {
         placeholder="введите название доски"
       />
 
-      <DeskList list={descs} onDeleteDesk={deleteDeskHandler} />
+      {descs && descs.length ? (
+        <Group>
+          <List>
+            {descs.map(({ id, name }) => (
+              <DeskItem key={id} id={id} onDelete={deleteDeskHandler}>
+                {name}
+              </DeskItem>
+            ))}
+          </List>
+        </Group>
+      ) : null}
 
       {/* <div>Панель с досками</div>
       <Button onClick={onChangePanel}>Перейти к колонкам</Button> */}
