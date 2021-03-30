@@ -1,17 +1,34 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { View } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 import { Desks } from "../desks";
 import { Columns } from "../columns";
 import { useAlertContext } from "../../context/alert-context";
+import { IDesks } from "../../Interfaces/IDesks";
 
 export const App = () => {
   const [activePanel, setActivePanel] = useState<"desks" | "columns">("desks");
+
   const { popout } = useAlertContext();
+
+  const [descs, setDesks] = useState<IDesks[]>([]);
+  const setDesksHandler = useCallback((desks: IDesks[]) => setDesks(() => desks), []);
+  const addDeskHandler = useCallback((desk: IDesks) => setDesks((prev) => [...prev, desk]), []);
+  const deleteDeskHandler = useCallback(
+    (deskIdRemoved) => setDesks((prev) => prev.filter(({ id }) => id !== deskIdRemoved)),
+    []
+  );
 
   return (
     <View activePanel={activePanel} popout={popout}>
-      <Desks id="desks" onChangePanel={() => setActivePanel("columns")} />
+      <Desks
+        id="desks"
+        onChangePanel={() => setActivePanel("columns")}
+        desks={descs}
+        onAddDesk={addDeskHandler}
+        onDeleteDesk={deleteDeskHandler}
+        onSetDesks={setDesksHandler}
+      />
       <Columns id="columns" onChangePanel={() => setActivePanel("desks")} />
     </View>
   );

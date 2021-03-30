@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Group, List, Panel, PanelHeaderSimple, Snackbar } from "@vkontakte/vkui";
 import firebase from "firebase/app";
 
@@ -10,12 +10,21 @@ import { DeskItem } from "../desk-item";
 
 interface DesksProps extends Pick<PanelProps, "id"> {
   onChangePanel: () => void;
+  desks: IDesks[];
+  onSetDesks: (desks: IDesks[]) => void;
+  onAddDesk: (desks: IDesks) => void;
+  onDeleteDesk: (id: string) => void;
 }
 
-const Desks: React.FC<DesksProps> = ({ id, onChangePanel }) => {
+const Desks: React.FC<DesksProps> = ({
+  id,
+  onChangePanel,
+  desks,
+  onSetDesks,
+  onAddDesk,
+  onDeleteDesk,
+}) => {
   const { snackbar, setSnackbarHandler } = useSnackbarContext();
-
-  const [descs, setDesks] = useState<IDesks[]>([]);
 
   useEffect(() => {
     const db = firebase.firestore();
@@ -32,18 +41,10 @@ const Desks: React.FC<DesksProps> = ({ id, onChangePanel }) => {
           });
         });
 
-        setDesks(() => desks);
+        onSetDesks(desks);
       })
       .catch(console.error);
-  }, []);
-
-  const addDeskHandler = useCallback((desk) => {
-    setDesks((prev) => [...prev, desk]);
-  }, []);
-
-  const deleteDeskHandler = useCallback((deskIdRemoved) => {
-    setDesks((prev) => prev.filter(({ id }) => id !== deskIdRemoved));
-  }, []);
+  }, [onSetDesks]);
 
   const createDeskHandler = useCallback(
     async (name: string) => {
@@ -58,7 +59,7 @@ const Desks: React.FC<DesksProps> = ({ id, onChangePanel }) => {
 
         const data = doc.data();
 
-        addDeskHandler({ id: doc.id, name: (data as IDesks).name });
+        onAddDesk({ id: doc.id, name: (data as IDesks).name });
 
         setSnackbarHandler(
           <Snackbar onClose={() => setSnackbarHandler(null)}>
@@ -69,7 +70,7 @@ const Desks: React.FC<DesksProps> = ({ id, onChangePanel }) => {
         console.error("Error writing document: ", error);
       }
     },
-    [addDeskHandler, setSnackbarHandler]
+    [onAddDesk, setSnackbarHandler]
   );
 
   return (
@@ -82,11 +83,11 @@ const Desks: React.FC<DesksProps> = ({ id, onChangePanel }) => {
         placeholder="введите название доски"
       />
 
-      {descs && descs.length ? (
+      {desks && desks.length ? (
         <Group>
           <List>
-            {descs.map(({ id, name }) => (
-              <DeskItem key={id} id={id} onDelete={deleteDeskHandler} onDeskClick={onChangePanel}>
+            {desks.map(({ id, name }) => (
+              <DeskItem key={id} id={id} onDelete={onDeleteDesk} onDeskClick={onChangePanel}>
                 {name}
               </DeskItem>
             ))}
