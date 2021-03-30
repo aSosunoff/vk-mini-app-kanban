@@ -6,9 +6,11 @@ import { useSnackbarContext } from "../../context/snackbar-context";
 import { ICards } from "../../Interfaces/ICards";
 import { CreateForm } from "../create-form";
 
-interface CardsProps {}
+interface CardsProps {
+  columnId: string;
+}
 
-const Cards: React.FC<CardsProps> = () => {
+const Cards: React.FC<CardsProps> = ({ columnId }) => {
   const { setSnackbarHandler } = useSnackbarContext();
 
   const [cards, setCards] = useState<ICards[]>([]);
@@ -17,6 +19,7 @@ const Cards: React.FC<CardsProps> = () => {
     const db = firebase.firestore();
 
     db.collection("cards")
+      .where("columnId", "==", columnId)
       .get()
       .then((querySnapshot) => {
         const cards: ICards[] = [];
@@ -34,7 +37,7 @@ const Cards: React.FC<CardsProps> = () => {
         setCards(() => cards);
       })
       .catch(console.error);
-  }, []);
+  }, [columnId]);
 
   const addHandler = useCallback((column: ICards) => {
     setCards((prev) => [...prev, column]);
@@ -51,7 +54,7 @@ const Cards: React.FC<CardsProps> = () => {
 
         const docRef = await db.collection("cards").add({
           name,
-          columnId: "",
+          columnId,
         });
 
         const doc = await docRef.get();
@@ -73,7 +76,7 @@ const Cards: React.FC<CardsProps> = () => {
         console.error("Error writing document: ", error);
       }
     },
-    [addHandler, setSnackbarHandler]
+    [addHandler, setSnackbarHandler, columnId]
   );
 
   return (

@@ -64,7 +64,7 @@ const Column: React.FC<ColumnProps> = ({ id, children, onDelete }) => {
         </Header>
       }
     >
-      <Cards />
+      <Cards columnId={id} />
     </Group>
   );
 };
