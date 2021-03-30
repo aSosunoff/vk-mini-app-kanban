@@ -8,9 +8,10 @@ import { useAlertContext } from "../../context/alert-context";
 interface DeskItemProps {
   id: string;
   onDelete: (id: string) => void;
+  onDeskClick: () => void;
 }
 
-const DeskItem: React.FC<DeskItemProps> = ({ id, onDelete, children }) => {
+const DeskItem: React.FC<DeskItemProps> = ({ id, onDelete, children, onDeskClick }) => {
   const { setSnackbarHandler } = useSnackbarContext();
 
   const { setPopoutHandler } = useAlertContext();
@@ -56,7 +57,7 @@ const DeskItem: React.FC<DeskItemProps> = ({ id, onDelete, children }) => {
   }, [children, deleteHandler, setPopoutHandler]);
 
   return (
-    <Cell expandable after={<Icon24DeleteOutline onClick={question} />}>
+    <Cell expandable after={<Icon24DeleteOutline onClick={question} />} onClick={onDeskClick}>
       {children}
     </Cell>
   );

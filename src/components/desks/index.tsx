@@ -8,9 +8,11 @@ import { IDesks } from "../../Interfaces/IDesks";
 import { CreateForm } from "../create-form";
 import { DeskItem } from "../desk-item";
 
-interface DesksProps extends Pick<PanelProps, "id"> {}
+interface DesksProps extends Pick<PanelProps, "id"> {
+  onChangePanel: () => void;
+}
 
-const Desks: React.FC<DesksProps> = ({ id }) => {
+const Desks: React.FC<DesksProps> = ({ id, onChangePanel }) => {
   const { snackbar, setSnackbarHandler } = useSnackbarContext();
 
   const [descs, setDesks] = useState<IDesks[]>([]);
@@ -84,7 +86,7 @@ const Desks: React.FC<DesksProps> = ({ id }) => {
         <Group>
           <List>
             {descs.map(({ id, name }) => (
-              <DeskItem key={id} id={id} onDelete={deleteDeskHandler}>
+              <DeskItem key={id} id={id} onDelete={deleteDeskHandler} onDeskClick={onChangePanel}>
                 {name}
               </DeskItem>
             ))}
