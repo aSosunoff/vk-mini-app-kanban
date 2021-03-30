@@ -9,7 +9,7 @@ import { CreateForm } from "../create-form";
 import { DeskItem } from "../desk-item";
 
 interface DesksProps extends Pick<PanelProps, "id"> {
-  onChangePanel: () => void;
+  onChangePanel: (desk: IDesks) => void;
   desks: IDesks[];
   onSetDesks: (desks: IDesks[]) => void;
   onAddDesk: (desks: IDesks) => void;
@@ -18,8 +18,8 @@ interface DesksProps extends Pick<PanelProps, "id"> {
 
 const Desks: React.FC<DesksProps> = ({
   id,
-  onChangePanel,
   desks,
+  onChangePanel,
   onSetDesks,
   onAddDesk,
   onDeleteDesk,
@@ -86,9 +86,14 @@ const Desks: React.FC<DesksProps> = ({
       {desks && desks.length ? (
         <Group>
           <List>
-            {desks.map(({ id, name }) => (
-              <DeskItem key={id} id={id} onDelete={onDeleteDesk} onDeskClick={onChangePanel}>
-                {name}
+            {desks.map((desk) => (
+              <DeskItem
+                key={desk.id}
+                id={desk.id}
+                onDelete={onDeleteDesk}
+                onDeskClick={() => onChangePanel(desk)}
+              >
+                {desk.name}
               </DeskItem>
             ))}
           </List>

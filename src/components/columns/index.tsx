@@ -8,12 +8,14 @@ import styles from "./Columns.module.css";
 import { Column } from "../column";
 import { IColumns } from "../../Interfaces/IColumns";
 import { CreateForm } from "../create-form";
+import { IDesks } from "../../Interfaces/IDesks";
 
 interface ColumnsProps extends Pick<PanelProps, "id"> {
   onChangePanel: () => void;
+  activeDesk?: IDesks;
 }
 
-const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel }) => {
+const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel, activeDesk }) => {
   const { snackbar, setSnackbarHandler } = useSnackbarContext();
 
   const [columns, setColumns] = useState<IColumns[]>([]);
@@ -83,7 +85,9 @@ const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel }) => {
 
   return (
     <Panel id={id} className={styles.columns}>
-      <PanelHeader left={<PanelHeaderBack onClick={onChangePanel} />}>Доска</PanelHeader>
+      <PanelHeader left={<PanelHeaderBack onClick={onChangePanel} />}>
+        Доска - {activeDesk?.name}
+      </PanelHeader>
 
       <Gallery slideWidth="100%" align="center" className={styles.gallery} bullets="dark">
         {columns.map((column) => (

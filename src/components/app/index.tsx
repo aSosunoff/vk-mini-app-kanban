@@ -8,6 +8,7 @@ import { IDesks } from "../../Interfaces/IDesks";
 
 export const App = () => {
   const [activePanel, setActivePanel] = useState<"desks" | "columns">("desks");
+  const [activeDesk, setActiveDesk] = useState<IDesks>();
 
   const { popout } = useAlertContext();
 
@@ -23,13 +24,17 @@ export const App = () => {
     <View activePanel={activePanel} popout={popout}>
       <Desks
         id="desks"
-        onChangePanel={() => setActivePanel("columns")}
+        onChangePanel={(desk) => {
+          setActivePanel(() => "columns");
+          setActiveDesk(() => desk);
+        }}
         desks={descs}
         onAddDesk={addDeskHandler}
         onDeleteDesk={deleteDeskHandler}
         onSetDesks={setDesksHandler}
       />
-      <Columns id="columns" onChangePanel={() => setActivePanel("desks")} />
+
+      <Columns id="columns" onChangePanel={() => setActivePanel("desks")} activeDesk={activeDesk} />
     </View>
   );
 };
