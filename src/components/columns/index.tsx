@@ -58,7 +58,7 @@ const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel, activeDesk }) => {
 
         const docRef = await db.collection("columns").add({
           name,
-          deskId: "",
+          deskId: activeDesk?.id,
         });
 
         const doc = await docRef.get();
@@ -80,7 +80,7 @@ const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel, activeDesk }) => {
         console.error("Error writing document: ", error);
       }
     },
-    [addColumnHandler, setSnackbarHandler]
+    [activeDesk?.id, addColumnHandler, setSnackbarHandler]
   );
 
   return (
