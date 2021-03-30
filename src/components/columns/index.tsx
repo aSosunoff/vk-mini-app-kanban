@@ -24,6 +24,7 @@ const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel, activeDesk }) => {
     const db = firebase.firestore();
 
     db.collection("columns")
+      .where("deskId", "==", activeDesk?.id)
       .get()
       .then((querySnapshot) => {
         const columns: IColumns[] = [];
@@ -41,7 +42,7 @@ const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel, activeDesk }) => {
         setColumns(() => columns);
       })
       .catch(console.error);
-  }, []);
+  }, [activeDesk?.id]);
 
   const addColumnHandler = useCallback((column: IColumns) => {
     setColumns((prev) => [...prev, column]);
