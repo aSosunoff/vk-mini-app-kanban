@@ -6,23 +6,23 @@ import { useSnackbarContext } from "../../../context/snackbar-context";
 import { IDesks } from "../../../Interfaces/IDesks";
 import { CreateForm } from "../../create-form";
 import { DeskItem } from "../../desk-item";
+import { useAppStateContext } from "../../../context/app-state-context";
 
 interface DesksProps extends Pick<PanelProps, "id"> {
   onChangePanel: (desk: IDesks) => void;
-  desks: IDesks[];
-  onCreateDesk: (name: string) => Promise<void>;
-  onDeleteDesk: (desk: IDesks) => void;
 }
 
-const Desks: React.FC<DesksProps> = ({ id, desks, onChangePanel, onCreateDesk, onDeleteDesk }) => {
+const Desks: React.FC<DesksProps> = ({ id, onChangePanel }) => {
   const { snackbar } = useSnackbarContext();
+
+  const { desks, createDeskHandler } = useAppStateContext();
 
   return (
     <Panel id={id}>
       <PanelHeaderSimple>Мои доски</PanelHeaderSimple>
 
       <CreateForm
-        onSubmit={onCreateDesk}
+        onSubmit={createDeskHandler}
         buttonName="Создать доску"
         placeholder="введите название доски"
       />
@@ -31,12 +31,7 @@ const Desks: React.FC<DesksProps> = ({ id, desks, onChangePanel, onCreateDesk, o
         <Group>
           <List>
             {desks.map((desk) => (
-              <DeskItem
-                key={desk.id}
-                id={desk.id}
-                onDelete={() => onDeleteDesk(desk)}
-                onDeskClick={() => onChangePanel(desk)}
-              >
+              <DeskItem key={desk.id} desk={desk} onDeskClick={() => onChangePanel(desk)}>
                 {desk.name}
               </DeskItem>
             ))}

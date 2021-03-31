@@ -6,6 +6,7 @@ import { App } from "./components/app";
 import { AlertProvider } from "./context/alert-context";
 import { AdaptivityProvider, AppRoot } from "@vkontakte/vkui";
 import { SnackbarProvider } from "./context/snackbar-context";
+import { AppStateProvider } from "./context/app-state-context";
 
 backend.initializeApp();
 
@@ -17,7 +18,9 @@ ReactDOM.render(
     <AppRoot>
       <AlertProvider>
         <SnackbarProvider>
-          <App />
+          <AppStateProvider>
+            <App />
+          </AppStateProvider>
         </SnackbarProvider>
       </AlertProvider>
     </AppRoot>

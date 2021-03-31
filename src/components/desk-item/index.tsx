@@ -2,15 +2,18 @@ import React, { useCallback } from "react";
 import { Cell } from "@vkontakte/vkui";
 import { Icon24DeleteOutline } from "@vkontakte/icons";
 import { useAlertContext } from "../../context/alert-context";
+import { IDesks } from "../../Interfaces/IDesks";
+import { useAppStateContext } from "../../context/app-state-context";
 
 interface DeskItemProps {
-  id: string;
-  onDelete: () => void;
+  desk: IDesks;
   onDeskClick: () => void;
 }
 
-const DeskItem: React.FC<DeskItemProps> = ({ children, onDeskClick, onDelete }) => {
+const DeskItem: React.FC<DeskItemProps> = ({ children, desk, onDeskClick }) => {
   const { setPopoutHandler, clearPopoutHandler } = useAlertContext();
+
+  const { deleteDeskHandler } = useAppStateContext();
 
   const question = useCallback(() => {
     setPopoutHandler({
@@ -21,7 +24,7 @@ const DeskItem: React.FC<DeskItemProps> = ({ children, onDeskClick, onDelete }) 
           title: "Да",
           mode: "destructive",
           autoclose: true,
-          action: onDelete,
+          action: () => deleteDeskHandler(desk),
         },
         {
           title: "Передумал",
@@ -32,7 +35,7 @@ const DeskItem: React.FC<DeskItemProps> = ({ children, onDeskClick, onDelete }) 
       actionsLayout: "vertical",
       onClose: clearPopoutHandler,
     });
-  }, [children, clearPopoutHandler, onDelete, setPopoutHandler]);
+  }, [children, clearPopoutHandler, deleteDeskHandler, desk, setPopoutHandler]);
 
   return (
     <Cell expandable after={<Icon24DeleteOutline onClick={question} />} onClick={onDeskClick}>

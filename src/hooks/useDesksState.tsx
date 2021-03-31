@@ -6,7 +6,7 @@ import { IDesks } from "../Interfaces/IDesks";
 export const useDesksState = () => {
   const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
-  const [descs, setDesks] = useState<IDesks[]>([]);
+  const [desks, setDesks] = useState<IDesks[]>([]);
 
   useEffect(() => {
     let isFetch = true;
@@ -57,7 +57,7 @@ export const useDesksState = () => {
   );
 
   return {
-    descs,
+    desks,
     createDeskHandler,
     deleteDeskHandler,
   };
