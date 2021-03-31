@@ -10,6 +10,7 @@ interface CardsProps {
 
 const Cards: React.FC<CardsProps> = ({ columnId }) => {
   const { cards, createHandler, deleteHandler } = useCardsState(columnId);
+
   return (
     <>
       <List>
