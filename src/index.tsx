@@ -1,28 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 /* import bridge from "@vkontakte/vk-bridge"; */
+import * as backend from "./models/firebase";
 import { App } from "./components/app";
-import firebase from "firebase/app";
-import "firebase/analytics";
-import "firebase/auth";
-import "firebase/firestore";
 import { AlertProvider } from "./context/alert-context";
 import { AdaptivityProvider, AppRoot } from "@vkontakte/vkui";
 import { SnackbarProvider } from "./context/snackbar-context";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDy_s8iisu5mEYvW0r9Ryk6IzkdlbWky2k",
-  authDomain: "kanban-vk-mini.firebaseapp.com",
-  databaseURL: "https://kanban-vk-mini-default-rtdb.firebaseio.com",
-  projectId: "kanban-vk-mini",
-  storageBucket: "kanban-vk-mini.appspot.com",
-  messagingSenderId: "248866479246",
-  appId: "1:248866479246:web:866981d140783fc2f1fddf",
-  measurementId: "G-4XBV89MV44",
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+backend.initializeApp();
 
 // Init VK  Mini App
 /* bridge.send("VKWebAppInit"); */
