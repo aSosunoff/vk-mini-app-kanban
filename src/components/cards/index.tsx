@@ -1,64 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { List } from "@vkontakte/vkui";
 import { Card } from "../card";
-import { useSnackbarContext } from "../../context/snackbar-context";
-import { ICards } from "../../Interfaces/ICards";
 import { CreateForm } from "../create-form";
-import { createCard, getCards, deleteCard } from "../actions";
+import { useCards } from "../../hooks/useCards";
 
 interface CardsProps {
   columnId: string;
 }
 
 const Cards: React.FC<CardsProps> = ({ columnId }) => {
-  const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
-
-  const [cards, setCards] = useState<ICards[]>([]);
-
-  useEffect(() => {
-    let isFetch = true;
-
-    getCards(columnId)
-      .then((cards) => isFetch && setCards(() => cards))
-      .catch(console.error);
-
-    return () => {
-      isFetch = false;
-    };
-  }, [columnId]);
-
-  const createHandler = useCallback(
-    async (name: string) => {
-      try {
-        const data = await createCard(columnId, name);
-
-        setCards((prev) => [...prev, data]);
-
-        setSnackbarHandler({
-          onClose: clearSnackbarHandler,
-          children: `Добавдена новая колонка "${(data as ICards).name}"`,
-        });
-      } catch (error) {
-        console.error("Error writing document: ", error);
-      }
-    },
-    [clearSnackbarHandler, columnId, setSnackbarHandler]
-  );
-
-  const deleteHandler = useCallback(
-    async (card: ICards) => {
-      await deleteCard(card.id);
-
-      setCards((prev) => prev.filter(({ id }) => id !== card.id));
-
-      setSnackbarHandler({
-        onClose: clearSnackbarHandler,
-        children: `Удалена карточка "${card.name}"`,
-      });
-    },
-    [clearSnackbarHandler, setSnackbarHandler]
-  );
-
+  const { cards, createHandler, deleteHandler } = useCards(columnId);
   return (
     <>
       <List>
