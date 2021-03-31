@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { View } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
-import { Desks } from "../desks";
-import { Columns } from "../columns";
+import { Desks } from "../panels/desks";
+import { Columns } from "../panels/columns";
 import { useAlertContext } from "../../context/alert-context";
 import { IDesks } from "../../Interfaces/IDesks";
 

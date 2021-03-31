@@ -3,10 +3,10 @@ import { Group, List, Panel, PanelHeaderSimple, Snackbar } from "@vkontakte/vkui
 import firebase from "firebase/app";
 
 import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
-import { useSnackbarContext } from "../../context/snackbar-context";
-import { IDesks } from "../../Interfaces/IDesks";
-import { CreateForm } from "../create-form";
-import { DeskItem } from "../desk-item";
+import { useSnackbarContext } from "../../../context/snackbar-context";
+import { IDesks } from "../../../Interfaces/IDesks";
+import { CreateForm } from "../../create-form";
+import { DeskItem } from "../../desk-item";
 
 interface DesksProps extends Pick<PanelProps, "id"> {
   onChangePanel: (desk: IDesks) => void;

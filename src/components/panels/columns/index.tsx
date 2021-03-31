@@ -3,12 +3,12 @@ import { Gallery, Group, Panel, PanelHeader, PanelHeaderBack, Snackbar } from "@
 import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
 import firebase from "firebase/app";
 
-import { useSnackbarContext } from "../../context/snackbar-context";
+import { useSnackbarContext } from "../../../context/snackbar-context";
 import styles from "./Columns.module.css";
-import { Column } from "../column";
-import { IColumns } from "../../Interfaces/IColumns";
-import { CreateForm } from "../create-form";
-import { IDesks } from "../../Interfaces/IDesks";
+import { Column } from "../../column";
+import { IColumns } from "../../../Interfaces/IColumns";
+import { CreateForm } from "../../create-form";
+import { IDesks } from "../../../Interfaces/IDesks";
 
 interface ColumnsProps extends Pick<PanelProps, "id"> {
   onChangePanel: () => void;
