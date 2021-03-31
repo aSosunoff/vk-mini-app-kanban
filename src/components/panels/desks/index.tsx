@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { Group, List, Panel, PanelHeaderSimple, Snackbar } from "@vkontakte/vkui";
-import firebase from "firebase/app";
 
 import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
 import { useSnackbarContext } from "../../../context/snackbar-context";
@@ -12,40 +11,12 @@ import { createDesk } from "../../actions";
 interface DesksProps extends Pick<PanelProps, "id"> {
   onChangePanel: (desk: IDesks) => void;
   desks: IDesks[];
-  onSetDesks: (desks: IDesks[]) => void;
   onAddDesk: (desks: IDesks) => void;
   onDeleteDesk: (id: string) => void;
 }
 
-const Desks: React.FC<DesksProps> = ({
-  id,
-  desks,
-  onChangePanel,
-  onSetDesks,
-  onAddDesk,
-  onDeleteDesk,
-}) => {
+const Desks: React.FC<DesksProps> = ({ id, desks, onChangePanel, onAddDesk, onDeleteDesk }) => {
   const { snackbar, setSnackbarHandler } = useSnackbarContext();
-
-  useEffect(() => {
-    const db = firebase.firestore();
-
-    db.collection("desks")
-      .get()
-      .then((querySnapshot) => {
-        const desks: IDesks[] = [];
-
-        querySnapshot.forEach((desk) => {
-          desks.push({
-            id: desk.id,
-            name: desk.data().name,
-          });
-        });
-
-        onSetDesks(desks);
-      })
-      .catch(console.error);
-  }, [onSetDesks]);
 
   const createDeskHandler = useCallback(
     async (name: string) => {

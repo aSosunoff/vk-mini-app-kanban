@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 import { IDesks } from "../../Interfaces/IDesks";
 
-export const createDesk = async (name: string): Promise<IDesks> => {
+export const createDesk = async (name: string) => {
   const db = firebase.firestore();
 
   const docRef = await db.collection("desks").add({
@@ -13,4 +13,21 @@ export const createDesk = async (name: string): Promise<IDesks> => {
   const data = doc.data();
 
   return { ...data, id: doc.id } as IDesks;
+};
+
+export const getDesks = async () => {
+  const db = firebase.firestore();
+
+  const querySnapshot = await db.collection("desks").get();
+
+  const desks: IDesks[] = [];
+
+  querySnapshot.forEach((desk) => {
+    desks.push({
+      id: desk.id,
+      name: desk.data().name,
+    });
+  });
+
+  return desks;
 };

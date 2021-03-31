@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 import { Desks } from "../panels/desks";
 import { Columns } from "../panels/columns";
 import { useAlertContext } from "../../context/alert-context";
 import { IDesks } from "../../Interfaces/IDesks";
+import { getDesks } from "../actions";
 
 export const App = () => {
   const [activePanel, setActivePanel] = useState<"desks" | "columns">("desks");
@@ -12,13 +13,19 @@ export const App = () => {
 
   const { popout } = useAlertContext();
 
+  /* Desk */
   const [descs, setDesks] = useState<IDesks[]>([]);
-  const setDesksHandler = useCallback((desks: IDesks[]) => setDesks(() => desks), []);
   const addDeskHandler = useCallback((desk: IDesks) => setDesks((prev) => [...prev, desk]), []);
   const deleteDeskHandler = useCallback(
     (deskIdRemoved) => setDesks((prev) => prev.filter(({ id }) => id !== deskIdRemoved)),
     []
   );
+  useEffect(() => {
+    getDesks()
+      .then((desks) => setDesks(() => desks))
+      .catch(console.error);
+  }, []);
+  /* Desk */
 
   return (
     <View activePanel={activePanel} popout={popout}>
@@ -31,7 +38,6 @@ export const App = () => {
         desks={descs}
         onAddDesk={addDeskHandler}
         onDeleteDesk={deleteDeskHandler}
-        onSetDesks={setDesksHandler}
       />
 
       <Columns id="columns" onChangePanel={() => setActivePanel("desks")} activeDesk={activeDesk} />
