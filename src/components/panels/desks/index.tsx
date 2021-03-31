@@ -7,6 +7,7 @@ import { useSnackbarContext } from "../../../context/snackbar-context";
 import { IDesks } from "../../../Interfaces/IDesks";
 import { CreateForm } from "../../create-form";
 import { DeskItem } from "../../desk-item";
+import { createDesk } from "../../actions";
 
 interface DesksProps extends Pick<PanelProps, "id"> {
   onChangePanel: (desk: IDesks) => void;
@@ -49,17 +50,9 @@ const Desks: React.FC<DesksProps> = ({
   const createDeskHandler = useCallback(
     async (name: string) => {
       try {
-        const db = firebase.firestore();
+        const data = await createDesk(name);
 
-        const docRef = await db.collection("desks").add({
-          name,
-        });
-
-        const doc = await docRef.get();
-
-        const data = doc.data();
-
-        onAddDesk({ id: doc.id, name: (data as IDesks).name });
+        onAddDesk(data);
 
         setSnackbarHandler(
           <Snackbar onClose={() => setSnackbarHandler(null)}>
