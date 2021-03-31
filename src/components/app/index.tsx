@@ -16,8 +16,19 @@ import {
 import { useSnackbarContext } from "../../context/snackbar-context";
 import { IColumns } from "../../Interfaces/IColumns";
 
-export const App = () => {
+const useActivePanel = () => {
   const [activePanel, setActivePanel] = useState<"desks" | "columns">("desks");
+
+  const goToColumn = useCallback(() => setActivePanel(() => "columns"), []);
+
+  const goToDesk = useCallback(() => setActivePanel(() => "desks"), []);
+
+  return { activePanel, goToColumn, goToDesk };
+};
+
+export const App = () => {
+  const { activePanel, goToColumn, goToDesk } = useActivePanel();
+
   const [activeDesk, setActiveDesk] = useState<IDesks>();
 
   const { popout } = useAlertContext();
@@ -137,7 +148,7 @@ export const App = () => {
         id="desks"
         desks={descs}
         onChangePanel={(desk) => {
-          setActivePanel(() => "columns");
+          goToColumn();
           setActiveDesk(() => desk);
         }}
         onCreateDesk={createDeskHandler}
@@ -147,7 +158,7 @@ export const App = () => {
       <Columns
         id="columns"
         columns={columns}
-        onChangePanel={() => setActivePanel("desks")}
+        onChangePanel={goToDesk}
         onCreateColumn={createColumnHandler}
         onDeleteColumn={deleteColumnHandler}
         activeDesk={activeDesk}
