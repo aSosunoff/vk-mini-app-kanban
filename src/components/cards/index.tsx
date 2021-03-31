@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { List, Snackbar } from "@vkontakte/vkui";
+import { List } from "@vkontakte/vkui";
 import firebase from "firebase/app";
 import { Card } from "../card";
 import { useSnackbarContext } from "../../context/snackbar-context";
@@ -11,7 +11,7 @@ interface CardsProps {
 }
 
 const Cards: React.FC<CardsProps> = ({ columnId }) => {
-  const { setSnackbarHandler } = useSnackbarContext();
+  const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
   const [cards, setCards] = useState<ICards[]>([]);
 
@@ -67,16 +67,15 @@ const Cards: React.FC<CardsProps> = ({ columnId }) => {
           columnId: (data as ICards).columnId,
         });
 
-        setSnackbarHandler(
-          <Snackbar onClose={() => setSnackbarHandler(null)}>
-            Добавдена новая колонка "{(data as ICards).name}"
-          </Snackbar>
-        );
+        setSnackbarHandler({
+          onClose: clearSnackbarHandler,
+          children: `Добавдена новая колонка "${(data as ICards).name}"`,
+        });
       } catch (error) {
         console.error("Error writing document: ", error);
       }
     },
-    [addHandler, setSnackbarHandler, columnId]
+    [addHandler, clearSnackbarHandler, columnId, setSnackbarHandler]
   );
 
   return (

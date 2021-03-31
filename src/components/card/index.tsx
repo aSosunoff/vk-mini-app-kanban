@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import firebase from "firebase/app";
-import { Cell, Snackbar } from "@vkontakte/vkui";
+import { Cell } from "@vkontakte/vkui";
 import { useAlertContext } from "../../context/alert-context";
 import { useSnackbarContext } from "../../context/snackbar-context";
 
@@ -10,7 +10,7 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ id, children, onDelete }) => {
-  const { setSnackbarHandler } = useSnackbarContext();
+  const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
   const { setPopoutHandler, clearPopoutHandler } = useAlertContext();
 
@@ -23,14 +23,13 @@ const Card: React.FC<CardProps> = ({ id, children, onDelete }) => {
       .then(() => {
         onDelete(id);
 
-        setSnackbarHandler(
-          <Snackbar onClose={() => setSnackbarHandler(null)}>
-            Удалена карточка "{children}"
-          </Snackbar>
-        );
+        setSnackbarHandler({
+          onClose: clearSnackbarHandler,
+          children: `Удалена карточка "${children}"`,
+        });
       })
       .catch(console.error);
-  }, [id, children, onDelete, setSnackbarHandler]);
+  }, [children, clearSnackbarHandler, id, onDelete, setSnackbarHandler]);
 
   const question = useCallback(() => {
     setPopoutHandler({

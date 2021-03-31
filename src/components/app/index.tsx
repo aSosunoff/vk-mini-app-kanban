@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Snackbar, View } from "@vkontakte/vkui";
+import { View } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 import { Desks } from "../panels/desks";
 import { Columns } from "../panels/columns";
@@ -13,7 +13,7 @@ export const App = () => {
   const [activeDesk, setActiveDesk] = useState<IDesks>();
 
   const { popout } = useAlertContext();
-  const { setSnackbarHandler } = useSnackbarContext();
+  const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
   /* Desk */
   const [descs, setDesks] = useState<IDesks[]>([]);
@@ -31,16 +31,15 @@ export const App = () => {
 
         setDesks((prev) => [...prev, desk]);
 
-        setSnackbarHandler(
-          <Snackbar onClose={() => setSnackbarHandler(null)}>
-            Добавдена новая доска "{(desk as IDesks).name}"
-          </Snackbar>
-        );
+        setSnackbarHandler({
+          onClose: clearSnackbarHandler,
+          children: `Добавдена новая доска "${desk.name}"`,
+        });
       } catch (error) {
         console.error("Error writing document: ", error);
       }
     },
-    [setSnackbarHandler]
+    [clearSnackbarHandler, setSnackbarHandler]
   );
 
   const deleteDeskHandler = useCallback(
@@ -50,14 +49,15 @@ export const App = () => {
 
         setDesks((prev) => prev.filter(({ id }) => id !== desk.id));
 
-        setSnackbarHandler(
-          <Snackbar onClose={() => setSnackbarHandler(null)}>Удалена доска "{desk.name}"</Snackbar>
-        );
+        setSnackbarHandler({
+          onClose: clearSnackbarHandler,
+          children: `Удалена доска "${desk.name}"`,
+        });
       } catch (error) {
         console.error(error);
       }
     },
-    [setSnackbarHandler]
+    [clearSnackbarHandler, setSnackbarHandler]
   );
   /* Desk */
 

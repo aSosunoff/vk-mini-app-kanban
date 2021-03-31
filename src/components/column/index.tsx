@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Group, Header, Snackbar } from "@vkontakte/vkui";
+import { Group, Header } from "@vkontakte/vkui";
 import firebase from "firebase/app";
 import { Icon16Delete } from "@vkontakte/icons";
 import { useSnackbarContext } from "../../context/snackbar-context";
@@ -12,7 +12,7 @@ interface ColumnProps {
 }
 
 const Column: React.FC<ColumnProps> = ({ id, children, onDelete }) => {
-  const { setSnackbarHandler } = useSnackbarContext();
+  const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
   const { setPopoutHandler, clearPopoutHandler } = useAlertContext();
 
@@ -25,12 +25,13 @@ const Column: React.FC<ColumnProps> = ({ id, children, onDelete }) => {
       .then(() => {
         onDelete(id);
 
-        setSnackbarHandler(
-          <Snackbar onClose={() => setSnackbarHandler(null)}>Удалена колонка "{children}"</Snackbar>
-        );
+        setSnackbarHandler({
+          onClose: clearSnackbarHandler,
+          children: `Удалена колонка "${children}"`,
+        });
       })
       .catch(console.error);
-  }, [id, children, onDelete, setSnackbarHandler]);
+  }, [children, clearSnackbarHandler, id, onDelete, setSnackbarHandler]);
 
   const question = useCallback(() => {
     setPopoutHandler({

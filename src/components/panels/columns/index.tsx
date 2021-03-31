@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Gallery, Group, Panel, PanelHeader, PanelHeaderBack, Snackbar } from "@vkontakte/vkui";
+import { Gallery, Group, Panel, PanelHeader, PanelHeaderBack } from "@vkontakte/vkui";
 import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
 import firebase from "firebase/app";
 
@@ -16,7 +16,7 @@ interface ColumnsProps extends Pick<PanelProps, "id"> {
 }
 
 const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel, activeDesk }) => {
-  const { snackbar, setSnackbarHandler } = useSnackbarContext();
+  const { snackbar, setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
   const [columns, setColumns] = useState<IColumns[]>([]);
 
@@ -72,16 +72,15 @@ const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel, activeDesk }) => {
           deskId: (data as IColumns).deskId,
         });
 
-        setSnackbarHandler(
-          <Snackbar onClose={() => setSnackbarHandler(null)}>
-            Добавдена новая колонка "{(data as IColumns).name}"
-          </Snackbar>
-        );
+        setSnackbarHandler({
+          onClose: clearSnackbarHandler,
+          children: `Добавдена новая колонка "${(data as IColumns).name}"`,
+        });
       } catch (error) {
         console.error("Error writing document: ", error);
       }
     },
-    [activeDesk?.id, addColumnHandler, setSnackbarHandler]
+    [activeDesk?.id, addColumnHandler, clearSnackbarHandler, setSnackbarHandler]
   );
 
   return (
