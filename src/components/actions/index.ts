@@ -31,3 +31,9 @@ export const getDesks = async () => {
 
   return desks;
 };
+
+export const deleteDesk = async (id: string) => {
+  const db = firebase.firestore();
+  
+  await db.collection("desks").doc(id).delete();
+};

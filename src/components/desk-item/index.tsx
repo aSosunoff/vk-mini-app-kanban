@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
-import firebase from "firebase/app";
 import { Cell, Snackbar } from "@vkontakte/vkui";
 import { Icon24DeleteOutline } from "@vkontakte/icons";
 import { useSnackbarContext } from "../../context/snackbar-context";
 import { useAlertContext } from "../../context/alert-context";
+import { deleteDesk } from "../actions";
 
 interface DeskItemProps {
   id: string;
@@ -16,20 +16,18 @@ const DeskItem: React.FC<DeskItemProps> = ({ id, onDelete, children, onDeskClick
 
   const { setPopoutHandler, clearPopoutHandler } = useAlertContext();
 
-  const deleteHandler = useCallback(() => {
-    const db = firebase.firestore();
+  const deleteHandler = useCallback(async () => {
+    try {
+      await deleteDesk(id);
 
-    db.collection("desks")
-      .doc(id)
-      .delete()
-      .then(() => {
-        onDelete(id);
+      onDelete(id);
 
-        setSnackbarHandler(
-          <Snackbar onClose={() => setSnackbarHandler(null)}>Удалена доска "{children}"</Snackbar>
-        );
-      })
-      .catch(console.error);
+      setSnackbarHandler(
+        <Snackbar onClose={() => setSnackbarHandler(null)}>Удалена доска "{children}"</Snackbar>
+      );
+    } catch (error) {
+      console.error(error);
+    }
   }, [children, id, onDelete, setSnackbarHandler]);
 
   const question = useCallback(() => {
