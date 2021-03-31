@@ -3,7 +3,7 @@ import { createDesk, deleteDesk, getDesks } from "../components/actions";
 import { useSnackbarContext } from "../context/snackbar-context";
 import { IDesks } from "../Interfaces/IDesks";
 
-export const useDesks = () => {
+export const useDesksState = () => {
   const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
   const [descs, setDesks] = useState<IDesks[]>([]);

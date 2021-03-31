@@ -6,8 +6,8 @@ import { Columns } from "../panels/columns";
 import { useAlertContext } from "../../context/alert-context";
 import { IDesks } from "../../Interfaces/IDesks";
 import { useActivePanel } from "../../hooks/useActivePanel";
-import { useDesks } from "../../hooks/useDesks";
-import { useColumns } from "../../hooks/useColumns";
+import { useDesksState } from "../../hooks/useDesksState";
+import { useColumnsState } from "../../hooks/useColumnsState";
 
 export const App = () => {
   const { activePanel, goToColumn, goToDesk } = useActivePanel();
@@ -16,9 +16,9 @@ export const App = () => {
 
   const { popout } = useAlertContext();
 
-  const { descs, createDeskHandler, deleteDeskHandler } = useDesks();
+  const { descs, createDeskHandler, deleteDeskHandler } = useDesksState();
 
-  const { columns, createColumnHandler, deleteColumnHandler } = useColumns(activeDesk);
+  const { columns, createColumnHandler, deleteColumnHandler } = useColumnsState(activeDesk);
 
   return (
     <View activePanel={activePanel} popout={popout}>

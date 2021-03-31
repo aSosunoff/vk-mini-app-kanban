@@ -3,7 +3,7 @@ import { createCard, deleteCard, getCards } from "../components/actions";
 import { useSnackbarContext } from "../context/snackbar-context";
 import { ICards } from "../Interfaces/ICards";
 
-export const useCards = (columnId: string) => {
+export const useCardsState = (columnId: string) => {
   const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
   const [cards, setCards] = useState<ICards[]>([]);

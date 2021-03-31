@@ -2,14 +2,14 @@ import React from "react";
 import { List } from "@vkontakte/vkui";
 import { Card } from "../card";
 import { CreateForm } from "../create-form";
-import { useCards } from "../../hooks/useCards";
+import { useCardsState } from "../../hooks/useCardsState";
 
 interface CardsProps {
   columnId: string;
 }
 
 const Cards: React.FC<CardsProps> = ({ columnId }) => {
-  const { cards, createHandler, deleteHandler } = useCards(columnId);
+  const { cards, createHandler, deleteHandler } = useCardsState(columnId);
   return (
     <>
       <List>

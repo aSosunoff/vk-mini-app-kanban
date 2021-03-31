@@ -4,7 +4,7 @@ import { useSnackbarContext } from "../context/snackbar-context";
 import { IColumns } from "../Interfaces/IColumns";
 import { IDesks } from "../Interfaces/IDesks";
 
-export const useColumns = (activeDesk?: IDesks) => {
+export const useColumnsState = (activeDesk?: IDesks) => {
   const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
   const [columns, setColumns] = useState<IColumns[]>([]);
