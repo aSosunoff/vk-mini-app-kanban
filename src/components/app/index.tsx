@@ -27,9 +27,15 @@ export const App = () => {
   const [descs, setDesks] = useState<IDesks[]>([]);
 
   useEffect(() => {
+    let isFetch = true;
+
     getDesks()
-      .then((desks) => setDesks(() => desks))
+      .then((desks) => isFetch && setDesks(() => desks))
       .catch(console.error);
+
+    return () => {
+      isFetch = false;
+    };
   }, []);
 
   const createDeskHandler = useCallback(
@@ -73,13 +79,17 @@ export const App = () => {
   const [columns, setColumns] = useState<IColumns[]>([]);
 
   useEffect(() => {
+    let isFetch = true;
+
     if (activeDesk) {
       getColumns(activeDesk.id)
-        .then((columns) => {
-          setColumns(() => columns);
-        })
+        .then((columns) => isFetch && setColumns(() => columns))
         .catch(console.error);
     }
+
+    return () => {
+      isFetch = false;
+    };
   }, [activeDesk]);
 
   const createColumnHandler = useCallback(

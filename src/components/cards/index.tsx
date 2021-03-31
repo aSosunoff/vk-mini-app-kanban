@@ -16,11 +16,15 @@ const Cards: React.FC<CardsProps> = ({ columnId }) => {
   const [cards, setCards] = useState<ICards[]>([]);
 
   useEffect(() => {
+    let isFetch = true;
+
     getCards(columnId)
-      .then((cards) => {
-        setCards(() => cards);
-      })
+      .then((cards) => isFetch && setCards(() => cards))
       .catch(console.error);
+
+    return () => {
+      isFetch = false;
+    };
   }, [columnId]);
 
   const createHandler = useCallback(
