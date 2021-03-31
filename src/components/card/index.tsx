@@ -1,35 +1,13 @@
 import React, { useCallback } from "react";
-import firebase from "firebase/app";
 import { Cell } from "@vkontakte/vkui";
 import { useAlertContext } from "../../context/alert-context";
-import { useSnackbarContext } from "../../context/snackbar-context";
 
 interface CardProps {
-  onDelete: (id: string) => void;
-  id: string;
+  onDelete: () => Promise<void>;
 }
 
-const Card: React.FC<CardProps> = ({ id, children, onDelete }) => {
-  const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
-
+const Card: React.FC<CardProps> = ({ children, onDelete }) => {
   const { setPopoutHandler, clearPopoutHandler } = useAlertContext();
-
-  const deleteHandler = useCallback(() => {
-    const db = firebase.firestore();
-
-    db.collection("cards")
-      .doc(id)
-      .delete()
-      .then(() => {
-        onDelete(id);
-
-        setSnackbarHandler({
-          onClose: clearSnackbarHandler,
-          children: `Удалена карточка "${children}"`,
-        });
-      })
-      .catch(console.error);
-  }, [children, clearSnackbarHandler, id, onDelete, setSnackbarHandler]);
 
   const question = useCallback(() => {
     setPopoutHandler({
@@ -40,7 +18,7 @@ const Card: React.FC<CardProps> = ({ id, children, onDelete }) => {
           title: "Да",
           mode: "destructive",
           autoclose: true,
-          action: deleteHandler,
+          action: onDelete,
         },
         {
           title: "Передумал",
@@ -51,7 +29,7 @@ const Card: React.FC<CardProps> = ({ id, children, onDelete }) => {
       actionsLayout: "vertical",
       onClose: clearPopoutHandler,
     });
-  }, [children, clearPopoutHandler, deleteHandler, setPopoutHandler]);
+  }, [children, clearPopoutHandler, onDelete, setPopoutHandler]);
 
   return (
     <Cell removable onRemove={question}>
