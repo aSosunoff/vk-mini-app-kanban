@@ -5,8 +5,16 @@ import { Desks } from "../panels/desks";
 import { Columns } from "../panels/columns";
 import { useAlertContext } from "../../context/alert-context";
 import { IDesks } from "../../Interfaces/IDesks";
-import { createDesk, deleteDesk, getDesks } from "../actions";
+import {
+  createColumn,
+  createDesk,
+  deleteColumn,
+  deleteDesk,
+  getColumns,
+  getDesks,
+} from "../actions";
 import { useSnackbarContext } from "../../context/snackbar-context";
+import { IColumns } from "../../Interfaces/IColumns";
 
 export const App = () => {
   const [activePanel, setActivePanel] = useState<"desks" | "columns">("desks");
@@ -61,20 +69,79 @@ export const App = () => {
   );
   /* Desk */
 
+  /* Columns */
+  const [columns, setColumns] = useState<IColumns[]>([]);
+
+  useEffect(() => {
+    if (activeDesk) {
+      getColumns(activeDesk.id)
+        .then((columns) => {
+          setColumns(() => columns);
+        })
+        .catch(console.error);
+    }
+  }, [activeDesk]);
+
+  const createColumnHandler = useCallback(
+    async (name: string) => {
+      try {
+        if (activeDesk) {
+          const data = await createColumn(activeDesk.id, name);
+
+          setColumns((prev) => [...prev, data]);
+
+          setSnackbarHandler({
+            onClose: clearSnackbarHandler,
+            children: `Добавдена новая колонка "${(data as IColumns).name}"`,
+          });
+        }
+      } catch (error) {
+        console.error("Error writing document: ", error);
+      }
+    },
+    [activeDesk, clearSnackbarHandler, setSnackbarHandler]
+  );
+
+  const deleteColumnHandler = useCallback(
+    async (column: IColumns) => {
+      try {
+        await deleteColumn(column.id);
+
+        setColumns((prev) => prev.filter(({ id }) => id !== column.id));
+
+        setSnackbarHandler({
+          onClose: clearSnackbarHandler,
+          children: `Удалена колонка "${column.name}"`,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [clearSnackbarHandler, setSnackbarHandler]
+  );
+  /* Columns */
+
   return (
     <View activePanel={activePanel} popout={popout}>
       <Desks
         id="desks"
+        desks={descs}
         onChangePanel={(desk) => {
           setActivePanel(() => "columns");
           setActiveDesk(() => desk);
         }}
-        desks={descs}
         onCreateDesk={createDeskHandler}
         onDeleteDesk={deleteDeskHandler}
       />
 
-      <Columns id="columns" onChangePanel={() => setActivePanel("desks")} activeDesk={activeDesk} />
+      <Columns
+        id="columns"
+        columns={columns}
+        onChangePanel={() => setActivePanel("desks")}
+        onCreateColumn={createColumnHandler}
+        onDeleteColumn={deleteColumnHandler}
+        activeDesk={activeDesk}
+      />
     </View>
   );
 };
