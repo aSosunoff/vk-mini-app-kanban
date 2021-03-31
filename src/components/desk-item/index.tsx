@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import firebase from "firebase/app";
-import { Alert, Cell, Snackbar } from "@vkontakte/vkui";
+import { Cell, Snackbar } from "@vkontakte/vkui";
 import { Icon24DeleteOutline } from "@vkontakte/icons";
 import { useSnackbarContext } from "../../context/snackbar-context";
 import { useAlertContext } from "../../context/alert-context";
@@ -14,7 +14,7 @@ interface DeskItemProps {
 const DeskItem: React.FC<DeskItemProps> = ({ id, onDelete, children, onDeskClick }) => {
   const { setSnackbarHandler } = useSnackbarContext();
 
-  const { setPopoutHandler } = useAlertContext();
+  const { setPopoutHandler, clearPopoutHandler } = useAlertContext();
 
   const deleteHandler = useCallback(() => {
     const db = firebase.firestore();
@@ -33,28 +33,26 @@ const DeskItem: React.FC<DeskItemProps> = ({ id, onDelete, children, onDeskClick
   }, [children, id, onDelete, setSnackbarHandler]);
 
   const question = useCallback(() => {
-    setPopoutHandler(
-      <Alert
-        header="Внимание"
-        text={`Вы уверены в удалении доски ${children}`}
-        actions={[
-          {
-            title: "Да",
-            mode: "destructive",
-            autoclose: true,
-            action: deleteHandler,
-          },
-          {
-            title: "Передумал",
-            mode: "cancel",
-            autoclose: true,
-          },
-        ]}
-        actionsLayout="vertical"
-        onClose={() => setPopoutHandler(null)}
-      />
-    );
-  }, [children, deleteHandler, setPopoutHandler]);
+    setPopoutHandler({
+      header: "Внимание",
+      text: `Вы уверены в удалении доски ${children}`,
+      actions: [
+        {
+          title: "Да",
+          mode: "destructive",
+          autoclose: true,
+          action: deleteHandler,
+        },
+        {
+          title: "Передумал",
+          mode: "cancel",
+          autoclose: true,
+        },
+      ],
+      actionsLayout: "vertical",
+      onClose: clearPopoutHandler,
+    });
+  }, [children, clearPopoutHandler, deleteHandler, setPopoutHandler]);
 
   return (
     <Cell expandable after={<Icon24DeleteOutline onClick={question} />} onClick={onDeskClick}>
