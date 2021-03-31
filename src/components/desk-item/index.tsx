@@ -7,13 +7,12 @@ import { useAppStateContext } from "../../context/app-state-context";
 
 interface DeskItemProps {
   desk: IDesks;
-  onDeskClick: () => void;
 }
 
-const DeskItem: React.FC<DeskItemProps> = ({ children, desk, onDeskClick }) => {
+const DeskItem: React.FC<DeskItemProps> = ({ children, desk }) => {
   const { setPopoutHandler, clearPopoutHandler } = useAlertContext();
 
-  const { deleteDeskHandler } = useAppStateContext();
+  const { deleteDeskHandler, setActiveDeskHandler } = useAppStateContext();
 
   const question = useCallback(() => {
     setPopoutHandler({
@@ -38,7 +37,11 @@ const DeskItem: React.FC<DeskItemProps> = ({ children, desk, onDeskClick }) => {
   }, [children, clearPopoutHandler, deleteDeskHandler, desk, setPopoutHandler]);
 
   return (
-    <Cell expandable after={<Icon24DeleteOutline onClick={question} />} onClick={onDeskClick}>
+    <Cell
+      expandable
+      after={<Icon24DeleteOutline onClick={question} />}
+      onClick={() => setActiveDeskHandler(desk)}
+    >
       {children}
     </Cell>
   );

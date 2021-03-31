@@ -3,14 +3,17 @@ import { Group, Header } from "@vkontakte/vkui";
 import { Icon16Delete } from "@vkontakte/icons";
 import { useAlertContext } from "../../context/alert-context";
 import { Cards } from "../cards";
+import { useAppStateContext } from "../../context/app-state-context";
+import { IColumns } from "../../Interfaces/IColumns";
 
 interface ColumnProps {
-  onDelete: () => void;
-  id: string;
+  column: IColumns;
 }
 
-const Column: React.FC<ColumnProps> = ({ id, children, onDelete }) => {
+const Column: React.FC<ColumnProps> = ({ column, children }) => {
   const { setPopoutHandler, clearPopoutHandler } = useAlertContext();
+
+  const { deleteColumnHandler } = useAppStateContext();
 
   const question = useCallback(() => {
     setPopoutHandler({
@@ -21,7 +24,7 @@ const Column: React.FC<ColumnProps> = ({ id, children, onDelete }) => {
           title: "Да",
           mode: "destructive",
           autoclose: true,
-          action: onDelete,
+          action: () => deleteColumnHandler(column),
         },
         {
           title: "Передумал",
@@ -32,7 +35,7 @@ const Column: React.FC<ColumnProps> = ({ id, children, onDelete }) => {
       actionsLayout: "vertical",
       onClose: clearPopoutHandler,
     });
-  }, [children, clearPopoutHandler, onDelete, setPopoutHandler]);
+  }, [children, clearPopoutHandler, column, deleteColumnHandler, setPopoutHandler]);
 
   return (
     <Group
@@ -42,7 +45,7 @@ const Column: React.FC<ColumnProps> = ({ id, children, onDelete }) => {
         </Header>
       }
     >
-      <Cards columnId={id} />
+      <Cards columnId={column.id} />
     </Group>
   );
 };

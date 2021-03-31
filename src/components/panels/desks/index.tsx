@@ -3,16 +3,15 @@ import { Group, List, Panel, PanelHeaderSimple } from "@vkontakte/vkui";
 
 import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
 import { useSnackbarContext } from "../../../context/snackbar-context";
-import { IDesks } from "../../../Interfaces/IDesks";
 import { CreateForm } from "../../create-form";
 import { DeskItem } from "../../desk-item";
 import { useAppStateContext } from "../../../context/app-state-context";
 
 interface DesksProps extends Pick<PanelProps, "id"> {
-  onChangePanel: (desk: IDesks) => void;
+  onChangePanel: () => void;
 }
 
-const Desks: React.FC<DesksProps> = ({ id, onChangePanel }) => {
+const Desks: React.FC<DesksProps> = ({ id }) => {
   const { snackbar } = useSnackbarContext();
 
   const { desks, createDeskHandler } = useAppStateContext();
@@ -31,7 +30,7 @@ const Desks: React.FC<DesksProps> = ({ id, onChangePanel }) => {
         <Group>
           <List>
             {desks.map((desk) => (
-              <DeskItem key={desk.id} desk={desk} onDeskClick={() => onChangePanel(desk)}>
+              <DeskItem key={desk.id} desk={desk}>
                 {desk.name}
               </DeskItem>
             ))}

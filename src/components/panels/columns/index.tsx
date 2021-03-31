@@ -5,27 +5,17 @@ import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
 import { useSnackbarContext } from "../../../context/snackbar-context";
 import styles from "./Columns.module.css";
 import { Column } from "../../column";
-import { IColumns } from "../../../Interfaces/IColumns";
 import { CreateForm } from "../../create-form";
-import { IDesks } from "../../../Interfaces/IDesks";
+import { useAppStateContext } from "../../../context/app-state-context";
 
 interface ColumnsProps extends Pick<PanelProps, "id"> {
   onChangePanel: () => void;
-  activeDesk?: IDesks;
-  columns: IColumns[];
-  onCreateColumn: (name: string) => Promise<void>;
-  onDeleteColumn: (columns: IColumns) => Promise<void>;
 }
 
-const Columns: React.FC<ColumnsProps> = ({
-  id,
-  onChangePanel,
-  columns,
-  activeDesk,
-  onCreateColumn,
-  onDeleteColumn,
-}) => {
+const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel }) => {
   const { snackbar } = useSnackbarContext();
+
+  const { columns, createColumnHandler, activeDesk } = useAppStateContext();
 
   return (
     <Panel id={id} className={styles.columns}>
@@ -35,14 +25,14 @@ const Columns: React.FC<ColumnsProps> = ({
 
       <Gallery slideWidth="100%" align="center" className={styles.gallery} bullets="dark">
         {columns.map((column) => (
-          <Column key={column.id} id={column.id} onDelete={() => onDeleteColumn(column)}>
+          <Column key={column.id} column={column}>
             {column.name}
           </Column>
         ))}
 
         <Group>
           <CreateForm
-            onSubmit={onCreateColumn}
+            onSubmit={createColumnHandler}
             buttonName="Создать колонку"
             placeholder="введите название колонки"
           />
