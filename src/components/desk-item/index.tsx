@@ -14,27 +14,32 @@ const DeskItem: React.FC<DeskItemProps> = ({ children, desk }) => {
 
   const { deleteDeskHandler, setActiveDeskHandler, goToColumn } = useAppStateContext();
 
-  const question = useCallback(() => {
-    setPopoutHandler({
-      header: "Внимание",
-      text: `Вы уверены в удалении доски ${children}`,
-      actions: [
-        {
-          title: "Да",
-          mode: "destructive",
-          autoclose: true,
-          action: () => deleteDeskHandler(desk),
-        },
-        {
-          title: "Передумал",
-          mode: "cancel",
-          autoclose: true,
-        },
-      ],
-      actionsLayout: "vertical",
-      onClose: clearPopoutHandler,
-    });
-  }, [children, clearPopoutHandler, deleteDeskHandler, desk, setPopoutHandler]);
+  const question = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      event.stopPropagation();
+
+      setPopoutHandler({
+        header: "Внимание",
+        text: `Вы уверены в удалении доски ${children}`,
+        actions: [
+          {
+            title: "Да",
+            mode: "destructive",
+            autoclose: true,
+            action: () => deleteDeskHandler(desk),
+          },
+          {
+            title: "Передумал",
+            mode: "cancel",
+            autoclose: true,
+          },
+        ],
+        actionsLayout: "vertical",
+        onClose: clearPopoutHandler,
+      });
+    },
+    [children, clearPopoutHandler, deleteDeskHandler, desk, setPopoutHandler]
+  );
 
   return (
     <Cell
