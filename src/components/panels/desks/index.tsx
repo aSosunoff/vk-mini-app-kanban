@@ -7,9 +7,7 @@ import { CreateForm } from "../../create-form";
 import { DeskItem } from "../../desk-item";
 import { useAppStateContext } from "../../../context/app-state-context";
 
-interface DesksProps extends Pick<PanelProps, "id"> {
-  onChangePanel: () => void;
-}
+interface DesksProps extends Pick<PanelProps, "id"> {}
 
 const Desks: React.FC<DesksProps> = ({ id }) => {
   const { snackbar } = useSnackbarContext();

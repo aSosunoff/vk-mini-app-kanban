@@ -4,17 +4,17 @@ import "@vkontakte/vkui/dist/vkui.css";
 import { Desks } from "../panels/desks";
 import { Columns } from "../panels/columns";
 import { useAlertContext } from "../../context/alert-context";
-import { useActivePanel } from "../../hooks/useActivePanel";
+import { useAppStateContext } from "../../context/app-state-context";
 
 export const App = () => {
-  const { activePanel, goToColumn, goToDesk } = useActivePanel();
-
   const { popout } = useAlertContext();
+
+  const { activePanel } = useAppStateContext();
 
   return (
     <View activePanel={activePanel} popout={popout}>
-      <Desks id="desks" onChangePanel={goToColumn} />
-      <Columns id="columns" onChangePanel={goToDesk} />
+      <Desks id="desks" />
+      <Columns id="columns" />
     </View>
   );
 };

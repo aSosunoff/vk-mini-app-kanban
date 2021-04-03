@@ -8,18 +8,16 @@ import { Column } from "../../column";
 import { CreateForm } from "../../create-form";
 import { useAppStateContext } from "../../../context/app-state-context";
 
-interface ColumnsProps extends Pick<PanelProps, "id"> {
-  onChangePanel: () => void;
-}
+interface ColumnsProps extends Pick<PanelProps, "id"> {}
 
-const Columns: React.FC<ColumnsProps> = ({ id, onChangePanel }) => {
+const Columns: React.FC<ColumnsProps> = ({ id }) => {
   const { snackbar } = useSnackbarContext();
 
-  const { columns, createColumnHandler, activeDesk } = useAppStateContext();
+  const { columns, createColumnHandler, activeDesk, goToDesk } = useAppStateContext();
 
   return (
     <Panel id={id} className={styles.columns}>
-      <PanelHeader left={<PanelHeaderBack onClick={onChangePanel} />}>
+      <PanelHeader left={<PanelHeaderBack onClick={goToDesk} />}>
         Доска - {activeDesk?.name}
       </PanelHeader>
 
