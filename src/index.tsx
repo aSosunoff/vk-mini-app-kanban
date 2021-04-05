@@ -23,11 +23,11 @@ ReactDOM.render(
     <AppRoot>
       <AlertProvider>
         <SnackbarProvider>
-          <AppStateProvider>
-            <RouterProvider router={route}>
+          <RouterProvider router={route}>
+            <AppStateProvider>
               <ErrorBoundary>{(hasError) => <App hasError={hasError} />}</ErrorBoundary>
-            </RouterProvider>
-          </AppStateProvider>
+            </AppStateProvider>
+          </RouterProvider>
         </SnackbarProvider>
       </AlertProvider>
     </AppRoot>

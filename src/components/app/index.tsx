@@ -1,20 +1,16 @@
 import React, { useEffect } from "react";
 import { View } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
-import { useRoute } from "react-router5";
 import { Desks } from "../panels/desks";
 import { Columns } from "../panels/columns";
 import { useAlertContext } from "../../context/alert-context";
 import { useAppStateContext } from "../../context/app-state-context";
+import { panel } from "../../hooks/useActivePanel";
 
 const App: React.FC<{ hasError: boolean }> = ({ hasError }) => {
   const { popout, setPopoutHandler, clearPopoutHandler } = useAlertContext();
 
   const { activePanel } = useAppStateContext();
-
-  const { router } = useRoute();
-
-  console.log(router);
 
   useEffect(() => {
     if (hasError) {
@@ -36,8 +32,8 @@ const App: React.FC<{ hasError: boolean }> = ({ hasError }) => {
 
   return (
     <View activePanel={activePanel} popout={popout}>
-      <Desks id="desks" />
-      <Columns id="columns" />
+      <Desks id={panel.DESKS} />
+      <Columns id={panel.COLUMNS} />
     </View>
   );
 };

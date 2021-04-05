@@ -1,11 +1,25 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useRoute } from "react-router5";
+
+export const panel = {
+  DESKS: "desks",
+  COLUMNS: "columns",
+};
 
 export const useActivePanel = () => {
-  const [activePanel, setActivePanel] = useState<"desks" | "columns">("desks");
+  const { route, router } = useRoute();
 
-  const goToColumn = useCallback(() => setActivePanel(() => "columns"), []);
+  const [activePanel, setActivePanel] = useState(route ? (route.name as any) : panel.DESKS);
 
-  const goToDesk = useCallback(() => setActivePanel(() => "desks"), []);
+  useEffect(() => {
+    router.subscribe((router) => {
+      setActivePanel(router.route.name as any);
+    });
+  }, [router]);
+
+  const goToColumn = useCallback(() => router.navigate(panel.COLUMNS), [router]);
+
+  const goToDesk = useCallback(() => router.navigate(panel.DESKS), [router]);
 
   return { activePanel, goToColumn, goToDesk };
 };
