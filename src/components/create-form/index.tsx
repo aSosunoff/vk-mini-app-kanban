@@ -64,7 +64,13 @@ const CreateForm: React.FC<CreateFormProps> = ({ onSubmit, buttonName, placehold
   if (mode === "button") {
     return (
       <Div>
-        <Button size="l" stretched before={<Icon24Add />} onClick={() => setMode("form")}>
+        <Button
+          size="l"
+          stretched
+          before={<Icon24Add />}
+          onClick={() => setMode("form")}
+          mode="outline"
+        >
           {buttonName}
         </Button>
       </Div>
@@ -95,7 +101,7 @@ const CreateForm: React.FC<CreateFormProps> = ({ onSubmit, buttonName, placehold
         </FormItem>
 
         <FormItem>
-          <Button size="l" stretched onClick={() => setMode("button")} mode="tertiary" color="red">
+          <Button size="l" stretched onClick={() => setMode("button")} mode="outline" color="red">
             Отменить
           </Button>
         </FormItem>
