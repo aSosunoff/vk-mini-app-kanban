@@ -7,6 +7,7 @@ import { AlertProvider } from "./context/alert-context";
 import { AdaptivityProvider, AppRoot } from "@vkontakte/vkui";
 import { SnackbarProvider } from "./context/snackbar-context";
 import { AppStateProvider } from "./context/app-state-context";
+import ErrorBoundary from "./HOC/ErrorBoundary";
 
 backend.initializeApp();
 
@@ -19,7 +20,7 @@ ReactDOM.render(
       <AlertProvider>
         <SnackbarProvider>
           <AppStateProvider>
-            <App />
+            <ErrorBoundary>{(hasError) => <App hasError={hasError} />}</ErrorBoundary>
           </AppStateProvider>
         </SnackbarProvider>
       </AlertProvider>
