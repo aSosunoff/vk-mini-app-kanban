@@ -39,7 +39,10 @@
     "eruda-dom": "^2.0.0",
     "firebase": "8.3.1",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "react-router5": "^8.0.1",
+    "router5": "^8.0.1",
+    "router5-plugin-browser": "^8.0.1"
   },
   "browserslist": {
     "production": [
