@@ -7,15 +7,7 @@ export const panel = {
 };
 
 export const useActivePanel = () => {
-  const { route, router } = useRoute();
-
-  const [activePanel, setActivePanel] = useState(route ? (route.name as any) : panel.DESKS);
-
-  useEffect(() => {
-    router.subscribe((router) => {
-      setActivePanel(router.route.name as any);
-    });
-  }, [router]);
+  const { router } = useRoute();
 
   const goToColumn = useCallback((deskId: string) => router.navigate(panel.COLUMNS, { deskId }), [
     router,
@@ -23,5 +15,5 @@ export const useActivePanel = () => {
 
   const goToDesk = useCallback(() => router.navigate(panel.DESKS), [router]);
 
-  return { activePanel, goToColumn, goToDesk };
+  return { goToColumn, goToDesk };
 };

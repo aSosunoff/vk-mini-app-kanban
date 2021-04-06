@@ -4,13 +4,13 @@ import "@vkontakte/vkui/dist/vkui.css";
 import { Desks } from "../panels/desks";
 import { Columns } from "../panels/columns";
 import { useAlertContext } from "../../context/alert-context";
-import { useAppStateContext } from "../../context/app-state-context";
 import { panel } from "../../hooks/useActivePanel";
+import { useRoute } from "react-router5";
 
 const App: React.FC<{ hasError: boolean }> = ({ hasError }) => {
-  const { popout, setPopoutHandler, clearPopoutHandler } = useAlertContext();
+  const { route } = useRoute();
 
-  const { activePanel } = useAppStateContext();
+  const { popout, setPopoutHandler, clearPopoutHandler } = useAlertContext();
 
   useEffect(() => {
     if (hasError) {
@@ -31,8 +31,9 @@ const App: React.FC<{ hasError: boolean }> = ({ hasError }) => {
   }, [hasError, setPopoutHandler, clearPopoutHandler]);
 
   return (
-    <View activePanel={activePanel} popout={popout}>
+    <View activePanel={route.name} popout={popout}>
       <Desks id={panel.DESKS} />
+
       <Columns id={panel.COLUMNS} />
     </View>
   );

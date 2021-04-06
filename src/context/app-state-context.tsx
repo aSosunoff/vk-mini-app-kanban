@@ -16,17 +16,16 @@ export const useAppStateContext = () => useContext(AppStateContext);
 
 export const AppStateProvider: React.FC = ({ children }) => {
   const deskState = useDesksState();
-  
+
   const columnsState = useColumnsState();
 
-  const { activePanel, goToColumn, goToDesk } = useActivePanel();
+  const { goToColumn, goToDesk } = useActivePanel();
 
   return (
     <AppStateContext.Provider
       value={{
         ...deskState,
         ...columnsState,
-        activePanel,
         goToColumn,
         goToDesk,
       }}

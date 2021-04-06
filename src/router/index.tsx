@@ -8,7 +8,7 @@ const routes = [
 ];
 
 export const initialize = () => {
-  const router = createRouter(routes);
+  const router = createRouter(routes, { defaultRoute: panel.DESKS });
 
   router.usePlugin(browserPlugin());
 
