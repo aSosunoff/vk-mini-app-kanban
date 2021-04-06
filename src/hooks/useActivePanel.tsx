@@ -17,7 +17,9 @@ export const useActivePanel = () => {
     });
   }, [router]);
 
-  const goToColumn = useCallback(() => router.navigate(panel.COLUMNS), [router]);
+  const goToColumn = useCallback((deskId: string) => router.navigate(panel.COLUMNS, { deskId }), [
+    router,
+  ]);
 
   const goToDesk = useCallback(() => router.navigate(panel.DESKS), [router]);
 

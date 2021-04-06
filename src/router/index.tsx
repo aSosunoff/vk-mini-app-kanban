@@ -4,7 +4,7 @@ import { panel } from "../hooks/useActivePanel";
 
 const routes = [
   { name: panel.DESKS, path: "/" },
-  { name: panel.COLUMNS, path: "/desk" },
+  { name: panel.COLUMNS, path: "/desk/:deskId" },
 ];
 
 export const initialize = () => {

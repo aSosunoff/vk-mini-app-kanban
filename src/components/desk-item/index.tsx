@@ -46,7 +46,7 @@ const DeskItem: React.FC<DeskItemProps> = ({ children, desk }) => {
       expandable
       after={<Icon24DeleteOutline onClick={question} />}
       onClick={() => {
-        goToColumn();
+        goToColumn(desk.id);
         setActiveDeskHandler(desk);
       }}
     >
