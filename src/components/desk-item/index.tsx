@@ -12,7 +12,7 @@ interface DeskItemProps {
 const DeskItem: React.FC<DeskItemProps> = ({ children, desk }) => {
   const { setPopoutHandler, clearPopoutHandler } = useAlertContext();
 
-  const { deleteDeskHandler, setActiveDeskHandler, goToColumn } = useAppStateContext();
+  const { deleteDeskHandler, goToColumn } = useAppStateContext();
 
   const question = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
@@ -45,10 +45,7 @@ const DeskItem: React.FC<DeskItemProps> = ({ children, desk }) => {
     <Cell
       expandable
       after={<Icon24DeleteOutline onClick={question} />}
-      onClick={() => {
-        goToColumn(desk.id);
-        setActiveDeskHandler(desk);
-      }}
+      onClick={() => goToColumn(desk.id)}
     >
       {children}
     </Cell>

@@ -1,46 +1,31 @@
-import { useCallback, useEffect, useState } from "react";
-import { createColumn, deleteColumn, getColumns } from "../components/actions";
+import { useCallback, useState } from "react";
+import { createColumn, deleteColumn } from "../components/actions";
 import { useSnackbarContext } from "../context/snackbar-context";
 import { IColumns } from "../Interfaces/IColumns";
-import { IDesks } from "../Interfaces/IDesks";
 
-export const useColumnsState = (activeDesk?: IDesks) => {
+export const useColumnsState = () => {
   const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
   const [columns, setColumns] = useState<IColumns[]>([]);
 
-  useEffect(() => {
-    let isFetch = true;
-
-    if (activeDesk) {
-      getColumns(activeDesk.id)
-        .then((columns) => isFetch && setColumns(() => columns))
-        .catch(console.error);
-    }
-
-    return () => {
-      isFetch = false;
-    };
-  }, [activeDesk]);
+  const setColumnsHandler = useCallback((columns: IColumns[]) => setColumns(() => columns), []);
 
   const createColumnHandler = useCallback(
-    async (name: string) => {
+    async (deskId: string, name: string) => {
       try {
-        if (activeDesk) {
-          const data = await createColumn(activeDesk.id, name);
+        const data = await createColumn(deskId, name);
 
-          setColumns((prev) => [...prev, data]);
+        setColumns((prev) => [...prev, data]);
 
-          setSnackbarHandler({
-            onClose: clearSnackbarHandler,
-            children: `Добавдена новая колонка "${(data as IColumns).name}"`,
-          });
-        }
+        setSnackbarHandler({
+          onClose: clearSnackbarHandler,
+          children: `Добавдена новая колонка "${(data as IColumns).name}"`,
+        });
       } catch (error) {
         console.error("Error writing document: ", error);
       }
     },
-    [activeDesk, clearSnackbarHandler, setSnackbarHandler]
+    [clearSnackbarHandler, setSnackbarHandler]
   );
 
   const deleteColumnHandler = useCallback(
@@ -61,5 +46,5 @@ export const useColumnsState = (activeDesk?: IDesks) => {
     [clearSnackbarHandler, setSnackbarHandler]
   );
 
-  return { columns, createColumnHandler, deleteColumnHandler };
+  return { columns, createColumnHandler, deleteColumnHandler, setColumnsHandler };
 };
