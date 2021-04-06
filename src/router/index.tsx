@@ -1,9 +1,10 @@
 import createRouter from "router5";
 import browserPlugin from "router5-plugin-browser";
+import { panel } from "../hooks/useActivePanel";
 
 const routes = [
-  { name: "desks", path: "/" },
-  { name: "columns", path: "/desk" },
+  { name: panel.DESKS, path: "/" },
+  { name: panel.COLUMNS, path: "/desk" },
 ];
 
 export const initialize = () => {
