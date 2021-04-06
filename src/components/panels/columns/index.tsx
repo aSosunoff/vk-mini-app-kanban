@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Gallery, Group, Panel, PanelHeader, PanelHeaderBack } from "@vkontakte/vkui";
 import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
 
@@ -17,7 +17,12 @@ const Columns: React.FC<ColumnsProps> = ({ id }) => {
 
   const { snackbar } = useSnackbarContext();
 
-  const { columns, setColumnsHandler, createColumnHandler, goToDesk } = useAppStateContext();
+  const { columns, setColumnsHandler, createColumnHandler, goToDesk, desks } = useAppStateContext();
+
+  const activeDesk = useMemo(() => desks.find(({ id }) => id === route?.params?.deskId), [
+    desks,
+    route?.params?.deskId,
+  ]);
 
   useEffect(() => {
     let isFetch = true;
@@ -45,7 +50,7 @@ const Columns: React.FC<ColumnsProps> = ({ id }) => {
   return (
     <Panel id={id} className={styles.columns}>
       <PanelHeader left={<PanelHeaderBack onClick={goToDesk} />}>
-        Доска - {/* {activeDesk?.name} */}
+        Доска - {activeDesk?.name}
       </PanelHeader>
 
       <Gallery slideWidth="100%" align="center" className={styles.gallery} bullets="dark">
