@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 
 import { Desks } from "./desks";
 import { RootState } from "../../../redux/reducers";

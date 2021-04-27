@@ -33,11 +33,13 @@ const Desks: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
   return (
     <Panel id={id}>
       <PanelHeaderSimple>Мои доски</PanelHeaderSimple>
+
       <CreateForm
         onSubmit={addedDeskHandler}
         buttonName="Создать доску"
         placeholder="введите название доски"
       />
+
       {desks && desks.length ? (
         <Group>
           <List>
