@@ -7,15 +7,20 @@ import { Column } from "../../column";
 import { CreateForm } from "../../create-form";
 import { useAppStateContext } from "../../../context/app-state-context";
 import { useRoute } from "react-router5";
-import { getColumns } from "../../actions";
 import * as I from "./interfaces";
 
-const Columns: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({ id, desks }) => {
+const Columns: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
+  id,
+  desks,
+  columns,
+  fetchColumns,
+  addedColumns,
+}) => {
   const { route } = useRoute();
 
   const { snackbar } = useSnackbarContext();
 
-  const { columns, setColumnsHandler, createColumnHandler, goToDesk } = useAppStateContext();
+  const { goToDesk } = useAppStateContext();
 
   const activeDesk = useMemo(() => desks.find(({ id }) => id === route?.params?.deskId), [
     desks,
@@ -23,26 +28,16 @@ const Columns: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({ id, de
   ]);
 
   useEffect(() => {
-    let isFetch = true;
-
-    if (route?.params?.deskId) {
-      getColumns(route.params.deskId)
-        .then((columns) => isFetch && setColumnsHandler(columns))
-        .catch(console.error);
-    }
-
-    return () => {
-      isFetch = false;
-    };
-  }, [route.params.deskId, setColumnsHandler]);
+    fetchColumns(route.params.deskId);
+  }, [route.params.deskId, fetchColumns]);
 
   const createColumn = useCallback(
     async (name: string) => {
       if (route?.params?.deskId) {
-        await createColumnHandler(route?.params?.deskId, name);
+        await addedColumns(route?.params?.deskId, name);
       }
     },
-    [createColumnHandler, route?.params?.deskId]
+    [addedColumns, route?.params?.deskId]
   );
 
   return (

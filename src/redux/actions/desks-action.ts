@@ -4,7 +4,7 @@ import { IDesks } from "../../Interfaces/IDesks";
 import { GetType } from "../handlers-type";
 import { ActionTypes_Desk } from "../types";
 
-const successDesks = (payload: IDesks[]): GetType<ActionTypes_Desk, "DESK_SUCCESS"> => {
+const success = (payload: IDesks[]): GetType<ActionTypes_Desk, "DESK_SUCCESS"> => {
   return {
     type: "DESK_SUCCESS",
     payload,
@@ -44,7 +44,7 @@ export const fetchDesks = () => async (dispatch: Dispatch) => {
 
     const desks = await getDesks();
 
-    dispatch(successDesks(desks));
+    dispatch(success(desks));
   } catch (error) {
     dispatch(falure(error));
   }
