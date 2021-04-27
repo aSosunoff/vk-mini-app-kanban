@@ -7,7 +7,7 @@ import { App } from "./components/app";
 import { AlertProvider } from "./context/alert-context";
 import { AdaptivityProvider, AppRoot } from "@vkontakte/vkui";
 import { SnackbarProvider } from "./context/snackbar-context";
-import { AppStateProvider } from "./context/app-state-context";
+/* import { AppStateProvider } from "./context/app-state-context"; */
 import ErrorBoundary from "./HOC/ErrorBoundary";
 import { RouterProvider } from "react-router5";
 
@@ -28,9 +28,9 @@ ReactDOM.render(
         <AlertProvider>
           <SnackbarProvider>
             <RouterProvider router={route}>
-              <AppStateProvider>
-                <ErrorBoundary>{(hasError) => <App hasError={hasError} />}</ErrorBoundary>
-              </AppStateProvider>
+              {/* <AppStateProvider> */}
+              <ErrorBoundary>{(hasError) => <App hasError={hasError} />}</ErrorBoundary>
+              {/* </AppStateProvider> */}
             </RouterProvider>
           </SnackbarProvider>
         </AlertProvider>

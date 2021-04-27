@@ -5,9 +5,9 @@ import { useSnackbarContext } from "../../../context/snackbar-context";
 import styles from "./Columns.module.css";
 import { Column } from "../../column";
 import { CreateForm } from "../../create-form";
-import { useAppStateContext } from "../../../context/app-state-context";
 import { useRoute } from "react-router5";
 import * as I from "./interfaces";
+import { panel } from "../../../hooks/useActivePanel";
 
 const Columns: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
   id,
@@ -16,11 +16,10 @@ const Columns: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
   fetchColumns,
   addedColumns,
 }) => {
-  const { route } = useRoute();
-
   const { snackbar } = useSnackbarContext();
 
-  const { goToDesk } = useAppStateContext();
+  const { route, router } = useRoute();
+  const goToDesk = useCallback(() => router.navigate(panel.DESKS), [router]);
 
   const activeDesk = useMemo(() => desks.find(({ id }) => id === route?.params?.deskId), [
     desks,

@@ -2,9 +2,10 @@ import React, { useCallback } from "react";
 import { Cell } from "@vkontakte/vkui";
 import { Icon24DeleteOutline } from "@vkontakte/icons";
 import { useAlertContext } from "../../context/alert-context";
-import { useAppStateContext } from "../../context/app-state-context";
 import * as I from "./interfaces";
 import { useSnackbarContext } from "../../context/snackbar-context";
+import { useRoute } from "react-router5";
+import { panel } from "../../hooks/useActivePanel";
 
 export const DeskItem: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
   children,
@@ -15,7 +16,10 @@ export const DeskItem: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = (
 
   const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
-  const { goToColumn } = useAppStateContext();
+  const { router } = useRoute();
+  const goToColumn = useCallback((deskId: string) => router.navigate(panel.COLUMNS, { deskId }), [
+    router,
+  ]);
 
   const removeDeskHandler = useCallback(async () => {
     await removeDesk(desk);
