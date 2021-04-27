@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import deskReducer from "./deskReducer";
+import desksReducer from "./desksReducer";
 
 const rootReducer = combineReducers({
-  desk: deskReducer,
+  desks: desksReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

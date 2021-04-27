@@ -1,55 +1,17 @@
-import React, { useCallback } from "react";
-import { Cell } from "@vkontakte/vkui";
-import { Icon24DeleteOutline } from "@vkontakte/icons";
-import { useAlertContext } from "../../context/alert-context";
-import { IDesks } from "../../Interfaces/IDesks";
-import { useAppStateContext } from "../../context/app-state-context";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
-interface DeskItemProps {
-  desk: IDesks;
-}
+import { DeskItem } from "./desk-item";
+import { RootState } from "../../redux/reducers";
+import * as I from "./interfaces";
+import { removeDesk } from "../../redux/actions/desks-action";
 
-const DeskItem: React.FC<DeskItemProps> = ({ children, desk }) => {
-  const { setPopoutHandler, clearPopoutHandler } = useAlertContext();
+const mapStateToProps = ({}: RootState): I.StateProps => ({});
 
-  const { deleteDeskHandler, goToColumn } = useAppStateContext();
-
-  const question = useCallback(
-    (event: React.MouseEvent<HTMLDivElement>) => {
-      event.stopPropagation();
-
-      setPopoutHandler({
-        header: "Внимание",
-        text: `Вы уверены в удалении доски ${children}`,
-        actions: [
-          {
-            title: "Да",
-            mode: "destructive",
-            autoclose: true,
-            action: () => deleteDeskHandler(desk),
-          },
-          {
-            title: "Передумал",
-            mode: "cancel",
-            autoclose: true,
-          },
-        ],
-        actionsLayout: "vertical",
-        onClose: clearPopoutHandler,
-      });
-    },
-    [children, clearPopoutHandler, deleteDeskHandler, desk, setPopoutHandler]
-  );
-
-  return (
-    <Cell
-      expandable
-      after={<Icon24DeleteOutline onClick={question} />}
-      onClick={() => goToColumn(desk.id)}
-    >
-      {children}
-    </Cell>
-  );
+const mapDispatchToProps = {
+  removeDesk,
 };
 
-export { DeskItem };
+const result = connect(mapStateToProps, mapDispatchToProps)(DeskItem);
+
+export { result as DeskItem };

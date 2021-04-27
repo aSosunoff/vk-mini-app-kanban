@@ -7,6 +7,17 @@
 
 export type Action<K extends string, V = void> = V extends void ? { type: K } : { type: K } & V;
 
+export type GetType<
+  ActionTypes extends Record<string, any>,
+  KeyOfActionTypes extends keyof ActionTypes
+> = ActionTypes[KeyOfActionTypes] extends void
+  ? { type: KeyOfActionTypes }
+  : {
+      [k in keyof ActionTypes[KeyOfActionTypes] | "type"]: k extends "type"
+        ? KeyOfActionTypes
+        : ActionTypes[KeyOfActionTypes][k];
+    };
+
 //#region
 type HandlerDraftFunc<S, T> = (state: S, action: T) => void | S;
 

@@ -27,6 +27,13 @@ const handlers: Handlers<IDeskInitialState, ActionTypes_Desk> = {
   DESK_CLEAR_ERROR: (draft) => {
     draft.error = null;
   },
+  DESK_ADD: (draft, action) => {
+    draft.list.push(action.payload);
+  },
+  DESK_REMOVE: (draft, action) => {
+    const index = draft.list.findIndex(({ id }) => id === action.payload);
+    draft.list.splice(index, 1);
+  },
   DEFAULT: (draft) => draft,
 };
 

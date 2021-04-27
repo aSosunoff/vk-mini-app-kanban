@@ -4,7 +4,7 @@ import { useColumnsState } from "../hooks/useColumnsState";
 import { useDesksState } from "../hooks/useDesksState";
 
 interface IAppStateContext
-  extends ReturnType<typeof useDesksState>,
+  extends /* ReturnType<typeof useDesksState>, */
     ReturnType<typeof useColumnsState>,
     ReturnType<typeof useActivePanel> {}
 
@@ -15,7 +15,7 @@ AppStateContext.displayName = "AppStateContext";
 export const useAppStateContext = () => useContext(AppStateContext);
 
 export const AppStateProvider: React.FC = ({ children }) => {
-  const deskState = useDesksState();
+  /* const deskState = useDesksState(); */
 
   const columnsState = useColumnsState();
 
@@ -24,7 +24,7 @@ export const AppStateProvider: React.FC = ({ children }) => {
   return (
     <AppStateContext.Provider
       value={{
-        ...deskState,
+        /* ...deskState, */
         ...columnsState,
         goToColumn,
         goToDesk,

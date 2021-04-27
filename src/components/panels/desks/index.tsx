@@ -1,44 +1,22 @@
-import React from "react";
-import { Group, List, Panel, PanelHeaderSimple } from "@vkontakte/vkui";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
-import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
-import { useSnackbarContext } from "../../../context/snackbar-context";
-import { CreateForm } from "../../create-form";
-import { DeskItem } from "../../desk-item";
-import { useAppStateContext } from "../../../context/app-state-context";
+import { Desks } from "./desks";
+import { RootState } from "../../../redux/reducers";
+import * as I from "./interfaces";
+import { fetchDesks, addedDesk } from "../../../redux/actions/desks-action";
 
-interface DesksProps extends Pick<PanelProps, "id"> {}
+const mapStateToProps = ({ desks }: RootState): I.StateProps => ({
+  desks: desks?.list ?? [],
+  loading: desks?.loading ?? false,
+  error: desks?.error,
+});
 
-const Desks: React.FC<DesksProps> = ({ id }) => {
-  const { snackbar } = useSnackbarContext();
-
-  const { desks, createDeskHandler } = useAppStateContext();
-
-  return (
-    <Panel id={id}>
-      <PanelHeaderSimple>Мои доски</PanelHeaderSimple>
-
-      <CreateForm
-        onSubmit={createDeskHandler}
-        buttonName="Создать доску"
-        placeholder="введите название доски"
-      />
-
-      {desks && desks.length ? (
-        <Group>
-          <List>
-            {desks.map((desk) => (
-              <DeskItem key={desk.id} desk={desk}>
-                {desk.name}
-              </DeskItem>
-            ))}
-          </List>
-        </Group>
-      ) : null}
-
-      {snackbar}
-    </Panel>
-  );
+const mapDispatchToProps = {
+  fetchDesks,
+  addedDesk,
 };
 
-export { Desks };
+const result = connect(mapStateToProps, mapDispatchToProps)(Desks);
+
+export { result as Desks };

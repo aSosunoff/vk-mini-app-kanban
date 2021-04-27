@@ -11,6 +11,9 @@ import { AppStateProvider } from "./context/app-state-context";
 import ErrorBoundary from "./HOC/ErrorBoundary";
 import { RouterProvider } from "react-router5";
 
+import { Provider } from "react-redux";
+import store from "./store";
+
 backend.initializeApp();
 
 const route = router.initialize();
@@ -19,19 +22,21 @@ const route = router.initialize();
 /* bridge.send("VKWebAppInit"); */
 
 ReactDOM.render(
-  <AdaptivityProvider>
-    <AppRoot>
-      <AlertProvider>
-        <SnackbarProvider>
-          <RouterProvider router={route}>
-            <AppStateProvider>
-              <ErrorBoundary>{(hasError) => <App hasError={hasError} />}</ErrorBoundary>
-            </AppStateProvider>
-          </RouterProvider>
-        </SnackbarProvider>
-      </AlertProvider>
-    </AppRoot>
-  </AdaptivityProvider>,
+  <Provider store={store}>
+    <AdaptivityProvider>
+      <AppRoot>
+        <AlertProvider>
+          <SnackbarProvider>
+            <RouterProvider router={route}>
+              <AppStateProvider>
+                <ErrorBoundary>{(hasError) => <App hasError={hasError} />}</ErrorBoundary>
+              </AppStateProvider>
+            </RouterProvider>
+          </SnackbarProvider>
+        </AlertProvider>
+      </AppRoot>
+    </AdaptivityProvider>
+  </Provider>,
   document.getElementById("root")
 );
 
