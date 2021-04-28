@@ -1,7 +1,7 @@
 import React from "react";
 import { List } from "@vkontakte/vkui";
 import { Card } from "../card";
-import { CreateForm } from "../create-form";
+import { CreateForm } from "../../../../components/create-form";
 import { useCardsState } from "../../hooks/useCardsState";
 
 interface CardsProps {

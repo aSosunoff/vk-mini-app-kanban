@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { Cell } from "@vkontakte/vkui";
-import { useAlertContext } from "../../context/alert-context";
+import { useAlertContext } from "../../../../context/alert-context";
 
 interface CardProps {
   onDelete: () => Promise<void>;

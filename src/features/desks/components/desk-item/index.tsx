@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
 import { DeskItem } from "./desk-item";
-import { RootState } from "../../../../redux/reducers";
+import { RootState } from "../../../../app/redux/reducers";
 import * as I from "./interfaces";
 import { removeDesk } from "../../actions";
 

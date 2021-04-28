@@ -1,7 +1,6 @@
 import firebase from "firebase/app";
 import { ICards } from "../../Interfaces/ICards";
 
-/* Card */
 export const getCards = async (columnId: string) => {
   const db = firebase.firestore();
 
@@ -42,4 +41,3 @@ export const deleteCard = async (id: string) => {
 
   await db.collection("cards").doc(id).delete();
 };
-/* Card */

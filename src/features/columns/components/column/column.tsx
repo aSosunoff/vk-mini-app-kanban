@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { Group, Header } from "@vkontakte/vkui";
 import { Icon16Delete } from "@vkontakte/icons";
-import { Cards } from "../../../../components/cards";
+import { Cards } from "../../../cards/components/cards";
 import { useAlertContext } from "../../../../context/alert-context";
 import * as I from "./interfaces";
 

@@ -1,6 +1,6 @@
 import produce, { Draft } from "immer";
-import { reducer } from "../../redux/handlers";
-import { Handlers } from "../../redux/handlers-type";
+import { reducer } from "../../app/redux/handlers";
+import { Handlers } from "../../app/redux/handlers-type";
 import { IColumnsInitialState } from "./interfaces/IColumnsInitialState";
 import { ActionTypes_Columns } from "./types";
 

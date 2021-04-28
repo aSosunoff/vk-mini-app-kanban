@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 /* import bridge from "@vkontakte/vk-bridge"; */
 import * as backend from "./models/firebase";
 import * as router from "./router";
-import { App } from "./components/app";
+import { App } from "./app";
 import { AlertProvider } from "./context/alert-context";
 import { AdaptivityProvider, AppRoot } from "@vkontakte/vkui";
 import { SnackbarProvider } from "./context/snackbar-context";
@@ -12,7 +12,7 @@ import ErrorBoundary from "./HOC/ErrorBoundary";
 import { RouterProvider } from "react-router5";
 
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./app/store";
 
 backend.initializeApp();
 

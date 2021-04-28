@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { createDesk, deleteDesk, getDesks } from "./api";
 import { IDesks } from "./interfaces/IDesks";
-import { GetType } from "../../redux/handlers-type";
+import { GetType } from "../../app/redux/handlers-type";
 import { ActionTypes_Desk } from "./types";
 
 const success = (payload: IDesks[]): GetType<ActionTypes_Desk, "DESK_SUCCESS"> => {

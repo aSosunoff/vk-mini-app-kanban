@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { createColumn, getColumns, deleteColumn } from "./api";
 import { IColumns } from "./interfaces/IColumns";
-import { GetType } from "../../redux/handlers-type";
+import { GetType } from "../../app/redux/handlers-type";
 import { ActionTypes_Columns } from "./types";
 
 const success = (payload: IColumns[]): GetType<ActionTypes_Columns, "COLUMNS_SUCCESS"> => {
