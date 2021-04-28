@@ -1,4 +1,4 @@
-import { IColumns } from "../Interfaces/IColumns";
+import { IColumns } from "./interfaces/IColumns";
 
 export type ActionTypes_Columns = {
   COLUMNS_REQUEST: void;

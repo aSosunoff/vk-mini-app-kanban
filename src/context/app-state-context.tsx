@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from "react";
 import { useActivePanel } from "../hooks/useActivePanel";
-import { useColumnsState } from "../hooks/useColumnsState";
+import { useColumnsState } from "../features/columns/hooks/useColumnsState";
 import { useDesksState } from "../features/desks/hooks/useDesksState";
 
 interface IAppStateContext

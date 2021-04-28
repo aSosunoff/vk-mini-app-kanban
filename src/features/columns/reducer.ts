@@ -1,8 +1,8 @@
 import produce, { Draft } from "immer";
-import { reducer } from "../handlers";
-import { Handlers } from "../handlers-type";
-import { IColumnsInitialState } from "../interfaces/IColumnsInitialState";
-import { ActionTypes_Columns } from "../types";
+import { reducer } from "../../redux/handlers";
+import { Handlers } from "../../redux/handlers-type";
+import { IColumnsInitialState } from "./interfaces/IColumnsInitialState";
+import { ActionTypes_Columns } from "./types";
 
 const initialState: IColumnsInitialState = {
   loading: false,

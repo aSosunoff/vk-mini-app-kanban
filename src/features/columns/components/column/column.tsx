@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
 import { Group, Header } from "@vkontakte/vkui";
 import { Icon16Delete } from "@vkontakte/icons";
-import { useAlertContext } from "../../context/alert-context";
-import { Cards } from "../cards";
+import { Cards } from "../../../../components/cards";
+import { useAlertContext } from "../../../../context/alert-context";
 import * as I from "./interfaces";
 
 const Column: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({

@@ -1,4 +1,4 @@
-import { IColumns } from "../../Interfaces/IColumns";
+import { IColumns } from "./IColumns";
 
 export interface IColumnsInitialState {
   loading: boolean;

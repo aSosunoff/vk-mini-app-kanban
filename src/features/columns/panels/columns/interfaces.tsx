@@ -1,6 +1,6 @@
 import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
-import { IColumns } from "../../../Interfaces/IColumns";
-import { IDesks } from "../../../features/desks/interfaces/IDesks";
+import { IDesks } from "../../../desks/interfaces/IDesks";
+import { IColumns } from "../../interfaces/IColumns";
 
 export interface StateProps {
   desks: IDesks[];

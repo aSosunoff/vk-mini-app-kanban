@@ -1,4 +1,4 @@
-import { IColumns } from "../../Interfaces/IColumns";
+import { IColumns } from "../../interfaces/IColumns";
 
 export interface StateProps {}
 
