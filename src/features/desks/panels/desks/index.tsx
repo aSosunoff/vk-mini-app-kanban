@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 
 import { Desks } from "./desks";
-import { RootState } from "../../../redux/reducers";
+import { RootState } from "../../../../redux/reducers";
 import * as I from "./interfaces";
-import { fetchDesks, addedDesk } from "../../../redux/actions/desks-action";
+import { fetchDesks, addedDesk } from "../../actions";
 
 const mapStateToProps = ({ desks }: RootState): I.StateProps => ({
   desks: desks?.list ?? [],

@@ -1,4 +1,4 @@
-import { IDesks } from "../../Interfaces/IDesks";
+import { IDesks } from "../../../../features/desks/interfaces/IDesks";
 
 export interface StateProps {}
 

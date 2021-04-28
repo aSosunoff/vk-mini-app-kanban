@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect } from "react";
 import { Group, List, Panel, PanelHeaderSimple } from "@vkontakte/vkui";
 
-import { useSnackbarContext } from "../../../context/snackbar-context";
-import { CreateForm } from "../../create-form";
-import { DeskItem } from "../../desk-item";
+import { useSnackbarContext } from "../../../../context/snackbar-context";
+import { CreateForm } from "../../../../components/create-form";
+import { DeskItem } from "../../components/desk-item";
 import * as I from "./interfaces";
 
 const Desks: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({

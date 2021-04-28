@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
-import { Desks } from "../panels/desks";
+import { Desks } from "../../features/desks/panels/desks";
 import { Columns } from "../panels/columns";
 import { useAlertContext } from "../../context/alert-context";
 import { panel } from "../../hooks/useActivePanel";

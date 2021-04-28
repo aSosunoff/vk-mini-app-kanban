@@ -1,11 +1,11 @@
 import React, { useCallback } from "react";
 import { Cell } from "@vkontakte/vkui";
 import { Icon24DeleteOutline } from "@vkontakte/icons";
-import { useAlertContext } from "../../context/alert-context";
+import { useAlertContext } from "../../../../context/alert-context";
 import * as I from "./interfaces";
-import { useSnackbarContext } from "../../context/snackbar-context";
+import { useSnackbarContext } from "../../../../context/snackbar-context";
 import { useRoute } from "react-router5";
-import { panel } from "../../hooks/useActivePanel";
+import { panel } from "../../../../hooks/useActivePanel";
 
 export const DeskItem: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
   children,

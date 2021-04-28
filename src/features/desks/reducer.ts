@@ -1,8 +1,8 @@
 import produce, { Draft } from "immer";
-import { reducer } from "../handlers";
-import { Handlers } from "../handlers-type";
-import { IDeskInitialState } from "../interfaces/IDeskInitialState";
-import { ActionTypes_Desk } from "../types";
+import { reducer } from "../../redux/handlers";
+import { Handlers } from "../../redux/handlers-type";
+import { IDeskInitialState } from "./interfaces/IDeskInitialState";
+import { ActionTypes_Desk } from "./types";
 
 const initialState: IDeskInitialState = {
   loading: false,

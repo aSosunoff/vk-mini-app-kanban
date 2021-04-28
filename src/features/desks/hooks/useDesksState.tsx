@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { createDesk, deleteDesk, getDesks } from "../components/actions";
-import { useSnackbarContext } from "../context/snackbar-context";
-import { IDesks } from "../Interfaces/IDesks";
+import { createDesk, deleteDesk, getDesks } from "../api";
+import { useSnackbarContext } from "../../../context/snackbar-context";
+import { IDesks } from "../interfaces/IDesks";
 
 export const useDesksState = () => {
   const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();

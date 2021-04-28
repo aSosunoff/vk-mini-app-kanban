@@ -1,4 +1,4 @@
-import { IDesks } from "../../Interfaces/IDesks";
+import { IDesks } from "../interfaces/IDesks";
 
 export interface IDeskInitialState {
   loading: boolean;

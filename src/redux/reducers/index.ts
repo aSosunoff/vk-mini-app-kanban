@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import desksReducer from "./desksReducer";
+import desksReducer from "../../features/desks/reducer";
 import columnsReducer from "./columnsReducer";
 
 const rootReducer = combineReducers({

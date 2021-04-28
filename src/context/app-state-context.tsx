@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { useActivePanel } from "../hooks/useActivePanel";
 import { useColumnsState } from "../hooks/useColumnsState";
-import { useDesksState } from "../hooks/useDesksState";
+import { useDesksState } from "../features/desks/hooks/useDesksState";
 
 interface IAppStateContext
   extends ReturnType<typeof useDesksState>,
