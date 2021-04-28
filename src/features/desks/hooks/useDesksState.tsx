@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { createDesk, deleteDesk, getDesks } from "../api";
+import { createDesk, deleteDesk, getDesks } from "../../../api/desksApi";
 import { useSnackbarContext } from "../../../context/snackbar-context";
 import { IDesks } from "../interfaces/IDesks";
 

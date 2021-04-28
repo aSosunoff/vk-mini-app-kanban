@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { createDesk, deleteDesk, getDesks } from "./api";
+import { createDesk, deleteDesk, getDesks } from "../../api/desksApi";
 import { IDesks } from "./interfaces/IDesks";
 import { GetType } from "../../app/redux/handlers-type";
 import { ActionTypes_Desk } from "./types";

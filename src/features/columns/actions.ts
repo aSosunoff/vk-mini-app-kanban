@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { createColumn, getColumns, deleteColumn } from "./api";
+import { createColumn, getColumns, deleteColumn } from "../../api/columnsApi";
 import { IColumns } from "./interfaces/IColumns";
 import { GetType } from "../../app/redux/handlers-type";
 import { ActionTypes_Columns } from "./types";

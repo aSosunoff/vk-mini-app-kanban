@@ -1,7 +1,6 @@
 import firebase from "firebase/app";
-import { IColumns } from "./interfaces/IColumns";
+import { IColumns } from "../features/columns/interfaces/IColumns";
 
-/* Column */
 export const getColumns = async (deskId: string) => {
   const db = firebase.firestore();
 
@@ -42,4 +41,3 @@ export const deleteColumn = async (id: string) => {
 
   await db.collection("columns").doc(id).delete();
 };
-/* Column */

@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { useSnackbarContext } from "../../../context/snackbar-context";
-import { createColumn, deleteColumn } from "../api";
+import { createColumn, deleteColumn } from "../../../api/columnsApi";
 import { IColumns } from "../interfaces/IColumns";
 
 export const useColumnsState = () => {

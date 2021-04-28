@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import { IDesks } from "./interfaces/IDesks";
+import { IDesks } from "../features/desks/interfaces/IDesks";
 
 export const createDesk = async (name: string) => {
   const db = firebase.firestore();
