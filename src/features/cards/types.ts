@@ -15,6 +15,6 @@ export type ActionTypes_Cards = {
       card: ICard;
     };
   };
-  /* CARDS_REMOVE: { payload: string }; */
+  CARDS_REMOVE: { payload: ICard };
   CARDS_CLEAR_ERROR: void;
 };

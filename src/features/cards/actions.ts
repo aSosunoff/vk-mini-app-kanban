@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { createCard, getCards } from "../../api/cardsApi";
+import { createCard, deleteCard, getCards } from "../../api/cardsApi";
 import { ICard } from "./interfaces/ICard";
 import { GetType } from "../../app/redux/handlers-type";
 import { ActionTypes_Cards } from "./types";
@@ -37,13 +37,12 @@ const create = (columnId: string, card: ICard): GetType<ActionTypes_Cards, "CARD
   };
 };
 
-/* 
-const remove = (payload: string): GetType<ActionTypes_Columns, "COLUMNS_REMOVE"> => {
+const remove = (payload: ICard): GetType<ActionTypes_Cards, "CARDS_REMOVE"> => {
   return {
-    type: "COLUMNS_REMOVE",
+    type: "CARDS_REMOVE",
     payload,
   };
-}; */
+};
 
 export const fetchCards = (columnId: string) => async (dispatch: Dispatch) => {
   try {
@@ -67,12 +66,12 @@ export const addedCard = (columnId: string, name: string) => async (dispatch: Di
   }
 };
 
-/* export const removeColumn = (desk: IColumns) => async (dispatch: Dispatch) => {
+export const removeCard = (card: ICard) => async (dispatch: Dispatch) => {
   try {
-    await deleteColumn(desk.id);
+    await deleteCard(card.id);
 
-    dispatch(remove(desk.id));
+    dispatch(remove(card));
   } catch (error) {
     dispatch(falure(error));
   }
-}; */
+};

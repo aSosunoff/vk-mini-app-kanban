@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 
 import { Cards } from "./cards";
 import { RootState } from "../../../../app/redux/reducers";
-import { fetchCards, addedCard } from "../../actions";
+import { fetchCards, addedCard, removeCard } from "../../actions";
 import * as I from "./interfaces";
 
 const mapStateToProps = (
@@ -15,6 +15,7 @@ const mapStateToProps = (
 const mapDispatchToProps = {
   fetchCards,
   addedCard,
+  removeCard,
 };
 
 const result = connect(mapStateToProps, mapDispatchToProps)(Cards);

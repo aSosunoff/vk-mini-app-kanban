@@ -17,7 +17,9 @@ const handlers: Handlers<ICardsInitialState, ActionTypes_Cards> = {
   },
   CARDS_SUCCESS: (draft, { payload: { columnId, cards } }) => {
     draft.loading = false;
+    
     draft.error = null;
+
     draft.columns = {
       ...draft.columns,
       [columnId]: cards,
@@ -25,6 +27,7 @@ const handlers: Handlers<ICardsInitialState, ActionTypes_Cards> = {
   },
   CARDS_FAILURE: (draft, action) => {
     draft.error = action.payload;
+    
     draft.loading = false;
   },
   CARDS_CLEAR_ERROR: (draft) => {
@@ -33,10 +36,13 @@ const handlers: Handlers<ICardsInitialState, ActionTypes_Cards> = {
   CARDS_ADD: (draft, { payload: { columnId, card } }) => {
     draft.columns[columnId].push(card);
   },
-  /* CARDS_REMOVE: (draft, action) => {
-    const index = draft.list.findIndex(({ id }) => id === action.payload);
-    draft.list.splice(index, 1);
-  }, */
+  CARDS_REMOVE: (draft, { payload: { columnId, id: deleteId } }) => {
+    draft.columns[columnId];
+
+    const index = draft.columns[columnId].findIndex(({ id }) => id === deleteId);
+
+    draft.columns[columnId].splice(index, 1);
+  },
   DEFAULT: (draft) => draft,
 };
 
