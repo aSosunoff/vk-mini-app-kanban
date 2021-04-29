@@ -1,15 +1,15 @@
 import firebase from "firebase/app";
-import { ICards } from "../features/cards/Interfaces/ICards";
+import { ICard } from "../features/cards/interfaces/ICard";
 
 export const getCards = async (columnId: string) => {
   const db = firebase.firestore();
 
   const querySnapshot = await db.collection("cards").where("columnId", "==", columnId).get();
 
-  const cards: ICards[] = [];
+  const cards: ICard[] = [];
 
   querySnapshot.forEach((doc) => {
-    const { columnId, name } = doc.data() as ICards;
+    const { columnId, name } = doc.data() as ICard;
 
     cards.push({
       id: doc.id,
@@ -33,7 +33,7 @@ export const createCard = async (columnId: string, name: string) => {
 
   const data = doc.data();
 
-  return { ...data, id: doc.id } as ICards;
+  return { ...data, id: doc.id } as ICard;
 };
 
 export const deleteCard = async (id: string) => {

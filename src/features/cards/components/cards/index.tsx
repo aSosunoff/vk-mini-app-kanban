@@ -1,33 +1,13 @@
-import React from "react";
-import { List } from "@vkontakte/vkui";
-import { Card } from "../card";
-import { CreateForm } from "../../../../components/create-form";
-import { useCardsState } from "../../hooks/useCardsState";
+import { connect } from "react-redux";
 
-interface CardsProps {
-  columnId: string;
-}
+import { Cards } from "./cards";
+import { RootState } from "../../../../app/redux/reducers";
+import * as I from "./interfaces";
 
-const Cards: React.FC<CardsProps> = ({ columnId }) => {
-  const { cards, createHandler, deleteHandler } = useCardsState(columnId);
+const mapStateToProps = ({}: RootState): I.StateProps => ({});
 
-  return (
-    <>
-      <List>
-        {cards.map((card) => (
-          <Card key={card.id} onDelete={() => deleteHandler(card)}>
-            {card.name}
-          </Card>
-        ))}
-      </List>
+const mapDispatchToProps = {};
 
-      <CreateForm
-        onSubmit={createHandler}
-        buttonName="Создать карточку"
-        placeholder="введите название карточки"
-      />
-    </>
-  );
-};
+const result = connect(mapStateToProps, mapDispatchToProps)(Cards);
 
-export { Cards };
+export { result as Cards };

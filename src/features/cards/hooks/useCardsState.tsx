@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { createCard, deleteCard, getCards } from "../../../api/cardsApi";
 import { useSnackbarContext } from "../../../context/snackbar-context";
-import { ICards } from "../Interfaces/ICards";
+import { ICard } from "../interfaces/ICard";
 
 export const useCardsState = (columnId: string) => {
   const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
-  const [cards, setCards] = useState<ICards[]>([]);
+  const [cards, setCards] = useState<ICard[]>([]);
 
   useEffect(() => {
     let isFetch = true;
@@ -29,7 +29,7 @@ export const useCardsState = (columnId: string) => {
 
         setSnackbarHandler({
           onClose: clearSnackbarHandler,
-          children: `Добавдена новая колонка "${(data as ICards).name}"`,
+          children: `Добавдена новая колонка "${(data as ICard).name}"`,
         });
       } catch (error) {
         console.error("Error writing document: ", error);
@@ -39,7 +39,7 @@ export const useCardsState = (columnId: string) => {
   );
 
   const deleteHandler = useCallback(
-    async (card: ICards) => {
+    async (card: ICard) => {
       await deleteCard(card.id);
 
       setCards((prev) => prev.filter(({ id }) => id !== card.id));
