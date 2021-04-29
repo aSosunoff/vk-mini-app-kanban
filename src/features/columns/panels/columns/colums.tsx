@@ -19,7 +19,6 @@ const Columns: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
   const { snackbar } = useSnackbarContext();
 
   const { route, router } = useRoute();
-  const goToDesk = useCallback(() => router.navigate(panel.DESKS), [router]);
 
   const activeDesk = useMemo(() => desks.find(({ id }) => id === route?.params?.deskId), [
     desks,
@@ -27,7 +26,9 @@ const Columns: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
   ]);
 
   useEffect(() => {
-    fetchColumns(route.params.deskId);
+    if (route.params.deskId) {
+      fetchColumns(route.params.deskId);
+    }
   }, [route.params.deskId, fetchColumns]);
 
   const createColumn = useCallback(
@@ -41,7 +42,7 @@ const Columns: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
 
   return (
     <Panel id={id} className={styles.columns}>
-      <PanelHeader left={<PanelHeaderBack onClick={goToDesk} />}>
+      <PanelHeader left={<PanelHeaderBack onClick={() => router.navigate(panel.DESKS)} />}>
         Доска - {activeDesk?.name}
       </PanelHeader>
 

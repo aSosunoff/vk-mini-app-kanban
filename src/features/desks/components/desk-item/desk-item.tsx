@@ -17,9 +17,6 @@ export const DeskItem: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = (
   const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
   const { router } = useRoute();
-  const goToColumn = useCallback((deskId: string) => router.navigate(panel.COLUMNS, { deskId }), [
-    router,
-  ]);
 
   const removeDeskHandler = useCallback(async () => {
     await removeDesk(desk);
@@ -61,7 +58,7 @@ export const DeskItem: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = (
     <Cell
       expandable
       after={<Icon24DeleteOutline onClick={question} />}
-      onClick={() => goToColumn(desk.id)}
+      onClick={() => router.navigate(panel.COLUMNS, { deskId: desk.id })}
     >
       {children}
     </Cell>
