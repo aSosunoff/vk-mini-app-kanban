@@ -30,10 +30,6 @@ const App: React.FC<{ hasError: boolean }> = ({ hasError }) => {
     }
   }, [hasError, setPopoutHandler, clearPopoutHandler]);
 
-  useEffect(() => {
-    console.log(route.name);
-  }, [route.name]);
-
   return (
     <View activePanel={route.name} popout={popout}>
       <Desks id={panel.DESKS} />

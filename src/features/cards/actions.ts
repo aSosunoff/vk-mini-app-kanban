@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { getCards } from "../../api/cardsApi";
+import { createCard, getCards } from "../../api/cardsApi";
 import { ICard } from "./interfaces/ICard";
 import { GetType } from "../../app/redux/handlers-type";
 import { ActionTypes_Cards } from "./types";
@@ -27,13 +27,17 @@ const falure = (payload: any): GetType<ActionTypes_Cards, "CARDS_FAILURE"> => {
   };
 };
 
-/* const create = (payload: IColumns): GetType<ActionTypes_Columns, "COLUMNS_ADD"> => {
+const create = (columnId: string, card: ICard): GetType<ActionTypes_Cards, "CARDS_ADD"> => {
   return {
-    type: "COLUMNS_ADD",
-    payload,
+    type: "CARDS_ADD",
+    payload: {
+      columnId,
+      card,
+    },
   };
 };
 
+/* 
 const remove = (payload: string): GetType<ActionTypes_Columns, "COLUMNS_REMOVE"> => {
   return {
     type: "COLUMNS_REMOVE",
@@ -53,17 +57,17 @@ export const fetchCards = (columnId: string) => async (dispatch: Dispatch) => {
   }
 };
 
-/* export const addedColumns = (deskId: string, name: string) => async (dispatch: Dispatch) => {
+export const addedCard = (columnId: string, name: string) => async (dispatch: Dispatch) => {
   try {
-    const column = await createColumn(deskId, name);
+    const card = await createCard(columnId, name);
 
-    dispatch(create(column));
+    dispatch(create(columnId, card));
   } catch (error) {
     dispatch(falure(error));
   }
 };
 
-export const removeColumn = (desk: IColumns) => async (dispatch: Dispatch) => {
+/* export const removeColumn = (desk: IColumns) => async (dispatch: Dispatch) => {
   try {
     await deleteColumn(desk.id);
 

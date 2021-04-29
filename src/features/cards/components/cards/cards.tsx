@@ -7,6 +7,7 @@ import * as I from "./interfaces";
 
 const Cards: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
   fetchCards,
+  addedCard,
   columnId,
   cards,
 }) => {
@@ -27,7 +28,7 @@ const Cards: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
       </List>
 
       <CreateForm
-        onSubmit={() => /* createHandler */ Promise.resolve()}
+        onSubmit={(name) => addedCard(columnId, name)}
         buttonName="Создать карточку"
         placeholder="введите название карточки"
       />

@@ -9,7 +9,12 @@ export type ActionTypes_Cards = {
     };
   };
   CARDS_FAILURE: { payload: any };
-  /* CARDS_ADD: { payload: ICard }; */
+  CARDS_ADD: {
+    payload: {
+      columnId: string;
+      card: ICard;
+    };
+  };
   /* CARDS_REMOVE: { payload: string }; */
   CARDS_CLEAR_ERROR: void;
 };

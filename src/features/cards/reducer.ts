@@ -15,12 +15,12 @@ const handlers: Handlers<ICardsInitialState, ActionTypes_Cards> = {
     draft.loading = true;
     draft.error = null;
   },
-  CARDS_SUCCESS: (draft, action) => {
+  CARDS_SUCCESS: (draft, { payload: { columnId, cards } }) => {
     draft.loading = false;
     draft.error = null;
     draft.columns = {
       ...draft.columns,
-      [action.payload.columnId]: action.payload.cards,
+      [columnId]: cards,
     };
   },
   CARDS_FAILURE: (draft, action) => {
@@ -30,9 +30,9 @@ const handlers: Handlers<ICardsInitialState, ActionTypes_Cards> = {
   CARDS_CLEAR_ERROR: (draft) => {
     draft.error = null;
   },
-  /* CARDS_ADD: (draft, action) => {
-    draft.list.push(action.payload);
-  }, */
+  CARDS_ADD: (draft, { payload: { columnId, card } }) => {
+    draft.columns[columnId].push(card);
+  },
   /* CARDS_REMOVE: (draft, action) => {
     const index = draft.list.findIndex(({ id }) => id === action.payload);
     draft.list.splice(index, 1);
