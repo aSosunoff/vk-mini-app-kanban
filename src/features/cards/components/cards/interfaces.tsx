@@ -1,6 +1,12 @@
-export interface StateProps {}
+import { ICard } from "../../interfaces/ICard";
 
-export interface DispatchProps {}
+export interface StateProps {
+  cards: ICard[];
+}
+
+export interface DispatchProps {
+  fetchCards: (columnId: string) => void;
+}
 
 export interface OwnProps {
   columnId: string;

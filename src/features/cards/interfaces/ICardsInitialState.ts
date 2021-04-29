@@ -2,6 +2,8 @@ import { ICard } from "./ICard";
 
 export interface ICardsInitialState {
   loading: boolean;
-  list: Array<ICard>;
+  columns: {
+    [columnId: string]: ICard[];
+  };
   error: any;
 }

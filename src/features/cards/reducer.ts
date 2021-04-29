@@ -6,7 +6,7 @@ import { ActionTypes_Cards } from "./types";
 
 const initialState: ICardsInitialState = {
   loading: false,
-  list: [],
+  columns: {} as ICardsInitialState["columns"],
   error: null,
 };
 
@@ -18,7 +18,10 @@ const handlers: Handlers<ICardsInitialState, ActionTypes_Cards> = {
   CARDS_SUCCESS: (draft, action) => {
     draft.loading = false;
     draft.error = null;
-    draft.list = action.payload;
+    draft.columns = {
+      ...draft.columns,
+      [action.payload.columnId]: action.payload.cards,
+    };
   },
   CARDS_FAILURE: (draft, action) => {
     draft.error = action.payload;
@@ -27,13 +30,13 @@ const handlers: Handlers<ICardsInitialState, ActionTypes_Cards> = {
   CARDS_CLEAR_ERROR: (draft) => {
     draft.error = null;
   },
-  CARDS_ADD: (draft, action) => {
+  /* CARDS_ADD: (draft, action) => {
     draft.list.push(action.payload);
-  },
-  CARDS_REMOVE: (draft, action) => {
+  }, */
+  /* CARDS_REMOVE: (draft, action) => {
     const index = draft.list.findIndex(({ id }) => id === action.payload);
     draft.list.splice(index, 1);
-  },
+  }, */
   DEFAULT: (draft) => draft,
 };
 
