@@ -6,7 +6,7 @@ import { ActionTypes_Columns } from "./types";
 
 const initialState: IColumnsInitialState = {
   loading: false,
-  columns: [],
+  columns: {},
   error: null,
 };
 
@@ -18,7 +18,13 @@ const handlers: Handlers<IColumnsInitialState, ActionTypes_Columns> = {
   COLUMNS_SUCCESS: (draft, action) => {
     draft.loading = false;
     draft.error = null;
-    draft.columns = action.payload;
+    draft.columns = action.payload.reduce(
+      (result, column) => ({
+        ...result,
+        [column.id]: { column, cards: [] },
+      }),
+      {}
+    );
   },
   COLUMNS_FAILURE: (draft, action) => {
     draft.error = action.payload;
@@ -28,11 +34,13 @@ const handlers: Handlers<IColumnsInitialState, ActionTypes_Columns> = {
     draft.error = null;
   },
   COLUMNS_ADD: (draft, action) => {
-    draft.columns.push(action.payload);
+    draft.columns[action.payload.id] = {
+      column: action.payload,
+      cards: [],
+    };
   },
   COLUMNS_REMOVE: (draft, action) => {
-    const index = draft.columns.findIndex(({ id }) => id === action.payload);
-    draft.columns.splice(index, 1);
+    delete draft.columns[action.payload];
   },
   DEFAULT: (draft) => draft,
 };

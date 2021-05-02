@@ -1,12 +1,12 @@
-import { IColumns } from "../../interfaces/IColumns";
+import { IColumn } from "../../interfaces/IColumns";
 
 export interface StateProps {}
 
 export interface DispatchProps {
-  removeColumn: (column: IColumns) => void;
+  removeColumn: (column: IColumn) => void;
 }
 
 export interface OwnProps {
-  column: IColumns;
+  column: IColumn;
   children?: React.ReactNode;
 }

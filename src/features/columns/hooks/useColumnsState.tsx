@@ -1,14 +1,14 @@
 import { useCallback, useState } from "react";
 import { useSnackbarContext } from "../../../context/snackbar-context";
 import { createColumn, deleteColumn } from "../../../api/columnsApi";
-import { IColumns } from "../interfaces/IColumns";
+import { IColumn } from "../interfaces/IColumns";
 
 export const useColumnsState = () => {
   const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
-  const [columns, setColumns] = useState<IColumns[]>([]);
+  const [columns, setColumns] = useState<IColumn[]>([]);
 
-  const setColumnsHandler = useCallback((columns: IColumns[]) => setColumns(() => columns), []);
+  const setColumnsHandler = useCallback((columns: IColumn[]) => setColumns(() => columns), []);
 
   const createColumnHandler = useCallback(
     async (deskId: string, name: string) => {
@@ -19,7 +19,7 @@ export const useColumnsState = () => {
 
         setSnackbarHandler({
           onClose: clearSnackbarHandler,
-          children: `Добавдена новая колонка "${(data as IColumns).name}"`,
+          children: `Добавдена новая колонка "${(data as IColumn).name}"`,
         });
       } catch (error) {
         console.error("Error writing document: ", error);
@@ -29,7 +29,7 @@ export const useColumnsState = () => {
   );
 
   const deleteColumnHandler = useCallback(
-    async (column: IColumns) => {
+    async (column: IColumn) => {
       try {
         await deleteColumn(column.id);
 

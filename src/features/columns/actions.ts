@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
 import { createColumn, getColumns, deleteColumn } from "../../api/columnsApi";
-import { IColumns } from "./interfaces/IColumns";
+import { IColumn } from "./interfaces/IColumns";
 import { GetType } from "../../app/redux/handlers-type";
 import { ActionTypes_Columns } from "./types";
 
-const success = (payload: IColumns[]): GetType<ActionTypes_Columns, "COLUMNS_SUCCESS"> => {
+const success = (payload: IColumn[]): GetType<ActionTypes_Columns, "COLUMNS_SUCCESS"> => {
   return {
     type: "COLUMNS_SUCCESS",
     payload,
@@ -24,7 +24,7 @@ const falure = (payload: any): GetType<ActionTypes_Columns, "COLUMNS_FAILURE"> =
   };
 };
 
-const create = (payload: IColumns): GetType<ActionTypes_Columns, "COLUMNS_ADD"> => {
+const create = (payload: IColumn): GetType<ActionTypes_Columns, "COLUMNS_ADD"> => {
   return {
     type: "COLUMNS_ADD",
     payload,
@@ -60,7 +60,7 @@ export const addedColumns = (deskId: string, name: string) => async (dispatch: D
   }
 };
 
-export const removeColumn = (desk: IColumns) => async (dispatch: Dispatch) => {
+export const removeColumn = (desk: IColumn) => async (dispatch: Dispatch) => {
   try {
     await deleteColumn(desk.id);
 

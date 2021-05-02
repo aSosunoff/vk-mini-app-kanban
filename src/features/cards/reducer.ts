@@ -6,7 +6,7 @@ import { ActionTypes_Cards } from "./types";
 
 const initialState: ICardsInitialState = {
   loading: false,
-  columns: {} as ICardsInitialState["columns"],
+  columns: {},
   error: null,
 };
 
@@ -17,7 +17,7 @@ const handlers: Handlers<ICardsInitialState, ActionTypes_Cards> = {
   },
   CARDS_SUCCESS: (draft, { payload: { columnId, cards } }) => {
     draft.loading = false;
-    
+
     draft.error = null;
 
     draft.columns = {
@@ -27,7 +27,7 @@ const handlers: Handlers<ICardsInitialState, ActionTypes_Cards> = {
   },
   CARDS_FAILURE: (draft, action) => {
     draft.error = action.payload;
-    
+
     draft.loading = false;
   },
   CARDS_CLEAR_ERROR: (draft) => {

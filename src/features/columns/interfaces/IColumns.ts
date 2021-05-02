@@ -1,4 +1,4 @@
-export interface IColumns {
+export interface IColumn {
   id: string;
   deskId: string;
   name: string;
