@@ -7,7 +7,7 @@ import { fetchColumns, addedColumns } from "../../actions";
 
 const mapStateToProps = ({ desks, columns }: RootState): I.StateProps => ({
   desks: desks?.list ?? [],
-  columns: columns?.list ?? [],
+  columns: columns?.columns ?? [],
 });
 
 const mapDispatchToProps = {
