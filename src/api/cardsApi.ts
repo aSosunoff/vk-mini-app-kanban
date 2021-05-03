@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import { ICard } from "../features/cards/interfaces/ICard";
+import { ICard } from "../features/columns/interfaces/ICard";
 
 export const getCards = async (columnId: string) => {
   const db = firebase.firestore();

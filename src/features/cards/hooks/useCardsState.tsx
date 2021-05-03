@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { createCard, deleteCard, getCards } from "../../../api/cardsApi";
 import { useSnackbarContext } from "../../../context/snackbar-context";
-import { ICard } from "../interfaces/ICard";
+import { ICard } from "../../columns/interfaces/ICard";
 
 export const useCardsState = (columnId: string) => {
   const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();

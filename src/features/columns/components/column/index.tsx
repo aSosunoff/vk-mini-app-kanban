@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Column } from "./column";
 import { RootState } from "../../../../app/redux/reducers";
 import * as I from "./interfaces";
-import { removeColumn } from "../../actions";
+import { removeColumn } from "../../actions/columnActions";
 
 const mapStateToProps = ({}: RootState): I.StateProps => ({});
 

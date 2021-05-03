@@ -1,10 +1,13 @@
 import { Dispatch } from "redux";
-import { createCard, deleteCard, getCards } from "../../api/cardsApi";
-import { ICard } from "./interfaces/ICard";
-import { GetType } from "../../app/redux/handlers-type";
-import { ActionTypes_Cards } from "./types";
+import { createCard, deleteCard, getCards } from "../../../api/cardsApi";
+import { ICard } from "../interfaces/ICard";
+import { GetType } from "../../../app/redux/handlers-type";
+import { ActionTypes_Columns } from "../types";
 
-const success = (columnId: string, cards: ICard[]): GetType<ActionTypes_Cards, "CARDS_SUCCESS"> => {
+const success = (
+  columnId: string,
+  cards: ICard[]
+): GetType<ActionTypes_Columns, "CARDS_SUCCESS"> => {
   return {
     type: "CARDS_SUCCESS",
     payload: {
@@ -14,20 +17,20 @@ const success = (columnId: string, cards: ICard[]): GetType<ActionTypes_Cards, "
   };
 };
 
-const request = (): GetType<ActionTypes_Cards, "CARDS_REQUEST"> => {
+const request = (): GetType<ActionTypes_Columns, "CARDS_REQUEST"> => {
   return {
     type: "CARDS_REQUEST",
   };
 };
 
-const falure = (payload: any): GetType<ActionTypes_Cards, "CARDS_FAILURE"> => {
+const falure = (payload: any): GetType<ActionTypes_Columns, "CARDS_FAILURE"> => {
   return {
     type: "CARDS_FAILURE",
     payload,
   };
 };
 
-const create = (columnId: string, card: ICard): GetType<ActionTypes_Cards, "CARDS_ADD"> => {
+const create = (columnId: string, card: ICard): GetType<ActionTypes_Columns, "CARDS_ADD"> => {
   return {
     type: "CARDS_ADD",
     payload: {
@@ -37,7 +40,7 @@ const create = (columnId: string, card: ICard): GetType<ActionTypes_Cards, "CARD
   };
 };
 
-const remove = (payload: ICard): GetType<ActionTypes_Cards, "CARDS_REMOVE"> => {
+const remove = (payload: ICard): GetType<ActionTypes_Columns, "CARDS_REMOVE"> => {
   return {
     type: "CARDS_REMOVE",
     payload,

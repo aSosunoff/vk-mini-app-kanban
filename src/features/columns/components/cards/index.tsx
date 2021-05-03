@@ -2,14 +2,14 @@ import { connect } from "react-redux";
 
 import { Cards } from "./cards";
 import { RootState } from "../../../../app/redux/reducers";
-import { fetchCards, addedCard, removeCard } from "../../actions";
+import { fetchCards, addedCard, removeCard } from "../../actions/cardActions";
 import * as I from "./interfaces";
 
 const mapStateToProps = (
-  { cards }: RootState,
+  { columns }: RootState,
   { columnId }: { columnId: string }
 ): I.StateProps => ({
-  cards: cards?.columns[columnId] ?? [],
+  cards: columns?.column.list[columnId].cards ?? [],
 });
 
 const mapDispatchToProps = {

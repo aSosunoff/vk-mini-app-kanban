@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
 import { Group, Header } from "@vkontakte/vkui";
 import { Icon16Delete } from "@vkontakte/icons";
-import { Cards } from "../../../cards/components/cards";
 import { useAlertContext } from "../../../../context/alert-context";
 import * as I from "./interfaces";
+import { Cards } from "../cards";
 
 const Column: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
   column,

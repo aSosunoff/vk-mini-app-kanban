@@ -1,13 +1,19 @@
-import { ICard } from "../../cards/interfaces/ICard";
+import { ICard } from "./ICard";
 import { IColumn } from "./IColumns";
 
 export interface IColumnsInitialState {
-  loading: boolean;
-  columns: {
-    [columnId: string]: {
-      column: IColumn;
-      cards: ICard[];
+  column: {
+    loading: boolean;
+    list: {
+      [columnId: string]: {
+        column: IColumn;
+        cards: ICard[];
+      };
     };
+    error: any;
   };
-  error: any;
+  card: {
+    loading: boolean;
+    error: any;
+  };
 }

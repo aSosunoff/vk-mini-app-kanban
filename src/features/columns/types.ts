@@ -1,3 +1,4 @@
+import { ICard } from "./interfaces/ICard";
 import { IColumn } from "./interfaces/IColumns";
 
 export type ActionTypes_Columns = {
@@ -7,4 +8,21 @@ export type ActionTypes_Columns = {
   COLUMNS_ADD: { payload: IColumn };
   COLUMNS_REMOVE: { payload: string };
   COLUMNS_CLEAR_ERROR: void;
+
+  CARDS_REQUEST: void;
+  CARDS_SUCCESS: {
+    payload: {
+      columnId: string;
+      cards: ICard[];
+    };
+  };
+  CARDS_FAILURE: { payload: any };
+  CARDS_ADD: {
+    payload: {
+      columnId: string;
+      card: ICard;
+    };
+  };
+  CARDS_REMOVE: { payload: ICard };
+  CARDS_CLEAR_ERROR: void;
 };
