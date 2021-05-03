@@ -8,14 +8,13 @@ import { Cards } from "../cards";
 const Column: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
   column,
   removeColumn,
-  children,
 }) => {
   const { setPopoutHandler, clearPopoutHandler } = useAlertContext();
 
   const question = useCallback(() => {
     setPopoutHandler({
       header: "Внимание",
-      text: `Вы уверены в удалении доски ${children}`,
+      text: `Вы уверены в удалении доски ${column.name}`,
       actions: [
         {
           title: "Да",
@@ -32,13 +31,13 @@ const Column: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
       actionsLayout: "vertical",
       onClose: clearPopoutHandler,
     });
-  }, [children, clearPopoutHandler, column, removeColumn, setPopoutHandler]);
+  }, [clearPopoutHandler, column, removeColumn, setPopoutHandler]);
 
   return (
     <Group
       header={
         <Header mode="secondary" aside={<Icon16Delete onClick={question} />}>
-          {children}
+          {column.name}
         </Header>
       }
     >

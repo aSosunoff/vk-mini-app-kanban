@@ -27,6 +27,7 @@ const Columns: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
 
   useEffect(() => {
     if (route.params.deskId) {
+      console.log(1);
       fetchColumns(route.params.deskId);
     }
   }, [route.params.deskId, fetchColumns]);
@@ -48,9 +49,7 @@ const Columns: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
 
       <Gallery slideWidth="100%" align="center" className={styles.gallery} bullets="dark">
         {columns.map((column) => (
-          <Column key={column.id} column={column}>
-            {column.name}
-          </Column>
+          <Column key={column.id} column={column} />
         ))}
 
         <Group>
