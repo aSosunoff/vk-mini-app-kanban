@@ -3,9 +3,8 @@ import { List } from "@vkontakte/vkui";
 import { Card } from "../card";
 import { CreateForm } from "../../../../components/create-form";
 import { fetchCards, addedCard } from "../../actions/cardActions";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../app/redux/reducers";
-import { ICard } from "../../interfaces/ICard";
+import { useDispatch } from "react-redux";
+import { useCardsSelectors } from "../../selectors";
 
 interface CardsProps {
   columnId: string;
@@ -14,9 +13,7 @@ interface CardsProps {
 const Cards: React.FC<CardsProps> = ({ columnId }) => {
   const dispatch = useDispatch();
 
-  const cards = useSelector<RootState, ICard[]>(
-    ({ columns }) => columns?.column.list[columnId].cards ?? []
-  );
+  const cards = useCardsSelectors(columnId);
 
   useEffect(() => {
     dispatch(fetchCards(columnId));
