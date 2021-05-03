@@ -1,23 +1,63 @@
-import { connect } from "react-redux";
+import React, { useCallback, useEffect } from "react";
+import { Group, List, Panel, PanelHeaderSimple } from "@vkontakte/vkui";
 
-import { Desks } from "./desks";
-import { RootState } from "../../../../app/redux/reducers";
-import * as I from "./interfaces";
+import { useSnackbarContext } from "../../../../context/snackbar-context";
+import { CreateForm } from "../../../../components/create-form";
+import { DeskItem } from "../../components/desk-item";
+import { useDispatch } from "react-redux";
 import { fetchDesks, addedDesk } from "../../actions";
 import { clearColumns } from "../../../columns/actions/columnActions";
+import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
+import { useDesksSelector } from "../../selectors";
 
-const mapStateToProps = ({ desks }: RootState): I.StateProps => ({
-  desks: desks?.list ?? [],
-  loading: desks?.loading ?? false,
-  error: desks?.error,
-});
+interface DesksProps extends Pick<PanelProps, "id"> {}
 
-const mapDispatchToProps = {
-  fetchDesks,
-  addedDesk,
-  clearColumns,
+const Desks: React.FC<DesksProps> = ({ id }) => {
+  const dispatch = useDispatch();
+
+  const desks = useDesksSelector();
+
+  const { snackbar, setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
+
+  useEffect(() => {
+    dispatch(fetchDesks());
+    dispatch(clearColumns());
+  }, [dispatch]);
+
+  const addedDeskHandler = useCallback(
+    async (name: string) => {
+      await dispatch(addedDesk(name));
+
+      setSnackbarHandler({
+        onClose: clearSnackbarHandler,
+        children: `Добавдена новая доска "${name}"`,
+      });
+    },
+    [dispatch, clearSnackbarHandler, setSnackbarHandler]
+  );
+
+  return (
+    <Panel id={id}>
+      <PanelHeaderSimple>Мои доски</PanelHeaderSimple>
+
+      <CreateForm
+        onSubmit={addedDeskHandler}
+        buttonName="Создать доску"
+        placeholder="введите название доски"
+      />
+
+      {desks && desks.length ? (
+        <Group>
+          <List>
+            {desks.map((desk) => (
+              <DeskItem key={desk.id} desk={desk} />
+            ))}
+          </List>
+        </Group>
+      ) : null}
+      {snackbar}
+    </Panel>
+  );
 };
 
-const result = connect(mapStateToProps, mapDispatchToProps)(Desks);
-
-export { result as Desks };
+export { Desks };
