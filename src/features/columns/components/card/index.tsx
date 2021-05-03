@@ -1,41 +1,16 @@
-import React, { useCallback } from "react";
-import { Cell } from "@vkontakte/vkui";
-import { useAlertContext } from "../../../../context/alert-context";
+import { connect } from "react-redux";
 
-interface CardProps {
-  onDelete: () => Promise<void>;
-}
+import { Card } from "./card";
+import { RootState } from "../../../../app/redux/reducers";
+import { removeCard } from "../../actions/cardActions";
+import * as I from "./interfaces";
 
-const Card: React.FC<CardProps> = ({ children, onDelete }) => {
-  const { setPopoutHandler, clearPopoutHandler } = useAlertContext();
+const mapStateToProps = ({}: RootState): I.StateProps => ({});
 
-  const question = useCallback(() => {
-    setPopoutHandler({
-      header: "Внимание",
-      text: `Вы уверены в удалении карточки ${children}`,
-      actions: [
-        {
-          title: "Да",
-          mode: "destructive",
-          autoclose: true,
-          action: onDelete,
-        },
-        {
-          title: "Передумал",
-          mode: "cancel",
-          autoclose: true,
-        },
-      ],
-      actionsLayout: "vertical",
-      onClose: clearPopoutHandler,
-    });
-  }, [children, clearPopoutHandler, onDelete, setPopoutHandler]);
-
-  return (
-    <Cell removable onRemove={question}>
-      {children}
-    </Cell>
-  );
+const mapDispatchToProps = {
+  removeCard,
 };
 
-export { Card };
+const result = connect(mapStateToProps, mapDispatchToProps)(Card);
+
+export { result as Card };

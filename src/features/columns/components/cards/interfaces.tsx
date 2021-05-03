@@ -7,7 +7,6 @@ export interface StateProps {
 export interface DispatchProps {
   fetchCards: (columnId: string) => void;
   addedCard: (columnId: string, name: string) => Promise<void>;
-  removeCard: (card: ICard) => Promise<void>;
 }
 
 export interface OwnProps {

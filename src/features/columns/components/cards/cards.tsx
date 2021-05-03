@@ -7,7 +7,6 @@ import * as I from "./interfaces";
 const Cards: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
   fetchCards,
   addedCard,
-  removeCard,
   columnId,
   cards,
 }) => {
@@ -19,9 +18,7 @@ const Cards: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
     <>
       <List>
         {cards.map((card) => (
-          <Card key={card.id} onDelete={() => removeCard(card)}>
-            {card.name}
-          </Card>
+          <Card key={card.id} card={card} />
         ))}
       </List>
 
