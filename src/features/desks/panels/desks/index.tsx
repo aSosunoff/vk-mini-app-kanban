@@ -4,6 +4,7 @@ import { Desks } from "./desks";
 import { RootState } from "../../../../app/redux/reducers";
 import * as I from "./interfaces";
 import { fetchDesks, addedDesk } from "../../actions";
+import { clearColumns } from "../../../columns/actions/columnActions";
 
 const mapStateToProps = ({ desks }: RootState): I.StateProps => ({
   desks: desks?.list ?? [],
@@ -14,6 +15,7 @@ const mapStateToProps = ({ desks }: RootState): I.StateProps => ({
 const mapDispatchToProps = {
   fetchDesks,
   addedDesk,
+  clearColumns,
 };
 
 const result = connect(mapStateToProps, mapDispatchToProps)(Desks);

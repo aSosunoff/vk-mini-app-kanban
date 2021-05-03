@@ -10,6 +10,7 @@ export interface StateProps {
 export interface DispatchProps {
   fetchDesks: () => void;
   addedDesk: (name: string) => Promise<void>;
+  clearColumns: () => void;
 }
 
 export interface OwnProps extends Pick<PanelProps, "id"> {}

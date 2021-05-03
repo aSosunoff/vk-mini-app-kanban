@@ -8,6 +8,7 @@ export type ActionTypes_Columns = {
   COLUMNS_ADD: { payload: IColumn };
   COLUMNS_REMOVE: { payload: string };
   COLUMNS_CLEAR_ERROR: void;
+  COLUMNS_CLEAR: void;
 
   CARDS_REQUEST: void;
   CARDS_SUCCESS: {

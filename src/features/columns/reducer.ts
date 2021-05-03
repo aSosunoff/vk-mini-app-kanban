@@ -47,6 +47,9 @@ const handlers: Handlers<IColumnsInitialState, ActionTypes_Columns> = {
   COLUMNS_REMOVE: (draft, action) => {
     delete draft.column.list[action.payload];
   },
+  COLUMNS_CLEAR: (draft) => {
+    draft.column.list = initialState.column.list;
+  },
   //#endregion
 
   //#region cards
@@ -79,6 +82,7 @@ const handlers: Handlers<IColumnsInitialState, ActionTypes_Columns> = {
 };
 
 export default produce(
-  (state: Draft<IColumnsInitialState> = initialState, action: any): IColumnsInitialState =>
-    reducer(state, action, handlers)
+  (state: Draft<IColumnsInitialState>, action: any): IColumnsInitialState =>
+    reducer(state, action, handlers),
+  initialState
 );

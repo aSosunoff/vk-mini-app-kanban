@@ -38,6 +38,12 @@ const remove = (payload: string): GetType<ActionTypes_Columns, "COLUMNS_REMOVE">
   };
 };
 
+const clear = (): GetType<ActionTypes_Columns, "COLUMNS_CLEAR"> => {
+  return {
+    type: "COLUMNS_CLEAR",
+  };
+};
+
 export const fetchColumns = (deskId: string) => async (dispatch: Dispatch) => {
   try {
     dispatch(request());
@@ -68,4 +74,8 @@ export const removeColumn = (desk: IColumn) => async (dispatch: Dispatch) => {
   } catch (error) {
     dispatch(falure(error));
   }
+};
+
+export const clearColumns = () => async (dispatch: Dispatch) => {
+  dispatch(clear());
 };

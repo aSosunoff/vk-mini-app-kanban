@@ -10,14 +10,15 @@ const Desks: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
   id,
   fetchDesks,
   addedDesk,
+  clearColumns,
   desks,
 }) => {
   const { snackbar, setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
   useEffect(() => {
-    console.log(1);
+    clearColumns();
     fetchDesks();
-  }, [fetchDesks]);
+  }, [fetchDesks, clearColumns]);
 
   const addedDeskHandler = useCallback(
     async (name: string) => {
