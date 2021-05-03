@@ -15,6 +15,7 @@ const Desks: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
   const { snackbar, setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
   useEffect(() => {
+    console.log(1);
     fetchDesks();
   }, [fetchDesks]);
 
@@ -44,9 +45,7 @@ const Desks: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
         <Group>
           <List>
             {desks.map((desk) => (
-              <DeskItem key={desk.id} desk={desk}>
-                {desk.name}
-              </DeskItem>
+              <DeskItem key={desk.id} desk={desk} />
             ))}
           </List>
         </Group>

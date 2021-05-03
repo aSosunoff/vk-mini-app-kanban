@@ -27,7 +27,6 @@ const Columns: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
 
   useEffect(() => {
     if (route.params.deskId) {
-      console.log(1);
       fetchColumns(route.params.deskId);
     }
   }, [route.params.deskId, fetchColumns]);

@@ -8,7 +8,6 @@ import { useRoute } from "react-router5";
 import { panel } from "../../../../hooks/useActivePanel";
 
 export const DeskItem: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
-  children,
   desk,
   removeDesk,
 }) => {
@@ -33,7 +32,7 @@ export const DeskItem: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = (
 
       setPopoutHandler({
         header: "Внимание",
-        text: `Вы уверены в удалении доски ${children}`,
+        text: `Вы уверены в удалении доски ${desk.name}`,
         actions: [
           {
             title: "Да",
@@ -51,7 +50,7 @@ export const DeskItem: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = (
         onClose: clearPopoutHandler,
       });
     },
-    [children, clearPopoutHandler, removeDeskHandler, setPopoutHandler]
+    [clearPopoutHandler, desk.name, removeDeskHandler, setPopoutHandler]
   );
 
   return (
@@ -60,7 +59,7 @@ export const DeskItem: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = (
       after={<Icon24DeleteOutline onClick={question} />}
       onClick={() => router.navigate(panel.COLUMNS, { deskId: desk.id })}
     >
-      {children}
+      {desk.name}
     </Cell>
   );
 };
