@@ -35,7 +35,15 @@ const App: React.FC<{ hasError: boolean }> = ({ hasError }) => {
     <View activePanel={route.name} popout={popout}>
       <Desks id={panel.DESKS} />
 
-      <Columns id={panel.COLUMNS} />
+      <Panel
+        id={panel.COLUMNS}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Columns />
+      </Panel>
 
       <Panel id={panel.CARD}>
         <Card />

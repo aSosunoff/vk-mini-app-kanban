@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Gallery, Group, Panel, PanelHeader, PanelHeaderBack } from "@vkontakte/vkui";
+import { Gallery, Group, PanelHeader, PanelHeaderBack } from "@vkontakte/vkui";
 
 import { useSnackbarContext } from "../../../../context/snackbar-context";
 import styles from "./columns.module.css";
@@ -10,12 +10,11 @@ import { useRoute } from "react-router5";
 import { panel } from "../../../../hooks/useActivePanel";
 import { fetchColumns, addedColumns } from "../../actions/columnActions";
 import { useDeskSelector } from "../../../desks/selectors";
-import { PanelProps } from "@vkontakte/vkui/dist/components/Panel/Panel";
 import { useColumnsSelectors } from "../../selectors";
 
-interface ColumnsProps extends Pick<PanelProps, "id"> {}
+interface ColumnsProps {}
 
-const Columns: React.FC<ColumnsProps> = ({ id }) => {
+const Columns: React.FC<ColumnsProps> = () => {
   const dispatch = useDispatch();
 
   const { snackbar } = useSnackbarContext();
@@ -42,7 +41,7 @@ const Columns: React.FC<ColumnsProps> = ({ id }) => {
   );
 
   return (
-    <Panel id={id} className={styles.columns}>
+    <>
       <PanelHeader left={<PanelHeaderBack onClick={() => router.navigate(panel.DESKS)} />}>
         Доска - {desk?.name}
       </PanelHeader>
@@ -62,7 +61,7 @@ const Columns: React.FC<ColumnsProps> = ({ id }) => {
       </Gallery>
 
       {snackbar}
-    </Panel>
+    </>
   );
 };
 
