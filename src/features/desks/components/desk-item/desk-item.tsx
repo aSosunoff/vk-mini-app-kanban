@@ -4,8 +4,7 @@ import { Icon24DeleteOutline } from "@vkontakte/icons";
 import { useAlertContext } from "../../../../context/alert-context";
 import * as I from "./interfaces";
 import { useSnackbarContext } from "../../../../context/snackbar-context";
-import { useRoute } from "react-router5";
-import { panel } from "../../../../hooks/useActivePanel";
+import { useActivePanel } from "../../../../hooks/useActivePanel";
 
 export const DeskItem: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = ({
   desk,
@@ -15,7 +14,7 @@ export const DeskItem: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = (
 
   const { setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
-  const { router } = useRoute();
+  const { goToColumn } = useActivePanel();
 
   const removeDeskHandler = useCallback(async () => {
     await removeDesk(desk);
@@ -57,7 +56,7 @@ export const DeskItem: React.FC<I.StateProps & I.DispatchProps & I.OwnProps> = (
     <Cell
       expandable
       after={<Icon24DeleteOutline onClick={question} />}
-      onClick={() => router.navigate(panel.COLUMNS, { deskId: desk.id })}
+      onClick={() => goToColumn(desk.id)}
     >
       {desk.name}
     </Cell>
