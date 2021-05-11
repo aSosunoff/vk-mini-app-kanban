@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import { View } from "@vkontakte/vkui";
+import { Panel, View } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
 import { Desks } from "../features/desks/panels/desks";
 import { Columns } from "../features/columns/panels/columns";
 import { useAlertContext } from "../context/alert-context";
 import { panel } from "../hooks/useActivePanel";
 import { useRoute } from "react-router5";
+import { Card } from "../features/card/panels/card";
 
 const App: React.FC<{ hasError: boolean }> = ({ hasError }) => {
   const { route } = useRoute();
@@ -35,6 +36,10 @@ const App: React.FC<{ hasError: boolean }> = ({ hasError }) => {
       <Desks id={panel.DESKS} />
 
       <Columns id={panel.COLUMNS} />
+
+      <Panel id={panel.CARD}>
+        <Card />
+      </Panel>
     </View>
   );
 };
