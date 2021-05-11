@@ -33,7 +33,9 @@ const App: React.FC<{ hasError: boolean }> = ({ hasError }) => {
 
   return (
     <View activePanel={route.name} popout={popout}>
-      <Desks id={panel.DESKS} />
+      <Panel id={panel.DESKS}>
+        <Desks />
+      </Panel>
 
       <Panel
         id={panel.COLUMNS}
