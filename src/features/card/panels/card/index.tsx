@@ -1,15 +1,19 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { PanelHeader, PanelHeaderBack } from "@vkontakte/vkui";
 
 import { useSnackbarContext } from "../../../../context/snackbar-context";
-import styles from "./card.module.css";
+/* import styles from "./card.module.css"; */
 import { useActivePanel } from "../../../../hooks/useActivePanel";
 import { useRoute } from "react-router5";
 import { useCardSelectors } from "../../../columns/selectors";
+import { clearColumns } from "../../../columns/actions/columnActions";
 
 interface CardProps {}
 
 const Card: React.FC<CardProps> = ({}) => {
+  const dispatch = useDispatch();
+
   const { snackbar } = useSnackbarContext();
 
   const { goToColumn } = useActivePanel();
@@ -17,11 +21,6 @@ const Card: React.FC<CardProps> = ({}) => {
   const { route } = useRoute();
 
   const card = useCardSelectors(route.params.columnId, route.params.cardId);
-
-  /* const activeDesk = useMemo(() => desks.find(({ id }) => id === route?.params?.deskId), [
-    desks,
-    route?.params?.deskId,
-  ]); */
 
   /* useEffect(() => {
     if (route.params.deskId) {
@@ -40,7 +39,16 @@ const Card: React.FC<CardProps> = ({}) => {
 
   return (
     <>
-      <PanelHeader left={<PanelHeaderBack onClick={() => goToColumn(route?.params?.deskId)} />}>
+      <PanelHeader
+        left={
+          <PanelHeaderBack
+            onClick={() => {
+              dispatch(clearColumns());
+              goToColumn(route?.params?.deskId);
+            }}
+          />
+        }
+      >
         Карточка - {card?.name}
       </PanelHeader>
 
