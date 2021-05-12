@@ -7,11 +7,14 @@ import { useAlertContext } from "../context/alert-context";
 import { panel } from "../hooks/useActivePanel";
 import { useRoute } from "react-router5";
 import { Card } from "../features/columns/panels/card";
+import { useActionSheetContext } from "../context/action-sheet-context";
 
 const App: React.FC<{ hasError: boolean }> = ({ hasError }) => {
   const { route } = useRoute();
 
-  const { popout, setPopoutHandler, clearPopoutHandler } = useAlertContext();
+  const { popout: popoutAlert, setPopoutHandler, clearPopoutHandler } = useAlertContext();
+  
+  const { popout: popoutActionSheet } = useActionSheetContext();
 
   useEffect(() => {
     if (hasError) {
@@ -32,7 +35,7 @@ const App: React.FC<{ hasError: boolean }> = ({ hasError }) => {
   }, [hasError, setPopoutHandler, clearPopoutHandler]);
 
   return (
-    <View activePanel={route.name} popout={popout}>
+    <View activePanel={route.name} popout={popoutAlert || popoutActionSheet}>
       <Panel id={panel.DESKS}>
         <Desks />
       </Panel>

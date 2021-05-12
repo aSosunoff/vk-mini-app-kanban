@@ -13,6 +13,7 @@ import { RouterProvider } from "react-router5";
 
 import { Provider } from "react-redux";
 import store from "./app/store";
+import { ActionSheetProvider } from "./context/action-sheet-context";
 
 backend.initializeApp();
 
@@ -26,13 +27,15 @@ ReactDOM.render(
     <AdaptivityProvider>
       <AppRoot>
         <AlertProvider>
-          <SnackbarProvider>
-            <RouterProvider router={route}>
-              {/* <AppStateProvider> */}
-              <ErrorBoundary>{(hasError) => <App hasError={hasError} />}</ErrorBoundary>
-              {/* </AppStateProvider> */}
-            </RouterProvider>
-          </SnackbarProvider>
+          <ActionSheetProvider>
+            <SnackbarProvider>
+              <RouterProvider router={route}>
+                {/* <AppStateProvider> */}
+                <ErrorBoundary>{(hasError) => <App hasError={hasError} />}</ErrorBoundary>
+                {/* </AppStateProvider> */}
+              </RouterProvider>
+            </SnackbarProvider>
+          </ActionSheetProvider>
         </AlertProvider>
       </AppRoot>
     </AdaptivityProvider>
