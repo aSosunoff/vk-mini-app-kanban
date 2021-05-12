@@ -1,6 +1,5 @@
 import React, { useCallback, useRef } from "react";
 import { ActionSheetItem, Cell } from "@vkontakte/vkui";
-import { useAlertContext } from "../../../../context/alert-context";
 import { ICard } from "../../interfaces/ICard";
 import { removeCard } from "../../actions/cardActions";
 import { useDispatch } from "react-redux";
