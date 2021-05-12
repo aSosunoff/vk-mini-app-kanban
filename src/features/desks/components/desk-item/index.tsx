@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { ActionSheetItem, Cell } from "@vkontakte/vkui";
-import { Icon24DeleteOutline } from "@vkontakte/icons";
+import { Icon28EditOutline } from "@vkontakte/icons";
 import { useSnackbarContext } from "../../../../context/snackbar-context";
 import { useActivePanel } from "../../../../hooks/useActivePanel";
 import { removeDesk } from "../../actions";
@@ -37,7 +37,7 @@ export const DeskItem: React.FC<DeskItemProps> = ({ desk }) => {
       event.stopPropagation();
 
       setActionSheetHandler({
-        header: `Вы уверены в удалении доски ${desk.name}`,
+        header: "Выберете действия",
         onClose: clearActionSheetHandler,
         iosCloseItem: (
           <ActionSheetItem autoclose mode="cancel">
@@ -45,20 +45,23 @@ export const DeskItem: React.FC<DeskItemProps> = ({ desk }) => {
           </ActionSheetItem>
         ),
         children: (
-          <ActionSheetItem autoclose mode="destructive" onClick={removeDeskHandler}>
-            Удалить
-          </ActionSheetItem>
+          <>
+            <ActionSheetItem autoclose>Редактировать</ActionSheetItem>
+            <ActionSheetItem autoclose mode="destructive" onClick={removeDeskHandler}>
+              Удалить
+            </ActionSheetItem>
+          </>
         ),
         toggleRef: subtitleTargetRef.current as Element,
       });
     },
-    [clearActionSheetHandler, desk.name, removeDeskHandler, setActionSheetHandler]
+    [clearActionSheetHandler, removeDeskHandler, setActionSheetHandler]
   );
 
   return (
     <Cell
       expandable
-      after={<Icon24DeleteOutline onClick={question} getRootRef={subtitleTargetRef} />}
+      after={<Icon28EditOutline onClick={question} getRootRef={subtitleTargetRef} />}
       onClick={() => goToColumn(desk.id)}
     >
       {desk.name}
