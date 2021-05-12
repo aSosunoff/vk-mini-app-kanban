@@ -6,7 +6,7 @@ import { Columns } from "../features/columns/panels/columns";
 import { useAlertContext } from "../context/alert-context";
 import { panel } from "../hooks/useActivePanel";
 import { useRoute } from "react-router5";
-import { Card } from "../features/card/panels/card";
+import { Card } from "../features/columns/panels/card";
 
 const App: React.FC<{ hasError: boolean }> = ({ hasError }) => {
   const { route } = useRoute();

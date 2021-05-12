@@ -9,12 +9,13 @@ export const getCards = async (columnId: string) => {
   const cards: ICard[] = [];
 
   querySnapshot.forEach((doc) => {
-    const { columnId, name } = doc.data() as ICard;
+    const { columnId, name, description } = doc.data() as ICard;
 
     cards.push({
       id: doc.id,
       columnId,
       name,
+      description,
     });
   });
 
