@@ -12,7 +12,7 @@ export interface IColumnsInitialState {
     };
     error: any;
   };
-  card: {
+  cards: {
     loading: boolean;
     error: any;
   };

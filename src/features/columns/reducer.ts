@@ -10,7 +10,7 @@ const initialState: IColumnsInitialState = {
     list: {},
     error: null,
   },
-  card: { loading: false, error: null },
+  cards: { loading: false, error: null },
 };
 
 const handlers: Handlers<IColumnsInitialState, ActionTypes_Columns> = {
@@ -54,20 +54,20 @@ const handlers: Handlers<IColumnsInitialState, ActionTypes_Columns> = {
 
   //#region cards
   CARDS_REQUEST: (draft) => {
-    draft.card.loading = true;
-    draft.card.error = null;
+    draft.cards.loading = true;
+    draft.cards.error = null;
   },
   CARDS_SUCCESS: (draft, { payload: { columnId, cards } }) => {
-    draft.card.loading = false;
-    draft.card.error = null;
+    draft.cards.loading = false;
+    draft.cards.error = null;
     draft.column.list[columnId].cards = cards;
   },
   CARDS_FAILURE: (draft, action) => {
-    draft.card.error = action.payload;
-    draft.card.loading = false;
+    draft.cards.error = action.payload;
+    draft.cards.loading = false;
   },
   CARDS_CLEAR_ERROR: (draft) => {
-    draft.card.error = null;
+    draft.cards.error = null;
   },
   CARDS_ADD: (draft, { payload: { columnId, card } }) => {
     draft.column.list[columnId].cards.push(card);
