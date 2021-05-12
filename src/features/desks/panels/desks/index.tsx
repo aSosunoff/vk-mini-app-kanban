@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { Group, List, PanelHeaderSimple } from "@vkontakte/vkui";
+import { Group, List, PanelHeader, PanelHeaderButton, PanelHeaderSimple } from "@vkontakte/vkui";
 
 import { useSnackbarContext } from "../../../../context/snackbar-context";
 import { CreateForm } from "../../../../components/create-form";
@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { fetchDesks, addedDesk } from "../../actions";
 import { clearColumns } from "../../../columns/actions/columnActions";
 import { useDesksSelector } from "../../selectors";
+import { Icon24Add } from "@vkontakte/icons";
 
 interface DesksProps {}
 
@@ -37,7 +38,15 @@ const Desks: React.FC<DesksProps> = () => {
 
   return (
     <>
-      <PanelHeaderSimple>Мои доски</PanelHeaderSimple>
+      <PanelHeader
+        left={
+          <PanelHeaderButton>
+            <Icon24Add />
+          </PanelHeaderButton>
+        }
+      >
+        Мои доски
+      </PanelHeader>
 
       <CreateForm
         onSubmit={addedDeskHandler}
