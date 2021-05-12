@@ -19,8 +19,8 @@ const Desks: React.FC<DesksProps> = () => {
   const { snackbar, setSnackbarHandler, clearSnackbarHandler } = useSnackbarContext();
 
   useEffect(() => {
-    dispatch(fetchDesks());
     dispatch(clearColumns());
+    dispatch(fetchDesks());
   }, [dispatch]);
 
   const addedDeskHandler = useCallback(
