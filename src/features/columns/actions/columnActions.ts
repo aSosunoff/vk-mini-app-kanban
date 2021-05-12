@@ -76,6 +76,6 @@ export const removeColumn = (desk: IColumn) => async (dispatch: Dispatch) => {
   }
 };
 
-export const clearColumns = () => async (dispatch: Dispatch) => {
+export const clearColumns = () => (dispatch: Dispatch) => {
   dispatch(clear());
 };
