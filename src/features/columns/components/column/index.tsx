@@ -1,11 +1,11 @@
-import React, { useCallback } from "react";
-import { Group, Header } from "@vkontakte/vkui";
+import React, { useCallback, useRef } from "react";
+import { ActionSheetItem, Group, Header } from "@vkontakte/vkui";
 import { Icon16Delete } from "@vkontakte/icons";
-import { useAlertContext } from "../../../../context/alert-context";
 import { Cards } from "../cards";
 import { IColumn } from "../../interfaces/IColumns";
 import { removeColumn } from "../../actions/columnActions";
 import { useDispatch } from "react-redux";
+import { useActionSheetContext } from "../../../../context/action-sheet-context";
 
 interface ColumnProps {
   column: IColumn;
@@ -14,34 +14,39 @@ interface ColumnProps {
 const Column: React.FC<ColumnProps> = ({ column }) => {
   const dispatch = useDispatch();
 
-  const { setPopoutHandler, clearPopoutHandler } = useAlertContext();
+  const { setActionSheetHandler, clearActionSheetHandler } = useActionSheetContext();
+
+  const subtitleTargetRef = useRef<HTMLDivElement>(null);
 
   const question = useCallback(() => {
-    setPopoutHandler({
-      header: "Внимание",
-      text: `Вы уверены в удалении доски ${column.name}`,
-      actions: [
-        {
-          title: "Да",
-          mode: "destructive",
-          autoclose: true,
-          action: () => dispatch(removeColumn(column)),
-        },
-        {
-          title: "Передумал",
-          mode: "cancel",
-          autoclose: true,
-        },
-      ],
-      actionsLayout: "vertical",
-      onClose: clearPopoutHandler,
+    setActionSheetHandler({
+      header: `Вы уверены в удалении доски ${column.name}`,
+      onClose: clearActionSheetHandler,
+      iosCloseItem: (
+        <ActionSheetItem autoclose mode="cancel">
+          Отменить
+        </ActionSheetItem>
+      ),
+      children: (
+        <ActionSheetItem
+          autoclose
+          mode="destructive"
+          onClick={() => dispatch(removeColumn(column))}
+        >
+          Удалить
+        </ActionSheetItem>
+      ),
+      toggleRef: subtitleTargetRef.current as Element,
     });
-  }, [clearPopoutHandler, column, dispatch, setPopoutHandler]);
+  }, [clearActionSheetHandler, column, dispatch, setActionSheetHandler]);
 
   return (
     <Group
       header={
-        <Header mode="secondary" aside={<Icon16Delete onClick={question} />}>
+        <Header
+          mode="secondary"
+          aside={<Icon16Delete onClick={question} getRootRef={subtitleTargetRef} />}
+        >
           {column.name}
         </Header>
       }
