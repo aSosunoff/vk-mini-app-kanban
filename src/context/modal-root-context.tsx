@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
+import { MODAL_PAGE_EDIT_DESK } from "../components/modal";
 
-type TActiveModal = "edit_desk" | null;
+type TActiveModal = typeof MODAL_PAGE_EDIT_DESK | null;
 
 interface IModalRootContext {
   activeModal: TActiveModal;
