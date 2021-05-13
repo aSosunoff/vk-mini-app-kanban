@@ -3,9 +3,11 @@ import React from "react";
 import { useModalRootContext } from "../../context/modal-root-context";
 import { ModalDeskAdd } from "./modal-desk-add";
 import { ModalColumnAdd } from "./modal-column-add";
+import { ModalCardAdd } from "./modal-card-add";
 
 export const MODAL_PAGE_ADD_DESK = "add_desk";
 export const MODAL_PAGE_ADD_COLUMN = "add_column";
+export const MODAL_PAGE_ADD_CARD = "add_card";
 
 export const Modal: React.FC = () => {
   const { activeModal, setActiveModalHandler } = useModalRootContext();
@@ -21,6 +23,11 @@ export const Modal: React.FC = () => {
         id={MODAL_PAGE_ADD_COLUMN}
         onClose={() => setActiveModalHandler(null)}
       ></ModalColumnAdd>
+
+      <ModalCardAdd
+        id={MODAL_PAGE_ADD_CARD}
+        onClose={() => setActiveModalHandler(null)}
+      ></ModalCardAdd>
     </ModalRoot>
   );
 };

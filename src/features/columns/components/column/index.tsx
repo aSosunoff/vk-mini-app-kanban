@@ -44,7 +44,7 @@ const Column: React.FC<ColumnProps> = ({ column }) => {
     <Group
       header={
         <Header
-          mode="secondary"
+          mode="primary"
           aside={<Icon16Delete onClick={question} getRootRef={subtitleTargetRef} />}
         >
           {column.name}

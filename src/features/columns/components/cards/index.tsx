@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { List } from "@vkontakte/vkui";
+import { Button, Div, List } from "@vkontakte/vkui";
 import { Card } from "../card";
-import { CreateForm } from "../../../../components/create-form";
-import { fetchCards, addedCard } from "../../actions/cardActions";
+import { fetchCards } from "../../actions/cardActions";
 import { useDispatch } from "react-redux";
 import { useCardsSelectors } from "../../selectors";
+import { useModalRootContext } from "../../../../context/modal-root-context";
 
 interface CardsProps {
   columnId: string;
@@ -19,6 +19,8 @@ const Cards: React.FC<CardsProps> = ({ columnId }) => {
     dispatch(fetchCards(columnId));
   }, [columnId, dispatch]);
 
+  const { setActiveModalHandler } = useModalRootContext();
+
   return (
     <>
       <List>
@@ -27,13 +29,16 @@ const Cards: React.FC<CardsProps> = ({ columnId }) => {
         ))}
       </List>
 
-      <CreateForm
-        onSubmit={async (name) => {
-          await dispatch(addedCard(columnId, name));
-        }}
-        buttonName="Создать карточку"
-        placeholder="введите название карточки"
-      />
+      <Div>
+        <Button
+          size="l"
+          stretched
+          onClick={() => setActiveModalHandler("add_card", { columnId })}
+          mode="outline"
+        >
+          Создать карточку
+        </Button>
+      </Div>
     </>
   );
 };
