@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Gallery, PanelHeader, PanelHeaderBack, PanelHeaderButton } from "@vkontakte/vkui";
 
