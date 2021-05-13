@@ -1,16 +1,17 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Gallery, Group, PanelHeader, PanelHeaderBack } from "@vkontakte/vkui";
+import { Gallery, PanelHeader, PanelHeaderBack, PanelHeaderButton } from "@vkontakte/vkui";
 
 import { useSnackbarContext } from "../../../../context/snackbar-context";
 import styles from "./columns.module.css";
 import { Column } from "../../components/column";
-import { CreateForm } from "../../../../components/create-form";
 import { useRoute } from "react-router5";
 import { panel } from "../../../../hooks/useActivePanel";
-import { fetchColumns, addedColumns } from "../../actions/columnActions";
+import { fetchColumns } from "../../actions/columnActions";
 import { useDeskSelector } from "../../../desks/selectors";
 import { useColumnsSelectors } from "../../selectors";
+import { Icon24Add } from "@vkontakte/icons";
+import { useModalRootContext } from "../../../../context/modal-root-context";
 
 interface ColumnsProps {}
 
@@ -31,34 +32,35 @@ const Columns: React.FC<ColumnsProps> = () => {
     }
   }, [route.params.deskId, dispatch]);
 
-  const createColumn = useCallback(
-    async (name: string) => {
-      if (route?.params?.deskId) {
-        await dispatch(addedColumns(route?.params?.deskId, name));
-      }
-    },
-    [dispatch, route?.params?.deskId]
-  );
+  const { setActiveModalHandler } = useModalRootContext();
 
   return (
     <>
-      <PanelHeader left={<PanelHeaderBack onClick={() => router.navigate(panel.DESKS)} />}>
+      <PanelHeader
+        left={
+          <>
+            <PanelHeaderBack onClick={() => router.navigate(panel.DESKS)} />
+
+            <PanelHeaderButton>
+              <Icon24Add
+                onClick={() => {
+                  setActiveModalHandler("add_column");
+                }}
+              />
+            </PanelHeaderButton>
+          </>
+        }
+      >
         Доска - {desk?.name}
       </PanelHeader>
 
-      <Gallery slideWidth="100%" align="center" className={styles.gallery} bullets="dark">
-        {columns.map((column) => (
-          <Column key={column.id} column={column} />
-        ))}
-
-        <Group>
-          <CreateForm
-            onSubmit={createColumn}
-            buttonName="Создать колонку"
-            placeholder="введите название колонки"
-          />
-        </Group>
-      </Gallery>
+      {columns.length > 0 ? (
+        <Gallery slideWidth="100%" align="center" className={styles.gallery} bullets="dark">
+          {columns.map((column) => (
+            <Column key={column.id} column={column} />
+          ))}
+        </Gallery>
+      ) : null}
 
       {snackbar}
     </>

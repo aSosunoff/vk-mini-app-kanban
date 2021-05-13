@@ -33,7 +33,7 @@ const Desks: React.FC<DesksProps> = () => {
           <PanelHeaderButton>
             <Icon24Add
               onClick={() => {
-                setActiveModalHandler("edit_desk");
+                setActiveModalHandler("add_desk");
               }}
             />
           </PanelHeaderButton>
