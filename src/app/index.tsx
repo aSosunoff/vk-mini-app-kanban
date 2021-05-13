@@ -34,7 +34,7 @@ const Modal: React.FC = () => {
         onClose={() => setActiveModalHandler(null)}
         /* icon={<Icon56MoneyTransferOutline />} */
         header="Создать новую доску"
-        subheader="Доски необходимы для того, что бы обьеденить какую либо работу"
+        subheader="Доски необходимы для того, что бы обьеденить какую либо деятельность для гибкого управления задачами"
       >
         <FormLayout /* onSubmit={createHandler} */>
           <FormItem
