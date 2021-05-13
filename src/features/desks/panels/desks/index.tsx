@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { Group, List, PanelHeader, PanelHeaderButton, PanelHeaderSimple } from "@vkontakte/vkui";
+import { Group, List, PanelHeader, PanelHeaderButton } from "@vkontakte/vkui";
 
 import { useSnackbarContext } from "../../../../context/snackbar-context";
 import { CreateForm } from "../../../../components/create-form";
@@ -9,6 +9,7 @@ import { fetchDesks, addedDesk } from "../../actions";
 import { clearColumns } from "../../../columns/actions/columnActions";
 import { useDesksSelector } from "../../selectors";
 import { Icon24Add } from "@vkontakte/icons";
+import { useModalRootContext } from "../../../../context/modal-root-context";
 
 interface DesksProps {}
 
@@ -36,12 +37,18 @@ const Desks: React.FC<DesksProps> = () => {
     [dispatch, clearSnackbarHandler, setSnackbarHandler]
   );
 
+  const { setActiveModalHandler } = useModalRootContext();
+
   return (
     <>
       <PanelHeader
         left={
           <PanelHeaderButton>
-            <Icon24Add />
+            <Icon24Add
+              onClick={() => {
+                setActiveModalHandler("edit_desk");
+              }}
+            />
           </PanelHeaderButton>
         }
       >
