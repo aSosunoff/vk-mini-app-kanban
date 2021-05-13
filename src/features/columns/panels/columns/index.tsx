@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Gallery, PanelHeader, PanelHeaderBack, PanelHeaderButton } from "@vkontakte/vkui";
+import { Icon24Add } from "@vkontakte/icons";
+import { useRoute } from "react-router5";
 
 import { useSnackbarContext } from "../../../../context/snackbar-context";
 import styles from "./columns.module.css";
 import { Column } from "../../components/column";
-import { useRoute } from "react-router5";
 import { panel } from "../../../../hooks/useActivePanel";
 import { fetchColumns } from "../../actions/columnActions";
 import { useDeskSelector } from "../../../desks/selectors";
 import { useColumnsSelectors } from "../../selectors";
-import { Icon24Add } from "@vkontakte/icons";
 import { useModalRootContext } from "../../../../context/modal-root-context";
 
 interface ColumnsProps {}
