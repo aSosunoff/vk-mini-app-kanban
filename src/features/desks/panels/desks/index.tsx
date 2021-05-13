@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Group, List, PanelHeader, PanelHeaderButton } from "@vkontakte/vkui";
 
 import { useSnackbarContext } from "../../../../context/snackbar-context";
-import { CreateForm } from "../../../../components/create-form";
 import { DeskItem } from "../../components/desk-item";
 import { useDispatch } from "react-redux";
 import { fetchDesks } from "../../actions";
