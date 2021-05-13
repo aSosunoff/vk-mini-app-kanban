@@ -14,6 +14,7 @@ import { RouterProvider } from "react-router5";
 import { Provider } from "react-redux";
 import store from "./app/store";
 import { ActionSheetProvider } from "./context/action-sheet-context";
+import { ModalRootProvider } from "./context/modal-root-context";
 
 backend.initializeApp();
 
@@ -29,11 +30,13 @@ ReactDOM.render(
         <AlertProvider>
           <ActionSheetProvider>
             <SnackbarProvider>
-              <RouterProvider router={route}>
-                {/* <AppStateProvider> */}
-                <ErrorBoundary>{(hasError) => <App hasError={hasError} />}</ErrorBoundary>
-                {/* </AppStateProvider> */}
-              </RouterProvider>
+              <ModalRootProvider>
+                <RouterProvider router={route}>
+                  {/* <AppStateProvider> */}
+                  <ErrorBoundary>{(hasError) => <App hasError={hasError} />}</ErrorBoundary>
+                  {/* </AppStateProvider> */}
+                </RouterProvider>
+              </ModalRootProvider>
             </SnackbarProvider>
           </ActionSheetProvider>
         </AlertProvider>
