@@ -1,12 +1,19 @@
 import React, { FormEventHandler, useCallback, useState } from "react";
-import { useForm, InitialFormType } from "@asosunoff/react_use_form";
-import { Button, Div, FormItem, FormLayout, FormLayoutGroup, Input } from "@vkontakte/vkui";
+import { useForm, InitialForm } from "@asosunoff/react_use_form";
+import {
+  Button,
+  Div,
+  FormItem,
+  FormLayout,
+  FormLayoutGroup,
+  Input,
+} from "@vkontakte/vkui";
 import { Icon24Add } from "@vkontakte/icons";
 import { useAlertContext } from "../../context/alert-context";
 
 type Modes = "button" | "form";
 
-const FORM: InitialFormType<"name"> = {
+const FORM: InitialForm<"name"> = {
   name: {
     value: "",
     validation: (value) => {
@@ -23,8 +30,17 @@ interface CreateFormProps {
   onSubmit: (name: string) => Promise<void>;
 }
 
-const CreateForm: React.FC<CreateFormProps> = ({ onSubmit, buttonName, placeholder }) => {
-  const { handlers, values, resetHandler, isInvalidForm } = useForm(FORM);
+const CreateForm: React.FC<CreateFormProps> = ({
+  onSubmit,
+  buttonName,
+  placeholder,
+}) => {
+  const {
+    handlers,
+    values,
+    reset: resetHandler,
+    isInvalidForm,
+  } = useForm(FORM);
 
   const [mode, setMode] = useState<Modes>("button");
 
@@ -58,7 +74,14 @@ const CreateForm: React.FC<CreateFormProps> = ({ onSubmit, buttonName, placehold
         resetHandler();
       }
     },
-    [clearPopoutHandler, isInvalidForm, onSubmit, resetHandler, setPopoutHandler, values.name]
+    [
+      clearPopoutHandler,
+      isInvalidForm,
+      onSubmit,
+      resetHandler,
+      setPopoutHandler,
+      values.name,
+    ]
   );
 
   if (mode === "button") {
@@ -80,28 +103,43 @@ const CreateForm: React.FC<CreateFormProps> = ({ onSubmit, buttonName, placehold
   return (
     <FormLayout onSubmit={createHandler}>
       <FormItem
-        status={handlers.name.error && handlers.name.touched ? "error" : "valid"}
+        status={
+          handlers.name.error && handlers.name.touched ? "error" : "valid"
+        }
         bottom={
-          handlers.name.error && handlers.name.touched ? handlers.name.error.errorMessage : ""
+          handlers.name.error && handlers.name.touched
+            ? handlers.name.error.errorMessage
+            : ""
         }
       >
         <Input
           autoFocus
           value={handlers.name.value}
-          onChange={handlers.name.onChange}
+          onChange={(ev) => handlers.name.onChange(ev.target.value)}
           placeholder={placeholder}
         />
       </FormItem>
 
       <FormLayoutGroup mode="horizontal">
         <FormItem>
-          <Button size="l" stretched before={<Icon24Add />} onClick={createHandler}>
+          <Button
+            size="l"
+            stretched
+            before={<Icon24Add />}
+            onClick={createHandler}
+          >
             {buttonName}
           </Button>
         </FormItem>
 
         <FormItem>
-          <Button size="l" stretched onClick={() => setMode("button")} mode="outline" color="red">
+          <Button
+            size="l"
+            stretched
+            onClick={() => setMode("button")}
+            mode="outline"
+            color="red"
+          >
             Отменить
           </Button>
         </FormItem>
