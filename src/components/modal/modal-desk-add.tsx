@@ -1,6 +1,13 @@
-import { InitialFormType, useForm } from "@asosunoff/react_use_form";
+import { InitialForm, useForm } from "@asosunoff/react_use_form";
 import { Icon20AddCircle } from "@vkontakte/icons";
-import { Button, FormItem, FormLayout, FormLayoutGroup, Input, ModalCard } from "@vkontakte/vkui";
+import {
+  Button,
+  FormItem,
+  FormLayout,
+  FormLayoutGroup,
+  Input,
+  ModalCard,
+} from "@vkontakte/vkui";
 import React, { FormEventHandler, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useAlertContext } from "../../context/alert-context";
@@ -8,7 +15,7 @@ import { useSnackbarContext } from "../../context/snackbar-context";
 import { addedDesk } from "../../features/desks/actions";
 import { ModalBaseProps } from "./interfaces";
 
-const FORM: InitialFormType<"name"> = {
+const FORM: InitialForm<"name"> = {
   name: {
     value: "",
     validation: (value) => {
@@ -24,7 +31,12 @@ interface ModalDeskAddProps extends ModalBaseProps {}
 export const ModalDeskAdd: React.FC<ModalDeskAddProps> = ({ id, onClose }) => {
   const dispatch = useDispatch();
 
-  const { handlers, values, resetHandler, isInvalidForm } = useForm(FORM);
+  const {
+    handlers,
+    values,
+    reset: resetHandler,
+    isInvalidForm,
+  } = useForm(FORM);
 
   const { setPopoutHandler, clearPopoutHandler } = useAlertContext();
 
@@ -91,15 +103,19 @@ export const ModalDeskAdd: React.FC<ModalDeskAddProps> = ({ id, onClose }) => {
     >
       <FormLayout onSubmit={createHandler}>
         <FormItem
-          status={handlers.name.error && handlers.name.touched ? "error" : "valid"}
+          status={
+            handlers.name.error && handlers.name.touched ? "error" : "valid"
+          }
           bottom={
-            handlers.name.error && handlers.name.touched ? handlers.name.error.errorMessage : ""
+            handlers.name.error && handlers.name.touched
+              ? handlers.name.error.errorMessage
+              : ""
           }
         >
           <Input
             autoFocus
             value={handlers.name.value}
-            onChange={handlers.name.onChange}
+            onChange={(ev) => handlers.name.onChange(ev.target.value)}
             placeholder="введите название доски"
           />
         </FormItem>
